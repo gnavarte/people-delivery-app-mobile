@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+import { PrimaryButton } from '../components/PrimaryButton';
 
 export const InitialScreen = () => {
     return (
@@ -7,18 +8,8 @@ export const InitialScreen = () => {
         <Text style={styles.title}>Welcome to the app</Text>
         <Text style={styles.subtitle}>Please login or register</Text>
         <View style={styles.buttonsContainer}>
-            <Button
-            title="Login"
-            onPress={() => {
-                console.log('Login');
-            }}
-            />
-            <Button
-            title="Register"
-            onPress={() => {
-                console.log('Register');
-            }}
-            />
+            <PrimaryButton title="Login" onPress={() => alert('Login')} />
+            <PrimaryButton title="Register" onPress={() => alert('Register')} />
         </View>
         </View>
     );
