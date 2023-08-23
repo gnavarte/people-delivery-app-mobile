@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-
+import TextInputBlack from '../components/TextInputBlack';
 export const InitialScreen = () => {
     return (
         <View style={styles.container}>
@@ -14,13 +14,17 @@ export const InitialScreen = () => {
             }}
             />
             <Button
-            title="Register"
+            title="Registessr"
             onPress={() => {
-                console.log('Register');
+                console.log('Registessr');
             }}
             />
+
+            
         </View>
+        <TextInputBlack placeholder="Email" />
         </View>
+        
     );
     };
 
