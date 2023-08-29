@@ -1,15 +1,13 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, Alert, TextInput, Dimensions } from 'react-native';
+import { View, Image, Text, StyleSheet, Alert, TextInput ,Dimensions} from 'react-native';
 
 import { PrimaryButton } from '../components/Buttons/Button';
 import TextInputCustomized from '../components/TextInputCustomized';
-import { useNavigation } from '@react-navigation/native';
 
-const ForgotPasswordScreen = () => {
-  const navigation = useNavigation();
+const InputCodeScreen = () => {
 
   const navigateToRecoveryPassword = () => {
-    navigation.push("InputCodeScreen")
+    console.log('Register');
   }
 
 
@@ -18,11 +16,12 @@ const ForgotPasswordScreen = () => {
       <Text style={styles.title}>PD</Text>
       <View style={styles.grayBackground}>
         
-        <Text style={styles.welcomeText}>Ingresa tu correo para recuperar la contraseña </Text>
-        <TextInputCustomized placeholder="Ingresa tu correo" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />        
+        <Text style={styles.welcomeText}>Ingresa el codigo de 4 digitos enviado a tu correo electronico. </Text>
+        <TextInputCustomized placeholder="Ingresa el codigo" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <PrimaryButton title="No recibi el codigo!" onPress={navigateToRecoveryPassword} backgroundColor="#808080"  />        
       </View>
       <View style={styles.bottomCenterPage}>
-          <PrimaryButton title="Recuperar contraseña" onPress={navigateToRecoveryPassword} backgroundColor="#000000"  />
+          <PrimaryButton title="Continuar" onPress={navigateToRecoveryPassword} backgroundColor="#000000"  />
       </View>
     </View>
   );
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
   },
+
 });
 
-export default ForgotPasswordScreen;
+export default InputCodeScreen;

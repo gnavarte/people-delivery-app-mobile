@@ -1,8 +1,12 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View , Dimensions } from 'react-native';
+
 import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
+import InputCodeScreen from './screens/InputCodeScreen';
+import LoginScreen from './screens/LoginScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,6 +18,9 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
+        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
+        <Stack.Screen name="InputCodeScreen" component={InputCodeScreen}/>
+        <Stack.Screen name="LoginScreen" component={LoginScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
 
