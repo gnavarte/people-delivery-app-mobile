@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet ,Dimensions} from 'react-native';
 
 export const PrimaryButton = ({ title, onPress, backgroundColor }) => {
   return (
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 24,
+    fontSize: Dimensions.get('window').width*0.05,
   },
 });
 

@@ -5,7 +5,7 @@ import { PrimaryButton } from '../components/Buttons/Button';
 import TextInputCustomized from '../components/TextInputCustomized';
 import { useNavigation } from '@react-navigation/native';
 
-const ForgotPasswordScreen = () => {
+const LoginScreen = () => {
   const navigation = useNavigation();
 
   const navigateToRecoveryPassword = () => {
@@ -19,7 +19,8 @@ const ForgotPasswordScreen = () => {
       <View style={styles.grayBackground}>
         
         <Text style={styles.welcomeText}>Ingresa tu correo para recuperar la contraseña </Text>
-        <TextInputCustomized placeholder="Ingresa tu correo" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />        
+        <TextInputCustomized placeholder="Ingresa tu Usuario" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <TextInputCustomized placeholder="Ingresa tu Contraseña" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />        
       </View>
       <View style={styles.bottomCenterPage}>
           <PrimaryButton title="Recuperar contraseña" onPress={navigateToRecoveryPassword} backgroundColor="#000000"  />
@@ -63,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgotPasswordScreen;
+export default LoginScreen;

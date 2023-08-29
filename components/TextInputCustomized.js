@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-const TextInputBlack = ({ placeholder, icon }) => {
+const TextInputCustomized = ({ placeholder, icon , backgroundColor ,placeholderTextColor}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor}]}>
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor="black"
+        placeholderTextColor={placeholderTextColor}
       />
       {/* {icon && <View style={styles.iconContainer}>{icon}</View>} */}
     </View>
@@ -24,11 +24,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     textAlign: 'center',
     width: '80%',
+    height:'12%',
   },
   input: {
     flex: 1,
     color: 'black',
     textAlign: 'center',
+    fontFamily: 'Roboto',
 
   },
   iconContainer: {
@@ -36,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TextInputBlack;
+export default TextInputCustomized;

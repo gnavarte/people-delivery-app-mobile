@@ -1,13 +1,24 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, Alert, TextInput } from 'react-native';
+import { View, Image, Text, StyleSheet, Alert, TextInput ,Dimensions} from 'react-native';
 
 import { PrimaryButton } from '../components/Buttons/Button';
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen = () => {
+
+  const navigation = useNavigation();
+
 
   const navigateToRegister = () => {
     console.log('Register');
   }
+  const navigateToForgotPassword =() => {
+    navigation.push("ForgotPasswordScreen")
+  }
+  const navigateToLogin =() => {
+    navigation.push("LoginScreen")
+  }
+
 
 
   return (
@@ -21,10 +32,10 @@ const RegisterScreen = () => {
         <PrimaryButton title="Continuar" onPress={navigateToRegister} backgroundColor="#5985EB" />
         <PrimaryButton title="Continuar con Apple" onPress={navigateToRegister} backgroundColor="#808080" />
         <PrimaryButton title="Continuar con Google" onPress={navigateToRegister} backgroundColor="#808080" />
-        <PrimaryButton title="Iniciar session" onPress={navigateToRegister} backgroundColor="#5985EB" />
+        <PrimaryButton title="Iniciar session" onPress={navigateToLogin} backgroundColor="#5985EB" />
 
         <View style={styles.bottomLeftTextContainer}>
-          <Text style={styles.bottomLeftText}>Olvide mi contraseña</Text>
+          <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvide mi contraseña</Text>
         </View>
       </View>
     </View>
@@ -48,19 +59,19 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   text: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width*0.05,
     textAlign: 'center',
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: Dimensions.get('window').width*0.05,
     fontWeight: 'bold',
     color: '#000000',
     marginTop: 20,
     marginLeft: 20,
   },
   welcomeText: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width*0.05,
     marginBottom: 10,
     textAlign: 'center',
   },
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
     left: 20,
   },
   bottomLeftText: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width*0.05,
     textDecorationLine: 'underline',
   },
 });

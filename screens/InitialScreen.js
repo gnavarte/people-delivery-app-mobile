@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet,Dimensions } from 'react-native';
 import { PrimaryButton } from '../components/Buttons/Button';
-import TextInputBlack from '../components/TextInputBlack';
+import TextInputBlack from '../components/TextInputCustomized';
 export const InitialScreen = () => {
     return (
         <View style={styles.container}>

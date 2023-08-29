@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, Alert } from 'react-native';
+import { View, Image, Text, StyleSheet, Alert  ,Dimensions} from 'react-native';
 
 import { PrimaryButton } from '../components/Buttons/Button';
 import { useNavigation } from '@react-navigation/native';
@@ -53,14 +53,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: Dimensions.get('window').width*0.05,
     fontWeight: 'bold',
     color: '#000000',
     marginTop: 20,
     marginLeft: 20,
   },
   welcomeText: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width*0.05,
     marginBottom: 10,
     textAlign: 'center',
   },
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     left: 20,
   },
   bottomLeftText: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width*0.05,
   },
 });
 
