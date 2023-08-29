@@ -18,7 +18,7 @@ const HomeScreen = () => {
       <Text style={styles.title}>PD</Text>
       <View style={styles.grayBackground}>
         <Image
-          source={require('../assets/Logo_Inicio.png')}
+          source={require('../assets/PeopleDeliveryLogo.png')}
           style={styles.mapImage}
         />
         <Text style={styles.welcomeText}>Bienvenido a People Delivery</Text>
