@@ -7,6 +7,10 @@ import RegisterScreen from './screens/RegisterScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import InputCodeScreen from './screens/InputCodeScreen';
 import LoginScreen from './screens/LoginScreen';
+import EditChoferScreen from './screens/EditChoferScreen';
+import HomeChoferScreen from './screens/HomeChoferScreen';
+
+import TabBar from './components/TabBar/TabBar';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -21,6 +25,9 @@ export default function App() {
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
         <Stack.Screen name="InputCodeScreen" component={InputCodeScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+        <Stack.Screen name="EditChoferInfoScreen" component={EditChoferScreen}/>
+        <Stack.Screen name="HomeChoferScreen" component={HomeChoferScreen}/>
+        <Stack.Screen name ="HomeChofer" component={TabBar}/>
       </Stack.Navigator>
     </NavigationContainer>
 

@@ -29,7 +29,7 @@ const RegisterScreen = () => {
         
         
 
-        <PrimaryButton title="Continuar" onPress={navigateToRegister} backgroundColor="#5985EB" />
+        <PrimaryButton title="Registrate" onPress={navigateToRegister} backgroundColor="#5985EB" />
         <PrimaryButton title="Continuar con Apple" onPress={navigateToRegister} backgroundColor="#808080" />
         <PrimaryButton title="Continuar con Google" onPress={navigateToRegister} backgroundColor="#808080" />
         <PrimaryButton title="Iniciar session" onPress={navigateToLogin} backgroundColor="#5985EB" />
