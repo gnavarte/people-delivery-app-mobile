@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     textAlign: 'center',
     width: '80%',
-    height:'12%',
+    height:'7%',
   },
   input: {
     flex: 1,
