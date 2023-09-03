@@ -22,7 +22,7 @@ const HomeScreen = () => {
           style={styles.mapImage}
         />
         <Text style={styles.welcomeText}>Bienvenido a People Delivery</Text>
-        <PrimaryButton title="Continuar" onPress={navigateToRegister} backgroundColor="#5985EB" />
+        <PrimaryButton title="Continuar" onPress={navigateToRegister} backgroundColor="#6372ff" />
         <View style={styles.bottomLeftTextContainer}>
           <Text style={styles.bottomLeftText}>o pedi un viaje en AppPD</Text>
         </View>

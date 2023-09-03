@@ -16,10 +16,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    width: '100%',
+    width: Dimensions.get('window').width*0.7,
     marginTop: 20,
     borderRadius: 30,
-    width: 279,
     alignSelf: 'center',
   },
   buttonText: {
