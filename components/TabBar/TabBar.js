@@ -16,11 +16,11 @@ const TabBar = () => {
 
           if (route.name === 'Inicio') {
             iconName = 'home';
-          } else if (route.name === 'Ganancias') {
+          } else if (route.name === 'Billetera') {
             iconName = 'cash'; 
-          } else if (route.name === 'Mis Viajes') {
+          } else if (route.name === 'Viajes') {
             iconName = 'car'; 
-          } else if (route.name === 'Configuracion') {
+          } else if (route.name === 'Perfil') {
             iconName = 'settings'; 
           }
 
@@ -41,17 +41,17 @@ const TabBar = () => {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Ganancias"
+        name="Billetera"
         component={HomeChoferScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Mis Viajes"
+        name="Viajes"
         component={HomeChoferScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Configuracion"
+        name="Perfil"
         component={EditChoferScreen}
         options={{ headerShown: false }}
       />
