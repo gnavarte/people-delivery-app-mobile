@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Dimensions } from 'react-native';
 
 import HomeScreen from './screens/HomeScreen';
-import RegisterScreen from './screens/RegisterScreen';
+import InitialScreen from './screens/InitialScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import InputCodeScreen from './screens/InputCodeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -20,8 +20,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+<<<<<<< HEAD
         <Stack.Screen name="HomeScreen" component={EditProfileScreen}/>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
+=======
+        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        <Stack.Screen name="InitialScreen" component={InitialScreen}/>
+>>>>>>> e0799882ee7f223be1d37a15c25c732df2ddc3b8
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
         <Stack.Screen name="InputCodeScreen" component={InputCodeScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
