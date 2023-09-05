@@ -9,7 +9,6 @@ const EditProfileScreen = () => {
     navigation.goBack();
   };
 
-  // Resto de tu código...
 
   return (
     <View style={styles.container}>

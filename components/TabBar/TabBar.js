@@ -20,7 +20,7 @@ const TabBar = () => {
             iconName = 'cash'; 
           } else if (route.name === 'Viajes') {
             iconName = 'car'; 
-          } else if (route.name === 'Perfil') {
+          } else if (route.name === 'Configuracion') {
             iconName = 'settings'; 
           }
 
@@ -51,13 +51,8 @@ const TabBar = () => {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-<<<<<<< HEAD
         name="Configuracion"
         component={EditProfileScreen}
-=======
-        name="Perfil"
-        component={EditChoferScreen}
->>>>>>> e0799882ee7f223be1d37a15c25c732df2ddc3b8
         options={{ headerShown: false }}
       />
     </Tab.Navigator>

@@ -20,13 +20,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-<<<<<<< HEAD
-        <Stack.Screen name="HomeScreen" component={EditProfileScreen}/>
-        <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
-=======
         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
         <Stack.Screen name="InitialScreen" component={InitialScreen}/>
->>>>>>> e0799882ee7f223be1d37a15c25c732df2ddc3b8
+        {/* <Stack.Screen name="RegisterScreen" component={RegisterScreen}/> */}
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
         <Stack.Screen name="InputCodeScreen" component={InputCodeScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
