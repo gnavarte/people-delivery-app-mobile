@@ -9,15 +9,14 @@ const RegisterScreen = () => {
 
   const navigation = useNavigation();
 
-
   const navigateToRegister = () => {
-    console.log('Register');
+    navigation.push("RegisterScreen")
   }
   const navigateToForgotPassword =() => {
     navigation.push("ForgotPasswordScreen")
   }
   const navigateToLogin =() => {
-    navigation.push("LoginScreen")
+    navigation.push("HomeChofer")
   }
 
 

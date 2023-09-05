@@ -9,7 +9,7 @@ import InputCodeScreen from './screens/InputCodeScreen';
 import LoginScreen from './screens/LoginScreen';
 import EditChoferScreen from './screens/EditChoferScreen';
 import HomeChoferScreen from './screens/HomeChoferScreen';
-
+import EditProfileScreen from './screens/EditProfileScreen';
 import TabBar from './components/TabBar/TabBar';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -20,14 +20,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        <Stack.Screen name="HomeScreen" component={EditProfileScreen}/>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
         <Stack.Screen name="InputCodeScreen" component={InputCodeScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+        <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="EditChoferInfoScreen" component={EditChoferScreen}/>
         <Stack.Screen name="HomeChoferScreen" component={HomeChoferScreen}/>
         <Stack.Screen name ="HomeChofer" component={TabBar}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
 

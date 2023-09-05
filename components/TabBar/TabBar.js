@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import HomeChoferScreen from '../../screens/HomeChoferScreen';
 import EditChoferScreen from '../../screens/EditChoferScreen';
-
+import EditProfileScreen from '../../screens/EditProfileScreen';
 const Tab = createBottomTabNavigator();
 
 const TabBar = () => {
@@ -52,7 +52,7 @@ const TabBar = () => {
       />
       <Tab.Screen
         name="Configuracion"
-        component={EditChoferScreen}
+        component={EditProfileScreen}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
