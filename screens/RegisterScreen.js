@@ -4,7 +4,7 @@ import { View, Image, Text, StyleSheet, Alert, TextInput ,Dimensions} from 'reac
 import { PrimaryButton } from '../components/Buttons/Button';
 import { useNavigation } from '@react-navigation/native';
 
-const RegisterScreen = () => {
+const InitialScreen = () => {
 
   const navigation = useNavigation();
 
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default InitialScreen;
