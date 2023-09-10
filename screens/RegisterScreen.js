@@ -1,19 +1,33 @@
-import React from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const RegisterScreen = () => {
   const initialState = {
     nombre: "",
     apellido: "",
     DNI: "",
-    fechaNacimiento: "",
+    fechaNacimiento: new Date(),
     domicilio: "",
     email: "",
     password: "",
   };
   const { form, onChange } = useForm(initialState);
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      onChange(selectedDate, "fechaNacimiento");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -42,15 +56,19 @@ const RegisterScreen = () => {
         autoCapitalize="false"
         keyboardType="numeric"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Fecha de nacimiento"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(value) => onChange(value, "fechaNacimiento")}
-        value={form.fechaNacimiento}
-        autoCapitalize="false"
-        keyboardType="numeric"
-      />
+      <TouchableOpacity onPress={toggleDatePicker} style={styles.dateInput}>
+        <Text style={styles.dateText}>Fecha de nacimiento</Text>
+      </TouchableOpacity>
+      {showDatePicker && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={form.fechaNacimiento}
+          mode="date"
+          is24Hour={true}
+          display="default"
+          onChange={handleDateChange}
+        />
+      )}
       <TextInput
         style={styles.input}
         placeholder="Domicilio"
@@ -76,7 +94,7 @@ const RegisterScreen = () => {
         value={form.password}
         autoCapitalize="none"
       />
-      <PrimaryButton title="Registrarse" backgroundColor="#6372ff"/>
+      <PrimaryButton title="Registrarse" backgroundColor="#6372ff" />
     </View>
   );
 };
@@ -94,6 +112,21 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
+  },
+  dateInput: {
+    backgroundColor: "#ffffff",
+    height: 48,
+    borderRadius: 5,
+    overflow: "hidden",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 30,
+    marginRight: 30,
+    paddingLeft: 16,
+    justifyContent: "center", // Alinea el texto verticalmente
+  },
+  dateText: {
+    color: "#aaaaaa", // Cambia el color del texto
   },
   container: {
     flex: 1,
