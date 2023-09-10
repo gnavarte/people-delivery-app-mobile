@@ -11,7 +11,7 @@ const InitialScreen = () => {
 
 
   const navigateToRegister = () => {
-    console.log('Register');
+    navigation.push("RegisterScreen")
   }
   const navigateToForgotPassword =() => {
     navigation.push("ForgotPasswordScreen")
@@ -35,7 +35,7 @@ const InitialScreen = () => {
         <PrimaryButton title="Registrate" onPress={navigateToRegister} backgroundColor="#6372ff" />
         <ButtonWithIcon title="Continuar con Facebook" onPress={navigateToHomeChofer} backgroundColor="#6372ff" icon={require('../assets/FacebookIcon.png')} />
         <ButtonWithIcon title="Continuar con Google" onPress={navigateToHomeChofer} backgroundColor="#6372ff" icon={require('../assets/GoogleIcon.png')} />
-        <PrimaryButton title="Iniciar session" onPress={navigateToLogin} backgroundColor="#6372ff" />
+        <PrimaryButton title="Iniciar sesión" backgroundColor="#6372ff" onPress={navigateToLogin} />
 
         <View style={styles.bottomLeftTextContainer}>
           <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvide mi contraseña</Text>
