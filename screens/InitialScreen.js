@@ -13,9 +13,6 @@ const InitialScreen = () => {
   const navigateToRegister = () => {
     navigation.push("RegisterScreen")
   }
-  const navigateToForgotPassword =() => {
-    navigation.push("ForgotPasswordScreen")
-  }
   const navigateToLogin =() => {
     navigation.push("LoginScreen")
   }
@@ -28,18 +25,11 @@ const InitialScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>PD</Text>
       <View style={styles.grayBackground}>
-        <Text style={styles.welcomeText}>¡Bienvenido a People Delivery!</Text>
-        
-        
-
+        <Text style={styles.welcomeText}>¡Bienvenido a People Delivery!</Text> 
         <PrimaryButton title="Registrate" onPress={navigateToRegister} backgroundColor="#6372ff" />
         <ButtonWithIcon title="Continuar con Facebook" onPress={navigateToHomeChofer} backgroundColor="#6372ff" icon={require('../assets/FacebookIcon.png')} />
         <ButtonWithIcon title="Continuar con Google" onPress={navigateToHomeChofer} backgroundColor="#6372ff" icon={require('../assets/GoogleIcon.png')} />
         <PrimaryButton title="Iniciar sesión" backgroundColor="#6372ff" onPress={navigateToLogin} />
-
-        <View style={styles.bottomLeftTextContainer}>
-          <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvide mi contraseña</Text>
-        </View>
       </View>
     </View>
   );
@@ -77,15 +67,6 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.get('window').width*0.05,
     marginBottom: 10,
     textAlign: 'center',
-  },
-  bottomLeftTextContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-  },
-  bottomLeftText: {
-    fontSize: Dimensions.get('window').width*0.05,
-    textDecorationLine: 'underline',
   },
 });
 

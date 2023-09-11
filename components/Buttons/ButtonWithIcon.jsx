@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    width: Dimensions.get('window').width*0.7, // Ajusta el ancho del botón según tus necesidades
+    width: Dimensions.get('window').width * 0.7, // Ajusta el ancho del botón según tus necesidades
+    height: 60, // Establece la altura deseada
     marginTop: 20,
     borderRadius: 30,
     alignSelf: 'center',
@@ -42,5 +43,6 @@ const styles = StyleSheet.create({
 });
 
 export default ButtonWithIcon;
+
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 
@@ -10,6 +10,10 @@ const LoginScreen = () => {
   };
   const { form, onChange } = useForm(initialState);
 
+  const navigateToForgotPassword =() => {
+    navigation.push("ForgotPasswordScreen")
+  }
+  
   return (
     <View style={styles.container}>
       <TextInput
@@ -30,6 +34,9 @@ const LoginScreen = () => {
         autoCapitalize="none"
       />
       <PrimaryButton title="Iniciar sesión" backgroundColor="#6372ff"/>
+      <View style={styles.bottomLeftTextContainer}>
+        <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvide mi contraseña</Text>
+      </View>
     </View>
   );
 };
@@ -51,5 +58,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+  },
+  bottomLeftTextContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+  },
+  bottomLeftText: {
+    fontSize: Dimensions.get('window').width*0.05,
+    textDecorationLine: 'underline',
   },
 });
