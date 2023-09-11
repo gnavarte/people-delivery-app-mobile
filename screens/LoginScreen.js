@@ -1,67 +1,71 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet, Alert, TextInput, Dimensions } from 'react-native';
-
-import { PrimaryButton } from '../components/Buttons/Button';
-import TextInputCustomized from '../components/TextInputCustomized';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
+import { useForm } from "../hooks/useForm";
+import { PrimaryButton } from "../components/Buttons/Button";
 
 const LoginScreen = () => {
-  const navigation = useNavigation();
+  const initialState = {
+    email: "",
+    password: "",
+  };
+  const { form, onChange } = useForm(initialState);
 
-  const navigateToRecoveryPassword = () => {
-    navigation.push("InputCodeScreen")
+  const navigateToForgotPassword =() => {
+    navigation.push("ForgotPasswordScreen")
   }
-
-
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>PD</Text>
-      <View style={styles.grayBackground}>
-        
-        <Text style={styles.welcomeText}>Ingresa tu correo para recuperar la contraseña </Text>
-        <TextInputCustomized placeholder="Ingresa tu Usuario" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
-        <TextInputCustomized placeholder="Ingresa tu Contraseña" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />        
-      </View>
-      <View style={styles.bottomCenterPage}>
-          <PrimaryButton title="Recuperar contraseña" onPress={navigateToRecoveryPassword} backgroundColor="#000000"  />
+      <TextInput
+        style={styles.input}
+        placeholder="Correo electrónico"
+        placeholderTextColor="#aaaaaa"
+        onChangeText={(value) => onChange(value, "email")}
+        value={form.email}
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholderTextColor="#aaaaaa"
+        secureTextEntry
+        placeholder="Contraseña"
+        onChangeText={(value) => onChange(value, "password")}
+        value={form.password}
+        autoCapitalize="none"
+      />
+      <PrimaryButton title="Iniciar sesión" backgroundColor="#6372ff"/>
+      <View style={styles.bottomLeftTextContainer}>
+        <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvide mi contraseña</Text>
       </View>
     </View>
   );
 };
 
+export default LoginScreen;
+
 const styles = StyleSheet.create({
+  input: {
+    backgroundColor: "#ffffff",
+    height: 48,
+    borderRadius: 5,
+    overflow: "hidden",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 30,
+    marginRight: 30,
+    paddingLeft: 16,
+  },
   container: {
     flex: 1,
-  },
-  bottomCenterPage: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 20,
-  },
-  grayBackground: {
-    flex: 1,
-    backgroundColor: '#F2F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: Dimensions.get('window').width*0.05,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginTop: 20,
-    marginLeft: 20,
-  },
-  welcomeText: {
-    fontSize: Dimensions.get('window').width*0.04,
-    marginBottom: 10,
-    textAlign: 'center',
+    justifyContent: "center",
   },
   bottomLeftTextContainer: {
     position: 'absolute',
     bottom: 20,
     left: 20,
   },
+  bottomLeftText: {
+    fontSize: Dimensions.get('window').width*0.05,
+    textDecorationLine: 'underline',
+  },
 });
-
-export default LoginScreen;
