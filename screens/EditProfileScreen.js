@@ -5,9 +5,38 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const EditProfileScreen = () => {
   const navigation = useNavigation();
 
+  const closeAccount = () => {
+    Alert.alert(
+      "Cerrar sesión",
+      "¿Estás seguro de que deseas cerrar la sesión?",
+      [
+        {
+          text: "No",
+          style: "cancel"
+        },
+        { text: "Sí", onPress: () => cerrarSession() }
+      ],
+      { cancelable: false }
+    );
+  }
   const handleGoBack = () => {
     navigation.goBack();
   };
+
+  const cerrarSession = () => {
+    // aca debemos limpiar el storage , etc.
+    navigation.push("HomeScreen")
+  }
+  const navigateToChangePassword = () => {
+    navigation.push("NewPasswordScreen")
+  }
+  const navigateToMyCars = () => {
+    navigation.push("MyCarsScreen")
+  }
+  const navigateToSettings = () => {
+    navigation.push("EditChoferInfoScreen")
+  }
+  
 
 
   return (
@@ -28,24 +57,24 @@ const EditProfileScreen = () => {
         <View style={styles.item}>
           <Icon name="lock" size={24} color="#7F44C2" />
           <Text style={styles.textLabel}>Cambiar contraseña</Text>
-          <Icon name="chevron-right" size={24} color="black" />
+          <Icon name="chevron-right" size={24} color="black" onPress={navigateToChangePassword}  />
         </View>
         <View style={styles.item}>
           <Icon name="car" size={24} color="#7F44C2" />
           <Text style={styles.textLabel}>Mis Autos</Text>
-          <Icon name="chevron-right" size={24} color="black" />
+          <Icon name="chevron-right" size={24} color="black" onPress={navigateToMyCars} />
         </View>
         <View style={styles.item}>
           <Icon name="Configuration" size={24} color="#7F44C2" />
           <Text style={styles.textLabel}>Ajustes</Text>
-          <Icon name="chevron-right" size={24} color="black" />
+          <Icon name="chevron-right" size={24} color="black" onPress={navigateToSettings} />
         </View>
       </View>
       <View style={styles.rectangle}>
         <View style={styles.item}>
             <Icon name="exit" size={24} color="red" />
-            <Text style={styles.textLabel}>Cerrar session</Text>
-            <Icon name="chevron-right" size={24} color="black" />
+            <Text style={styles.textLabel} >Cerrar session</Text>
+            <Icon name="chevron-right" size={24} color="black" onPress={closeAccount} />
         </View>
       </View>
     </View>
