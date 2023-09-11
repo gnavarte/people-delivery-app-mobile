@@ -17,17 +17,21 @@ const RegisterScreen = () => {
   const { form, onChange } = useForm(initialState);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
   };
 
-  const handleDateChange = (event, selectedDate) => {
+  const handleDateChange = (event, date) => {
     setShowDatePicker(false);
-    if (selectedDate) {
-      onChange(selectedDate, "fechaNacimiento");
+    if (date) {
+      setSelectedDate(date);
+      onChange(date, "fechaNacimiento");
     }
   };
+
+  const dateTextColor = selectedDate ? "#000000" : "#aaaaaa"; // Cambia el color del texto según si hay una fecha seleccionada o no
 
   return (
     <View style={styles.container}>
@@ -57,7 +61,9 @@ const RegisterScreen = () => {
         keyboardType="numeric"
       />
       <TouchableOpacity onPress={toggleDatePicker} style={styles.dateInput}>
-        <Text style={styles.dateText}>Fecha de nacimiento</Text>
+        <Text style={[styles.dateText, { color: dateTextColor }]}>
+          {selectedDate ? selectedDate.toDateString() : "Fecha de nacimiento"}
+        </Text>
       </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
@@ -123,10 +129,10 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
-    justifyContent: "center", // Alinea el texto verticalmente
+    justifyContent: "center",
   },
   dateText: {
-    color: "#aaaaaa", // Cambia el color del texto
+    color: "#aaaaaa", // Color de texto gris por defecto
   },
   container: {
     flex: 1,
