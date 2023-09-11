@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
@@ -18,6 +18,17 @@ const RegisterScreen = () => {
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [isFormValid, setIsFormValid] = useState(false); // Estado para verificar la validez del formulario
+
+  useEffect(() => {
+    // Verificar la validez del formulario cuando cambie el formulario
+    const checkFormValidity = () => {
+      const formValues = Object.values(form);
+      const isFormFilled = formValues.every((value) => value !== ""); // Comprueba si todos los campos están llenos
+      setIsFormValid(isFormFilled);
+    };
+    checkFormValidity();
+  }, [form]);
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
@@ -100,7 +111,7 @@ const RegisterScreen = () => {
         value={form.password}
         autoCapitalize="none"
       />
-      <PrimaryButton title="Registrarse" backgroundColor="#6372ff" />
+      <PrimaryButton title="Registrarse" backgroundColor="#6372ff" disabled={!isFormValid} />
     </View>
   );
 };
