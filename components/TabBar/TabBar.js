@@ -6,7 +6,7 @@ import HomeChoferScreen from '../../screens/HomeChoferScreen';
 import EditChoferScreen from '../../screens/EditChoferScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen';
 import TravelScreen from '../../screens/TravelHistoryScreen';
-import travel_history from '../../screens/TravelHistoryScreen';
+import EarningsScreen from '../../screens/EarningsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +45,7 @@ const TabBar = () => {
       />
       <Tab.Screen
         name="Billetera"
-        component={HomeChoferScreen}
+        component={EarningsScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen

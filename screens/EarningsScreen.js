@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import travelHistoryData from '../data/travel_history.json';
 
-const TravelScreen = () => {
+const EarningsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TravelScreen;
+export default EarningsScreen;
