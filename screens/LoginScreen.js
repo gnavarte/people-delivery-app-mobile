@@ -1,63 +1,65 @@
 import React from "react";
-import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
+import { View, Text, StyleSheet, TextInput, Dimensions, Image, KeyboardAvoidingView } from "react-native";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
-
+import CustomInput from "../components/TextInputs/CustomInput";
+import { useNavigation } from "@react-navigation/native";
 const LoginScreen = () => {
   const initialState = {
     email: "",
     password: "",
   };
   const { form, onChange } = useForm(initialState);
+  const navigation = useNavigation();
 
-  const navigateToForgotPassword =() => {
+  const navigateToForgotPassword = () => {
     navigation.push("ForgotPasswordScreen")
   }
   
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Correo electrónico"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(value) => onChange(value, "email")}
-        value={form.email}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholderTextColor="#aaaaaa"
-        secureTextEntry
-        placeholder="Contraseña"
-        onChangeText={(value) => onChange(value, "password")}
-        value={form.password}
-        autoCapitalize="none"
-      />
-      <PrimaryButton title="Iniciar sesión" backgroundColor="#6372ff"/>
-      <View style={styles.bottomLeftTextContainer}>
-        <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvide mi contraseña</Text>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
+    >
+      <View style={styles.container}>
+        <View style={styles.topContainer}>
+          <Text style={styles.helperText}>Ingrese correo electrónico y contraseña</Text>
+          <Image source={require("../assets/LoginIcon.png")} style={styles.logo} />
+        </View>
+        <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} />
+        <CustomInput placeholder="Contraseña" value={form.password} onChangeText={(value) => onChange(value, "password")} />
+        <PrimaryButton title="Iniciar sesión" backgroundColor="#6372ff"/>
       </View>
-    </View>
+      <View style={styles.bottomLeftTextContainer}>
+        <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvidé mi contraseña</Text>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: "#ffffff",
-    height: 48,
-    borderRadius: 5,
-    overflow: "hidden",
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 16,
-  },
   container: {
     flex: 1,
     justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingTop: 50,
+  },
+  topContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    marginBottom: 10,
+  },
+  helperText: {
+    textAlign: 'center',
+    fontSize: 16,
+    marginBottom: 10,
   },
   bottomLeftTextContainer: {
     position: 'absolute',

@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, Alert, TextInput, Dimensions } from 'react-native';
 
 import { PrimaryButton } from '../components/Buttons/Button';
-import TextInputCustomized from '../components/TextInputCustomized';
+import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 import { useNavigation } from '@react-navigation/native';
-
+import CustomInput from '../components/TextInputs/CustomInput';
 const ForgotPasswordScreen = () => {
   const navigation = useNavigation();
 
@@ -17,10 +17,10 @@ const ForgotPasswordScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>PD</Text>
       <View style={styles.grayBackground}>
-        
         <Text style={styles.welcomeText}>Ingresa tu correo para recuperar la contraseña </Text>
-        <TextInputCustomized placeholder="Ingresa tu correo" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />        
+        <CustomInput placeholder="Ingresa tu correo" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />        
       </View>
+      
       <View style={styles.bottomCenterPage}>
           <PrimaryButton title="Recuperar contraseña" onPress={navigateToRecoveryPassword} backgroundColor="#000000"  />
       </View>

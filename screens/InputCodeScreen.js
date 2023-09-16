@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, Image, Text, StyleSheet, Alert, TextInput ,Dimensions} from 'react-native';
 
 import { PrimaryButton } from '../components/Buttons/Button';
-import TextInputCustomized from '../components/TextInputCustomized';
+import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 
 const InputCodeScreen = () => {
   const [inputValues, setInputValues] = useState(['', '', '', '', '']);
@@ -31,7 +31,7 @@ const InputCodeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>PD</Text>
+
       <View style={styles.grayBackground}>
         <View style={styles.topImageContainer}>
           <Image
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000000',
     marginTop: 20,
+    textAlign: 'center',
     marginLeft: 20,
   },
   inputContainer: {
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
   topImage: {
     height: Dimensions.get('window').height * 0.3, 
     width: Dimensions.get('window').width, 
+    marginTop: 20,
   },
   input: {
     borderWidth: 2,
