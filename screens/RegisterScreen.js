@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
@@ -17,17 +17,32 @@ const RegisterScreen = () => {
   const { form, onChange } = useForm(initialState);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isFormValid, setIsFormValid] = useState(false); // Estado para verificar la validez del formulario
+
+  useEffect(() => {
+    // Verificar la validez del formulario cuando cambie el formulario
+    const checkFormValidity = () => {
+      const formValues = Object.values(form);
+      const isFormFilled = formValues.every((value) => value !== ""); // Comprueba si todos los campos están llenos
+      setIsFormValid(isFormFilled);
+    };
+    checkFormValidity();
+  }, [form]);
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
   };
 
-  const handleDateChange = (event, selectedDate) => {
+  const handleDateChange = (event, date) => {
     setShowDatePicker(false);
-    if (selectedDate) {
-      onChange(selectedDate, "fechaNacimiento");
+    if (date) {
+      setSelectedDate(date);
+      onChange(date, "fechaNacimiento");
     }
   };
+
+  const dateTextColor = selectedDate ? "#000000" : "#aaaaaa"; // Cambia el color del texto según si hay una fecha seleccionada o no
 
   return (
     <View style={styles.container}>
@@ -57,7 +72,9 @@ const RegisterScreen = () => {
         keyboardType="numeric"
       />
       <TouchableOpacity onPress={toggleDatePicker} style={styles.dateInput}>
-        <Text style={styles.dateText}>Fecha de nacimiento</Text>
+        <Text style={[styles.dateText, { color: dateTextColor }]}>
+          {selectedDate ? selectedDate.toDateString() : "Fecha de nacimiento"}
+        </Text>
       </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
@@ -94,7 +111,7 @@ const RegisterScreen = () => {
         value={form.password}
         autoCapitalize="none"
       />
-      <PrimaryButton title="Registrarse" backgroundColor="#6372ff" />
+      <PrimaryButton title="Registrarse" backgroundColor="#6372ff" disabled={!isFormValid} />
     </View>
   );
 };
@@ -123,10 +140,10 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
-    justifyContent: "center", // Alinea el texto verticalmente
+    justifyContent: "center",
   },
   dateText: {
-    color: "#aaaaaa", // Cambia el color del texto
+    color: "#aaaaaa", // Color de texto gris por defecto
   },
   container: {
     flex: 1,

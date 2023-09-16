@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomeChoferScreen from '../../screens/HomeChoferScreen';
 import EditChoferScreen from '../../screens/EditChoferScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen';
+import TravelScreen from '../../screens/TravelHistoryScreen';
+import EarningsScreen from '../../screens/EarningsScreen';
+
 const Tab = createBottomTabNavigator();
 
 const TabBar = () => {
@@ -42,12 +45,12 @@ const TabBar = () => {
       />
       <Tab.Screen
         name="Billetera"
-        component={HomeChoferScreen}
+        component={EarningsScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Viajes"
-        component={HomeChoferScreen}
+        component={TravelScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen

@@ -1,10 +1,10 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, Dimensions } from 'react-native';
 
-export const PrimaryButton = ({ title, onPress, backgroundColor }) => {
+export const PrimaryButton = ({ title, onPress, backgroundColor, disabled }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={[styles.button, { backgroundColor }]}>
+    <TouchableOpacity onPress={disabled ? null : onPress} disabled={disabled}>
+      <View style={[styles.button, { backgroundColor }, disabled && styles.disabledButton]}>
         <Text style={styles.buttonText}>{title}</Text>
       </View>
     </TouchableOpacity>
@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: Dimensions.get('window').width * 0.05,
   },
+  disabledButton: {
+    backgroundColor: '#ccc', // Cambia el color del botón cuando esté desactivado
+  },
 });
 
 export default PrimaryButton;
-
