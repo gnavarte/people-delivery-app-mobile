@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomeChoferScreen from '../../screens/HomeChoferScreen';
 import EditChoferScreen from '../../screens/EditChoferScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen';
+import TravelScreen from '../../screens/TravelHistoryScreen';
+import EarningsScreen from '../../screens/EarningsScreen';
+
 const Tab = createBottomTabNavigator();
 
 const TabBar = () => {
@@ -29,11 +32,9 @@ const TabBar = () => {
         tabBarStyle: {
           backgroundColor: '#5985EB', 
         },
+        tabBarActiveTintColor: '#D3D3fe', // Cambia el color cuando está seleccionado
+        tabBarInactiveTintColor: 'white', // Cambia el color cuando no está seleccionado
       })}
-      tabBarOptions={{
-        activeTintColor: 'white',
-        inactiveTintColor: 'white',
-      }}
     >
       <Tab.Screen
         name="Inicio"
@@ -42,12 +43,12 @@ const TabBar = () => {
       />
       <Tab.Screen
         name="Billetera"
-        component={HomeChoferScreen}
+        component={EarningsScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Viajes"
-        component={HomeChoferScreen}
+        component={TravelScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
