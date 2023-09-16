@@ -32,11 +32,9 @@ const TabBar = () => {
         tabBarStyle: {
           backgroundColor: '#5985EB', 
         },
+        tabBarActiveTintColor: '#D3D3fe', // Cambia el color cuando está seleccionado
+        tabBarInactiveTintColor: 'white', // Cambia el color cuando no está seleccionado
       })}
-      tabBarOptions={{
-        activeTintColor: 'white',
-        inactiveTintColor: 'white',
-      }}
     >
       <Tab.Screen
         name="Inicio"
