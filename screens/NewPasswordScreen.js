@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, Alert, TextInput ,Dimensions} from 'react-native';
 
 import { PrimaryButton } from '../components/Buttons/Button';
-import TextInputCustomized from '../components/TextInputCustomized';
-
+import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
+import CustomInput from '../components/TextInputs/CustomInput';
 const InputCodeScreen = () => {
 
   const navigateToRecoveryPassword = () => {
@@ -22,19 +22,13 @@ const InputCodeScreen = () => {
         />
       </View>
         <Text style={styles.welcomeText}>Ingresa tu nueva contraseña</Text>
-        <TextInputCustomized
-          placeholder="Ingresa tu nueva contraseña"
-          backgroundColor="#FFFFFF"
-          placeholderTextColor="#000000"
-        />
-        <TextInputCustomized
-          placeholder="Repeti tu nueva contraseña"
-          backgroundColor="#FFFFFF"
-          placeholderTextColor="#000000"
-        />
+        <CustomInput placeholder="Ingresa tu contraseña actual" />
+        <CustomInput placeholder="Ingresa tu nueva contraseña" />
+        <CustomInput placeholder="Repeti tu nueva contraseña" />
+
       <View style={styles.bottomCenterPage}>
         <PrimaryButton
-          title="Continuar"
+          title="Cambiar contraseña"
           onPress={navigateToRecoveryPassword}
           backgroundColor="#5985EB"
         />

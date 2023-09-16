@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, TextInput, Modal ,Alert, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import TextInputCustomized from '../components/TextInputCustomized';
+import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 import PrimaryButton from '../components/Buttons/Button';
-
+import CustomInput from '../components/TextInputs/CustomInput';
 const EditChoferScreen = () => {
     const navigation = useNavigation();
   
@@ -33,22 +33,22 @@ const EditChoferScreen = () => {
         <Text style={styles.subtitleText}>Informacion de la cuenta:</Text>
   
         <Text style={styles.textLabel}>Email</Text>
-        <TextInputCustomized placeholder="Ingresa tu correo" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
 
+        <TextInputCustomized placeholder="facu@gmail.com" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
-        <Text style={styles.textLabel}>Contraseña Actual</Text>
-        <TextInputCustomized placeholder="Ingresa tu contraseña actual" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <Text style={styles.textLabel}>Nombre</Text>
+        <TextInputCustomized placeholder="Ingresa tu nuevo Nombre" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
-        <Text style={styles.textLabel}>Nueva Contraseña</Text>
-        <TextInputCustomized placeholder="Ingresa tu nueva contraseña" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <Text style={styles.textLabel}>Apellido</Text>
+        <TextInputCustomized placeholder="Ingresa tu nuevo Apellido" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
-        <Text style={styles.textLabel}>Repetir Nueva Contraseña</Text>
-        <TextInputCustomized placeholder="Ingresa tu nueva contraseña" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <Text style={styles.textLabel}>Domicilio</Text>
+        <TextInputCustomized placeholder="Ingresa tu nuevo domicilio" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
         
         <View style={styles.contenedor}>
         <TouchableOpacity style={styles.buttonEditarF} onPress={cambiarDatos}>
-          <PrimaryButton title="CAMBIAR DATOS" onPress={cambiarDatos} backgroundColor="#D9D9D9" />
+          <PrimaryButton title="CAMBIAR DATOS" onPress={cambiarDatos} backgroundColor="#5985EB" />
         </TouchableOpacity>
   
         <TouchableOpacity onPress={() => setShowModal(true)}>

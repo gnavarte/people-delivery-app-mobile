@@ -1,80 +1,52 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity,Dimensions } from "react-native";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import CustomInput from "../components/TextInputs/CustomInput";
 
 const RegisterScreen = () => {
-  const initialState = {
-    nombre: "",
-    apellido: "",
-    DNI: "",
-    fechaNacimiento: new Date(),
-    domicilio: "",
-    email: "",
-    password: "",
-  };
-  const { form, onChange } = useForm(initialState);
-
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [DNI, setDNI] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
+  const [domicilio, setDomicilio] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [isFormValid, setIsFormValid] = useState(false); // Estado para verificar la validez del formulario
 
-  useEffect(() => {
-    // Verificar la validez del formulario cuando cambie el formulario
-    const checkFormValidity = () => {
-      const formValues = Object.values(form);
-      const isFormFilled = formValues.every((value) => value !== ""); // Comprueba si todos los campos están llenos
-      setIsFormValid(isFormFilled);
-    };
-    checkFormValidity();
-  }, [form]);
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
   };
 
-  const handleDateChange = (event, date) => {
+  const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
-    if (date) {
-      setSelectedDate(date);
-      onChange(date, "fechaNacimiento");
+    if (selectedDate) {
+      onChange(selectedDate, "fechaNacimiento");
+    }
+  };
+  const registerChofer = () => {
+    if (nombre && apellido && DNI && fechaNacimiento && domicilio && email && password) {
+      console.log(nombre, apellido, DNI, fechaNacimiento, domicilio, email, password);
+      navigation.push("LoadDataScreen")
+    } else {
+      alert("Por favor, completa todos los campos.");
     }
   };
 
-  const dateTextColor = selectedDate ? "#000000" : "#aaaaaa"; // Cambia el color del texto según si hay una fecha seleccionada o no
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(value) => onChange(value, "nombre")}
-        value={form.nombre}
-        autoCapitalize="true"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Apellido"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(value) => onChange(value, "apellido")}
-        value={form.apellido}
-        autoCapitalize="true"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Número de DNI"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(value) => onChange(value, "DNI")}
-        value={form.DNI}
-        autoCapitalize="false"
-        keyboardType="numeric"
-      />
+      <Text style={styles.textStyle}>Complete los datos para el registro!</Text> 
+      <CustomInput placeholder="Nombre" value={nombre} onChangeText={(value) => setNombre(value)} />
+      <CustomInput placeholder="Apellido" value={apellido} onChangeText={(value) => setApellido(value)} />
+      <CustomInput placeholder="Numero de DNI" value={DNI} onChangeText={(value) => setDNI(value)} />
+      <CustomInput placeholder="Domicilio" value={domicilio} onChangeText={(value) => setDomicilio(value)} />
+      <CustomInput placeholder="Correo electrónico" value={email} onChangeText={(value) => setEmail(value)} />
+      <CustomInput placeholder="Contraseña" value={password} onChangeText={(value) => setPassword(value)} />
       <TouchableOpacity onPress={toggleDatePicker} style={styles.dateInput}>
-        <Text style={[styles.dateText, { color: dateTextColor }]}>
-          {selectedDate ? selectedDate.toDateString() : "Fecha de nacimiento"}
-        </Text>
+        <Text style={styles.dateText}>Fecha de nacimiento</Text>
       </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
@@ -86,32 +58,9 @@ const RegisterScreen = () => {
           onChange={handleDateChange}
         />
       )}
-      <TextInput
-        style={styles.input}
-        placeholder="Domicilio"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(value) => onChange(value, "domicilio")}
-        value={form.domicilio}
-        autoCapitalize="true"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Correo electrónico"
-        placeholderTextColor="#aaaaaa"
-        onChangeText={(value) => onChange(value, "email")}
-        value={form.email}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholderTextColor="#aaaaaa"
-        secureTextEntry
-        placeholder="Contraseña"
-        onChangeText={(value) => onChange(value, "password")}
-        value={form.password}
-        autoCapitalize="none"
-      />
-      <PrimaryButton title="Registrarse" backgroundColor="#6372ff" disabled={!isFormValid} />
+
+
+      <PrimaryButton title="Registrarse" backgroundColor="#6372ff" onPress={registerChofer} />
     </View>
   );
 };
@@ -140,10 +89,18 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
-    justifyContent: "center",
+    justifyContent: "center", 
+    borderWidth: 1,
+    borderColor: '#7F44C2'
+
   },
   dateText: {
-    color: "#aaaaaa", // Color de texto gris por defecto
+    color: "black", 
+  },
+  textStyle:{
+    marginLeft: '7%',
+    textAlign: 'center',
+    fontSize: Dimensions.get('window').width*0.05,
   },
   container: {
     flex: 1,

@@ -25,6 +25,7 @@ const InitialScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>PD</Text>
       <View style={styles.grayBackground}>
+        <Image source={require('../assets/InitialImage.png')} style={styles.logo} />
         <Text style={styles.welcomeText}>¡Bienvenido a People Delivery!</Text> 
         <PrimaryButton title="Registrate" onPress={navigateToRegister} backgroundColor="#6372ff" />
         <ButtonWithIcon title="Continuar con Facebook" onPress={navigateToHomeChofer} backgroundColor="#6372ff" icon={require('../assets/FacebookIcon.png')} />
@@ -62,11 +63,18 @@ const styles = StyleSheet.create({
     color: '#000000',
     marginTop: 20,
     marginLeft: 20,
+    textAlign: 'center',
   },
   welcomeText: {
     fontSize: Dimensions.get('window').width*0.05,
     marginBottom: 10,
     textAlign: 'center',
+  },
+  logo: {
+    width: '100%',
+    height: '40%',
+    resizeMode: 'contain',
+    marginBottom: 20, 
   },
 });
 
