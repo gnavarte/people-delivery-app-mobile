@@ -3,10 +3,14 @@ import { View, Image, Text, StyleSheet, Alert, TextInput ,Dimensions} from 'reac
 
 import { PrimaryButton } from '../components/Buttons/Button';
 import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
+import CustomInput from '../components/TextInputs/CustomInput';
+import { useNavigation } from '@react-navigation/native';
 
 const InputCodeScreen = () => {
   const [inputValues, setInputValues] = useState(['', '', '', '', '']);
   const inputRefs = useRef([]);
+  const navigaton = useNavigation();
+
   const navigateToRecoveryPassword = () => {
     console.log('Send code again');
   }
@@ -26,7 +30,7 @@ const InputCodeScreen = () => {
   
   const validateCode = async () => {
     const code = inputValues.join('');
-    console.log(code)
+    navigaton.push("NewPasswordForgotScreen")
   };
 
   return (

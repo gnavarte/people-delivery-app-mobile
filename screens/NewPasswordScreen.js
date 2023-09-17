@@ -4,10 +4,30 @@ import { View, Image, Text, StyleSheet, Alert, TextInput ,Dimensions} from 'reac
 import { PrimaryButton } from '../components/Buttons/Button';
 import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 import CustomInput from '../components/TextInputs/CustomInput';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+
 const InputCodeScreen = () => {
+  const [actualPassword , setActualPassword] = useState('');
+  const [newPassword , setNewPassword] = useState('');
+  const [repeatNewPassword , setRepeatNewPassword] = useState('');
 
   const navigateToRecoveryPassword = () => {
-    console.log('Cambiamos contraseña');
+    if (newPassword!=repeatNewPassword){
+      Alert.alert("Las nuevas contraseñas no coinciden")
+    }
+    else if (newPassword.length<5 || repeatNewPassword.length<5)
+    {
+      Alert.alert("Por favor ingrese una contraseña mayor a 5 caracteres")
+    }
+    else if (actualPassword && newPassword && repeatNewPassword != "")
+    {
+      Alert.alert("cambiamos contraseña")
+    }
+    else if (actualPassword || newPassword || repeatNewPassword == "")
+    {
+      Alert.alert("por favor complete todos los campos")
+    }
   }
 
 
@@ -22,9 +42,9 @@ const InputCodeScreen = () => {
         />
       </View>
         <Text style={styles.welcomeText}>Ingresa tu nueva contraseña</Text>
-        <CustomInput placeholder="Ingresa tu contraseña actual" />
-        <CustomInput placeholder="Ingresa tu nueva contraseña" />
-        <CustomInput placeholder="Repeti tu nueva contraseña" />
+        <CustomInput placeholder="Ingresa tu contraseña actual" value={actualPassword} onChangeText={setActualPassword} secureTextEntry={true}  />
+        <CustomInput placeholder="Ingresa tu nueva contraseña" value={newPassword} onChangeText={setNewPassword} secureTextEntry={true}  />
+        <CustomInput placeholder="Repeti tu nueva contraseña" value={repeatNewPassword} onChangeText={setRepeatNewPassword} secureTextEntry={true}  />
 
       <View style={styles.bottomCenterPage}>
         <PrimaryButton

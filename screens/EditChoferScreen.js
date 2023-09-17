@@ -8,9 +8,9 @@ const EditChoferScreen = () => {
     const navigation = useNavigation();
   
     const [email, setEmail] = useState('');
-    const [contraseña, setContraseña] = useState('');
-    const [nuevaContraseña, setNuevaContraseña] = useState('');
-    const [repetirContraseña, setRepetirContraseña] = useState('');
+    const [nombre, setNombre] = useState('');
+    const [apellido, setApellido] = useState('');
+    const [domicilio, setDomicilio] = useState('');
     const [showModal, setShowModal] = useState(false);
 
     const openModalEliminar = () => {
@@ -19,9 +19,12 @@ const EditChoferScreen = () => {
     const navigateToRegister = () => {
       console.log("asd")
     };
-    const cambiarDatos =() => {
-      console.log("cambiar realizados")
+    const cambiarDatos = () => {    
+      if (!nombre && !apellido && !domicilio) {
+        Alert.alert("No se realizó ningún cambio.");
+      }
     };
+    
   
     return (
       <View style={styles.container}>
@@ -34,16 +37,16 @@ const EditChoferScreen = () => {
   
         <Text style={styles.textLabel}>Email</Text>
 
-        <TextInputCustomized placeholder="facu@gmail.com" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <TextInputCustomized value={email} onChangeText={setEmail}  placeholder="facu@gmail.com" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
         <Text style={styles.textLabel}>Nombre</Text>
-        <TextInputCustomized placeholder="Ingresa tu nuevo Nombre" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <TextInputCustomized value={nombre} onChangeText={setNombre}  placeholder="Ingresa tu nuevo Nombre" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
         <Text style={styles.textLabel}>Apellido</Text>
-        <TextInputCustomized placeholder="Ingresa tu nuevo Apellido" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <TextInputCustomized  value={apellido} onChangeText={setApellido} placeholder="Ingresa tu nuevo Apellido" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
         <Text style={styles.textLabel}>Domicilio</Text>
-        <TextInputCustomized placeholder="Ingresa tu nuevo domicilio" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <TextInputCustomized value={domicilio} onChangeText={setDomicilio}  placeholder="Ingresa tu nuevo domicilio" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
         
         <View style={styles.contenedor}>

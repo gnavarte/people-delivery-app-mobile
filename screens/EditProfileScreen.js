@@ -52,7 +52,6 @@ const EditProfileScreen = () => {
       <Text style={styles.descriptionText}>Juan Perez</Text>
       <Text style={styles.descriptionText}>Facu@gmai.com</Text>
 
-      {/* Rectángulo que agrupa los elementos */}
       <View style={styles.rectangle}>
         <View style={styles.item}>
           <Icon name="lock" size={24} color="#7F44C2" />
