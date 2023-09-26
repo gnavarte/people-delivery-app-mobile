@@ -19,10 +19,62 @@ const RegisterScreen = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false); 
-
+  const validarNombre = (nombre) => {
+    if (!nombre) { return "El nombre no puede estar vacio";} else { return true;}
+  };
+  const validarApellido =(apellido) => {
+    if (!apellido) { return "El apeellido no puede estar vacio";} else { return true;}
+  };
+  const validarDNI = (DNI) => {
+    if (DNI.lenght!=8){
+      return "El dni debe tener 8 digitos.";
+    }
+    else if (!DNI) { return "Por favor complete el campo DNI";} 
+    else if (typeof DNI !== "number") { return "El DNI Debe ser numeros enteros";}
+    else { return true;}
+   };
+  const validarDomicilio = (domicilio) => {
+    if (!domicilio) { return false;} else { return true;}
+  };
+  const validarEmail = (email) => {
+    if (!email) {
+      return "El correo electrónico no puede estar vacío.";
+    }
+  
+    if (!email.includes("@")) {
+      return "El correo electrónico debe contener un @.";
+    }
+    const [username, domain] = email.split("@");
+    if (!username || !domain) {
+      return "El correo electrónico debe tener contenido antes y después del @.";
+    }
+    return true; 
+  };
+  const validatePassword = (password) => {
+    if (!password) {
+      return "La contraseña no puede estar vacía.";
+    }
+  
+    if (password.length < 6) {
+      return "La contraseña debe tener al menos 6 caracteres.";
+    }
+  
+    return true;
+  };
   const registerChofer = () => {
     console.log("valores")
     console.log(form)
+    // var booleanNombre=validarNombre(form.nombre)
+    // var booleanApellido=validarApellido(form.apellido)
+    // var booleanDNI=validarDNI(form.DNI)
+    // var booleanDomicilio=validarDomicilio(form.domicilio)
+    // var booleanEmail=validarEmail(form.email)
+    // var booleanPassword=validatePassword(form.password)
+
+    // if (booleanNombre && booleanApellido && booleanDNI && booleanDomicilio && booleanEmail && booleanPassword === true){
+    //   navigation.push("HomeChofer")
+    // } 
+
 
   };
   useEffect(() => {
@@ -91,6 +143,12 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
+  },
+  errorText: {
+    color: 'red',
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 5,
   },
   dateInput: {
     backgroundColor: "#ffffff",

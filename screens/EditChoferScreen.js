@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 import PrimaryButton from '../components/Buttons/Button';
 import CustomInput from '../components/TextInputs/CustomInput';
+import DeleteConfirmationModal from '../components/Modals/Modal';
+
 const EditChoferScreen = () => {
     const navigation = useNavigation();
   
@@ -13,6 +15,14 @@ const EditChoferScreen = () => {
     const [domicilio, setDomicilio] = useState('');
     const [showModal, setShowModal] = useState(false);
 
+    const closeModal = () => {
+      setShowModal(false);
+    };
+  
+    const confirmDelete = () => {
+      console.log('Deleting...');
+      closeModal();
+    };
     const openModalEliminar = () => {
       setShowModal(true);
     };
@@ -58,24 +68,7 @@ const EditChoferScreen = () => {
           <PrimaryButton title="ELIMINAR CUENTA" onPress={openModalEliminar} backgroundColor="#000000" />
         </TouchableOpacity>
         </View>
-        
-  
-        <Modal visible={showModal} animationType="fade" transparent>
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalText}>¿Está seguro que quiere eliminar la cuenta?</Text>
-  
-              <View style={styles.modalButtons}>
-                <TouchableOpacity style={styles.modalButton} onPress={navigateToRegister}>
-                  <PrimaryButton title="ELIMINAR CUENTA" onPress={navigateToRegister} backgroundColor="#000000" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.modalButtonC} onPress={() => setShowModal(false)}>
-                  <PrimaryButton title="CANCELAR" onPress={() => setShowModal(false)} backgroundColor="#D9D9D9" />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
+        <DeleteConfirmationModal showModal={showModal} onClose={closeModal} onConfirm={confirmDelete} />
       </View>
     );
   };

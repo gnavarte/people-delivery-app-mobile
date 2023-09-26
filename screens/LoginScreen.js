@@ -29,7 +29,6 @@ const LoginScreen = () => {
     if (!username || !domain) {
       return "El correo electrónico debe tener contenido antes y después del @.";
     }
-  
     return true; 
   };
   const validatePassword = (password) => {

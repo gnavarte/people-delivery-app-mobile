@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet,Dimensions } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
 
 const MisAutosScreen = () => {
   const autos = [
@@ -30,6 +31,7 @@ const MisAutosScreen = () => {
             <Text style={styles.textos}>{auto.año}</Text>
             <Text style={styles.textos}>{auto.model}</Text>
             <Text style={styles.textos}>Viajes: {auto.viajes}</Text>
+            <AntDesign name="closecircle" size={24} color="black" />
           </View>
         </View>
       ))}

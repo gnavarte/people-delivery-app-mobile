@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
 const EditProfileScreen = () => {
   const navigation = useNavigation();
 
@@ -64,14 +66,14 @@ const EditProfileScreen = () => {
           <Icon name="chevron-right" size={24} color="black" onPress={navigateToMyCars} />
         </View>
         <View style={styles.item}>
-          <Icon name="Configuration" size={24} color="#7F44C2" />
+          <MaterialIcons name="settings" size={24} color="#7F44C2" />
           <Text style={styles.textLabel}>Ajustes</Text>
           <Icon name="chevron-right" size={24} color="black" onPress={navigateToSettings} />
         </View>
       </View>
       <View style={styles.rectangle}>
         <View style={styles.item}>
-            <Icon name="exit" size={24} color="red" />
+            <AntDesign name="closesquare" size={24} color="red" />
             <Text style={styles.textLabel} >Cerrar session</Text>
             <Icon name="chevron-right" size={24} color="black" onPress={closeAccount} />
         </View>
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10, // Espacio entre elementos
+    marginBottom: 10, 
   },
   descriptionText: {
     fontSize: 14,
