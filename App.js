@@ -14,6 +14,8 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import NewPasswordScreen from './screens/NewPasswordScreen';
 import MisAutosScreen from './screens/MisAutosScreen';
 import NewPasswordForgotScreen from './screens/NewPasswordForgotScreen';
+import SupportScreen from './screens/SupportScreen';
+
 import TabBar from './components/TabBar/TabBar';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -44,7 +46,7 @@ export default function App() {
         {/* <Stack.Screen name="LoadDataScreen" component={LoadDataScreen}/> */}
         <Stack.Screen name="MisAutosScreen" component={MisAutosScreen} />
         <Stack.Screen name="NewPasswordForgotScreen" component={NewPasswordForgotScreen} />
-
+        <Stack.Screen name="SupportScreen" component={SupportScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 

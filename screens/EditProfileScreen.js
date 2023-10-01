@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons'; 
 const EditProfileScreen = () => {
   const navigation = useNavigation();
 
@@ -38,6 +39,10 @@ const EditProfileScreen = () => {
   const navigateToSettings = () => {
     navigation.push("EditChoferInfoScreen")
   }
+  const navigateToSupprot = () => {
+    navigation.push("SupportScreen")
+  }
+
   
 
 
@@ -69,6 +74,11 @@ const EditProfileScreen = () => {
           <MaterialIcons name="settings" size={24} color="#7F44C2" />
           <Text style={styles.textLabel}>Ajustes</Text>
           <Icon name="chevron-right" size={24} color="black" onPress={navigateToSettings} />
+        </View>
+        <View style={styles.item}>
+          <MaterialIcons name="support-agent" size={24} color="#7F44C2" />
+          <Text style={styles.textLabel}>Soporte</Text>
+          <Icon name="chevron-right" size={24} color="black" onPress={navigateToSupprot} />
         </View>
       </View>
       <View style={styles.rectangle}>

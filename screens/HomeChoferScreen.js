@@ -5,16 +5,16 @@ import BotonCircular from '../components/Buttons/ButtonCircle';
 import { useRoute } from '@react-navigation/native';
 
 const HomeChoferScreen = () => {
-  // const { latitude, longitude } = route.params;
+
   const handleIniciar = () => {
     console.log("iniciamos")
   }
-  // const route = useRoute();
-  // const latitude=route.params.latitude;
-  // const longitude=route.params.longitude;
+  const route = useRoute();
+  // Obtener los parámetros de la pantalla anterior
+  const { latitude, longitude } = route.params;
+  console.log('Latitud:', latitude);
+  console.log('Longitud:', longitude);
 
-  // console.log('Latitud:', latitude);
-  // console.log('Longitud:', longitude);
 
 
   return (
@@ -24,14 +24,14 @@ const HomeChoferScreen = () => {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: latitude,
+            longitude: longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
         >
           <Marker
-            coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+            coordinate={{ latitude: latitude, longitude: longitude }}
             title={'Marker Title'}
             description={'Marker Description'}
           />
