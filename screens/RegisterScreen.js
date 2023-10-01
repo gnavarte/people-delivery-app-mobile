@@ -62,18 +62,15 @@ const RegisterScreen = () => {
     return true;
   };
   const registerChofer = () => {
-    console.log("valores")
-    console.log(form)
-    // var booleanNombre=validarNombre(form.nombre)
-    // var booleanApellido=validarApellido(form.apellido)
-    // var booleanDNI=validarDNI(form.DNI)
-    // var booleanDomicilio=validarDomicilio(form.domicilio)
-    // var booleanEmail=validarEmail(form.email)
-    // var booleanPassword=validatePassword(form.password)
+    if (!form.DNI || !form.nombre || !form.apellido || !form.domicilio || !form.email || !form.password) {
+      alert("Por favor complete todos los campos.");
+      return;
+    }
+    else {
+      alert("Registrado correctamente");
+      navigation.push("HomeChofer")
+    }
 
-    // if (booleanNombre && booleanApellido && booleanDNI && booleanDomicilio && booleanEmail && booleanPassword === true){
-    //   navigation.push("HomeChofer")
-    // } 
 
 
   };

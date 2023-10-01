@@ -5,8 +5,11 @@ import { PrimaryButton } from '../components/Buttons/Button';
 import { ButtonWithIcon } from '../components/Buttons/ButtonWithIcon';
 import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
+import {AuthSession} from "expo-auth-session";
+import { useState } from 'react';
 
 const InitialScreen = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigation = useNavigation();
 
@@ -28,11 +31,27 @@ const InitialScreen = () => {
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
 
-    navigation.push('HomeChofer', { 
-      latitude,
-      longitude,
+    navigation.navigate('HomeChoferScreen', {
+      latitude: latitude,
+      longitude: longitude,
     });
   }
+  // const signInWithGoogleAsync = async () => {
+  //   try {
+  //     const result = await Google.logInAsync({
+  //       androidClientId: '221955478877-spcu1q90ep2vq9ticd3b6i064o1qpmki.apps.googleusercontent.com', // Reemplaza con tu CLIENT_ID
+  //       scopes: ['profile', 'email'],
+  //     });
+
+  //     if (result.type === 'success') {
+  //       console.log('Usuario autenticado:', result.user);
+  //     } else {
+  //       console.log('Cancelado');
+  //     }
+  //   } catch (e) {
+  //     console.error('Error al iniciar sesión con Google:', e);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
