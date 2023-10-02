@@ -10,10 +10,9 @@ const HomeChoferScreen = () => {
     console.log("iniciamos")
   }
   const route = useRoute();
-  // Obtener los parámetros de la pantalla anterior
-  // const { latitude, longitude } = route.params;
-  // console.log('Latitud:', latitude);
-  // console.log('Longitud:', longitude);
+  const { latitude, longitude } = route.params;
+  console.log('Latitud:', latitude);
+  console.log('Longitud:', longitude);
 
 
 
@@ -24,14 +23,14 @@ const HomeChoferScreen = () => {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: -34.151,
-            longitude: -70.74,
+            latitude: latitude,
+            longitude: longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
         >
           <Marker
-            coordinate={{ latitude: -34.151, longitude: -70.74 }}
+            coordinate={{ latitude: latitude, longitude: longitude }}
             title={'Marker Title'}
             description={'Marker Description'}
           />

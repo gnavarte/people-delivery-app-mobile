@@ -36,9 +36,16 @@ const InitialScreen = () => {
     }
 
     try {
-      const location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
-      console.log('Ubicación actual:', { latitude, longitude });
+      let location = await Location.getCurrentPositionAsync({});
+      console.log('Ubicación actual:', location.coords);
+      var latitude = location.coords.latitude;
+      var longitude = location.coords.longitude;
+      console.log('Latitud:', latitude);
+      console.log('Longitud:', longitude);
+      navigation.navigate('HomeChofer', {
+        latitude: latitude,
+        longitude: longitude,
+      });
     } catch (error) {
       console.error('Error al obtener la ubicación:', error);
     }
