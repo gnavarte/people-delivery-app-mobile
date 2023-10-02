@@ -1,9 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet, TextInput, Dimensions, Image, KeyboardAvoidingView,Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TextInput, Dimensions, Image, KeyboardAvoidingView, Alert } from "react-native";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
+
 const LoginScreen = () => {
   const initialState = {
     email: "",
@@ -11,74 +12,83 @@ const LoginScreen = () => {
   };
   const { form, onChange } = useForm(initialState);
   const navigation = useNavigation();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    // Función para validar el formulario y habilitar o deshabilitar el botón.
+    const validateForm = () => {
+      setIsButtonDisabled(!(form.email && form.password));
+    };
+
+    validateForm();
+  }, [form]);
 
   const navigateToForgotPassword = () => {
-    navigation.push("ForgotPasswordScreen")
-  }
+    navigation.push("ForgotPasswordScreen");
+  };
+
   const validateEmail = (email) => {
     if (!email) {
       return "El correo electrónico no puede estar vacío.";
     }
-  
-    if (!email.includes("@")) {
-      return "El correo electrónico debe contener un @.";
+
+    // Utiliza una expresión regular para verificar el formato del correo electrónico.
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailPattern.test(email)) {
+      return "El correo electrónico no tiene un formato válido.";
     }
-  
-    const [username, domain] = email.split("@");
-  
-    if (!username || !domain) {
+
+    const [nombreUsuario, dominio] = email.split("@");
+
+    if (!nombreUsuario || !dominio) {
       return "El correo electrónico debe tener contenido antes y después del @.";
     }
-    return true; 
+    
+    return true;
   };
+
   const validatePassword = (password) => {
     if (!password) {
       return "La contraseña no puede estar vacía.";
     }
-  
+
     if (password.length < 6) {
       return "La contraseña debe tener al menos 6 caracteres.";
     }
-  
+
     return true;
   };
-  
-  const redirectToHome = () =>{
-    var booleanEmail=validateEmail(form.email)
-    var booleanPassword=validatePassword(form.password)
-    console.log(booleanEmail)
-    console.log(booleanPassword)
-    if (booleanEmail && booleanPassword === true)
-    {
-      //hago login y dsp redirigo
-      navigation.push("HomeChofer")
-    }
-    else if (booleanEmail == true && booleanPassword != true){
-      Alert.alert(booleanPassword)
-    }
-    else if (booleanEmail!= true && booleanPassword == true){
-      Alert.alert(booleanEmail)
-    }
-    else if (booleanEmail && booleanPassword != true){
-      Alert.alert("valide ambos campos por favor")
-    }
 
-  }
-  
+  const redirectToHome = () => {
+    const resultadoValidacionEmail = validateEmail(form.email);
+    const resultadoValidacionPassword = validatePassword(form.password);
+
+    if (resultadoValidacionEmail === true && resultadoValidacionPassword === true) {
+      // Realizar inicio de sesión y luego redirigir.
+      navigation.push("HomeChofer");
+    } else if (resultadoValidacionEmail === true && resultadoValidacionPassword !== true) {
+      Alert.alert(resultadoValidacionPassword);
+    } else if (resultadoValidacionEmail !== true && resultadoValidacionPassword === true) {
+      Alert.alert(resultadoValidacionEmail);
+    } else if (resultadoValidacionEmail !== true && resultadoValidacionPassword !== true) {
+      Alert.alert("Valide ambos campos por favor");
+    }
+  };
+
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior="padding"
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
     >
       <View style={styles.container}>
         <View style={styles.topContainer}>
+          <Image style={styles.logo} source={require("../assets/Receptionist.png")} />
           <Text style={styles.helperText}>Ingrese correo electrónico y contraseña</Text>
-          <Image source={require("../assets/LoginIcon.png")} style={styles.logo} />
         </View>
         <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} />
-        <CustomInput placeholder="Contraseña" value={form.password} onChangeText={(value) => onChange(value, "password")} secureTextEntry={true}  />
-        <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff"/>
+        <CustomInput placeholder="Contraseña" value={form.password} onChangeText={(value) => onChange(value, "password")} secureTextEntry={true} />
+        <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
       </View>
       <View style={styles.bottomLeftTextContainer}>
         <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvidé mi contraseña</Text>
