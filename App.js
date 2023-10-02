@@ -7,6 +7,7 @@ import InitialScreen from './screens/InitialScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import InputCodeScreen from './screens/InputCodeScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import DriverRegistrationScreen from './screens/DriverRegistrationScreen';
 import LoginScreen from './screens/LoginScreen';
 import EditChoferScreen from './screens/EditChoferScreen';
 import HomeChoferScreen from './screens/HomeChoferScreen';
@@ -37,13 +38,13 @@ export default function App() {
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
         <Stack.Screen name="InputCodeScreen" component={InputCodeScreen}/>
         <Stack.Screen name='RegisterScreen' component={RegisterScreen}/>
+        <Stack.Screen name="DriverRegistrationScreen" component={DriverRegistrationScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
         <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="EditChoferInfoScreen" component={EditChoferScreen}/>
         <Stack.Screen name="HomeChoferScreen" component={HomeChoferScreen}/>
         <Stack.Screen name ="HomeChofer" component={TabBar}/>
         <Stack.Screen name="NewPasswordScreen" component={NewPasswordScreen}/>
-        {/* <Stack.Screen name="LoadDataScreen" component={LoadDataScreen}/> */}
         <Stack.Screen name="MisAutosScreen" component={MisAutosScreen} />
         <Stack.Screen name="NewPasswordForgotScreen" component={NewPasswordForgotScreen} />
         <Stack.Screen name="SupportScreen" component={SupportScreen} />
