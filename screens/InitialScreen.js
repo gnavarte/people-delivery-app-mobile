@@ -11,6 +11,10 @@ const InitialScreen = () => {
     navigation.push('DriverRegistrationScreen');
   };
 
+  const navigateToDriverRegistrationScreen = () => {
+    navigation.push('DriverRegistrationScreen');
+  };
+
   const navigateToLogin = () => {
     navigation.push('LoginScreen');
   };
@@ -35,7 +39,7 @@ const InitialScreen = () => {
         />
         <ButtonWithIcon
           title="Continuar con Facebook"
-          onPress={navigateToHomeChofer}
+          onPress={navigateToDriverRegistrationScreen}
           backgroundColor="#6372ff"
           icon={require('../assets/FacebookIcon.png')}
         />
