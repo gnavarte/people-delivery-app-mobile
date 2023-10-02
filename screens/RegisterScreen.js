@@ -90,7 +90,7 @@ const RegisterScreen = () => {
       booleanEmail === true &&
       booleanPassword === true
     ) {
-      navigation.push("HomeChofer");
+      navigation.push("DriverRegistrationScreen");
     }
   };
 

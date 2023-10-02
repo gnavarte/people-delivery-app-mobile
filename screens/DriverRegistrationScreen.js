@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, ScrollView, Image, View } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import ImagePickerModal from "../components/Modals/ImagePickerModal";
 import { PrimaryButton } from '../components/Buttons/Button';
 
@@ -8,6 +9,12 @@ export default function DriverRegistrationScreen() {
   const [licenseImage, setLicenseImage] = useState(null);
   const [vehicleRegistrationImage, setVehicleRegistrationImage] = useState(null);
   const [vehicleFrontImage, setVehicleFrontImage] = useState(null);
+
+  const navigation = useNavigation();
+
+  const navigateToHomeChofer = () => {
+    navigation.push('HomeChofer');
+  };
 
   const renderImagePreview = (imageUri) => {
     if (imageUri) {
@@ -63,7 +70,7 @@ export default function DriverRegistrationScreen() {
         {renderImagePreview(vehicleFrontImage)}
       </View>
     </ScrollView>
-    <PrimaryButton title="Enviar" onPress={() => {}} backgroundColor="#6372ff" />
+    <PrimaryButton title="Enviar" onPress={navigateToHomeChofer} backgroundColor="#6372ff" />
     </View>
   );
 }
