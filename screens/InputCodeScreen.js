@@ -34,7 +34,7 @@ const InputCodeScreen = () => {
         <PrimaryButton
           title="Reenviar código"
           onPress={validateCode}
-          backgroundColor="#6372ff"
+          backgroundColor="#7F44C2"
         />
       </View>
     </View>
