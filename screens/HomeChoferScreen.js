@@ -1,24 +1,19 @@
 import React from 'react';
-import { View, Text, TouchableOpacity ,StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import BotonCircular from '../components/Buttons/ButtonCircle';
-import { useRoute } from '@react-navigation/native';
 
 const HomeChoferScreen = () => {
+  const latitude = -34.6118; // Latitud de Buenos Aires
+  const longitude = -58.4173; // Longitud de Buenos Aires
 
   const handleIniciar = () => {
-    console.log("iniciamos")
-  }
-  const route = useRoute();
-  const { latitude, longitude } = route.params;
-  console.log('Latitud:', latitude);
-  console.log('Longitud:', longitude);
-
-
+    console.log("iniciamos");
+  };
 
   return (
     <View style={{ flex: 1 }}>
-      <Text style={{ fontSize: 25 , textAlign: 'center' }}>Bienvenido a People Delivery</Text>
+      <Text style={{ fontSize: 25, textAlign: 'center' }}>Bienvenido a People Delivery</Text>
       <View style={styles.mapContainer}>
         <MapView
           style={styles.map}
@@ -37,16 +32,14 @@ const HomeChoferScreen = () => {
         </MapView>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-        >
+        <TouchableOpacity style={styles.button}>
           <BotonCircular backgroundColor="#7F44C2" onPress={handleIniciar} />
         </TouchableOpacity>
       </View>
     </View>
   );
-  
 };
+
 const styles = StyleSheet.create({
   mapContainer: {
     flex: 1,
@@ -65,7 +58,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-
-
 
 export default HomeChoferScreen;

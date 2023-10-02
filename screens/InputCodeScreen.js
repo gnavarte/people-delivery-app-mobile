@@ -1,72 +1,41 @@
-import React, { useState, useRef } from 'react';
-import { View, Image, Text, StyleSheet, Alert, TextInput ,Dimensions} from 'react-native';
-
-import { PrimaryButton } from '../components/Buttons/Button';
-import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
-import CustomInput from '../components/TextInputs/CustomInput';
+import React, { useState } from 'react';
+import { View, Image, Text, StyleSheet, Dimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import CodeInput from '../components/TextInputs/CodeInput';
+import { PrimaryButton } from '../components/Buttons/Button';
 
 const InputCodeScreen = () => {
-  const [inputValues, setInputValues] = useState(['', '', '', '', '']);
-  const inputRefs = useRef([]);
-  const navigaton = useNavigation();
+  const [code, setCode] = useState('');
+  const navigation = useNavigation();
 
-  const navigateToRecoveryPassword = () => {
-    console.log('Send code again');
-  }
-  const handleInputChange = (text, index) => {
-    const newInputValues = [...inputValues];
-    newInputValues[index] = text;
-    setInputValues(newInputValues);
-  
-    if (text === '') {
-      if (index > 0) {
-        inputRefs.current[index - 1].focus();
-      }
-    } else if (text.length >= 1 && index < inputRefs.current.length - 1) {
-      inputRefs.current[index + 1].focus();
-    }
+  const handleCodeComplete = (value) => {
+    setCode(value);
   };
-  
+
   const validateCode = async () => {
-    const code = inputValues.join('');
-    navigaton.push("NewPasswordForgotScreen")
+    // Ahora, 'code' contiene el valor completo de 5 dígitos ingresados.
+    navigation.push('NewPasswordForgotScreen');
   };
 
   return (
     <View style={styles.container}>
-
-      <View style={styles.grayBackground}>
-        <View style={styles.topImageContainer}>
-          <Image
-            source={require('../assets/InputCode.png')}
-            style={styles.topImage}
-            resizeMode='contain'
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          {inputValues.map((value, index) => (
-              <TextInput
-                key={index}
-                style={styles.input}
-                maxLength={1}
-                keyboardType='number-pad'
-                value={value}
-                onChangeText={(text) => handleInputChange(text, index)}
-                onSubmitEditing={() => {
-                  if (index < inputRefs.current.length - 1) {
-                    inputRefs.current[index + 1].focus();
-                  }
-                }}
-                ref={ref => inputRefs.current[index] = ref}
-              />
-            ))}   
-        </View>   
-        <Text style={styles.welcomeText}>Ingresa el codigo de 5 digitos enviado a tu correo electronico. </Text>
-        <PrimaryButton title="No recibi el codigo!" onPress={navigateToRecoveryPassword} backgroundColor="#808080"  />        
-      </View>
-      <View style={styles.bottomCenterPage}>
-          <PrimaryButton title="Continuar" onPress={validateCode} backgroundColor="#5985EB"  />
+      <Image source={require('../assets/Detective.png')} style={styles.illustration} />
+      <Text style={styles.helperText}>
+        Ingresa el código de 5 dígitos enviado a tu correo electrónico.
+      </Text>
+      <CodeInput onComplete={handleCodeComplete} />
+      <View style={styles.buttonContainer}>
+        <PrimaryButton
+          title="Continuar"
+          onPress={validateCode}
+          backgroundColor="#5985EB"
+        />
+        <PrimaryButton
+          title="Reenviar código"
+          onPress={validateCode}
+          backgroundColor="#6372ff"
+        />
       </View>
     </View>
   );
@@ -75,63 +44,24 @@ const InputCodeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  bottomCenterPage: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 20,
-  },
-  grayBackground: {
-    flex: 1,
     backgroundColor: '#F2F2F2',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
   },
-  title: {
-    fontSize: Dimensions.get('window').width*0.05,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginTop: 20,
-    textAlign: 'center',
-    marginLeft: 20,
+  illustration: {
+    width: Dimensions.get('window').width * 0.65,
+    height: Dimensions.get('window').width * 0.65,
+    marginBottom: 10,
   },
-  inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  topImageContainer: {
-    alignItems: 'center',
-  },
-  topImage: {
-    height: Dimensions.get('window').height * 0.3, 
-    width: Dimensions.get('window').width, 
-    marginTop: 20,
-  },
-  input: {
-    borderWidth: 2,
-    borderColor: '#5985EB',
-    borderRadius: 10,
-    textAlign: 'center',
-    fontSize: 24,
-    marginHorizontal: 5,
-    width: 50,
-    height: 50,
-    color: 'white',
-  },
-  welcomeText: {
-    fontSize: Dimensions.get('window').width*0.04,
+  helperText: {
+    fontSize: Dimensions.get('window').width * 0.04,
     marginBottom: 10,
     textAlign: 'center',
   },
-  bottomLeftTextContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
+  buttonContainer: {
+    marginTop: 20,
   },
-
 });
 
 export default InputCodeScreen;

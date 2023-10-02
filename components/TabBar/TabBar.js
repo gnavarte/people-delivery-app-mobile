@@ -3,48 +3,59 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import HomeChoferScreen from '../../screens/HomeChoferScreen';
-import EditChoferScreen from '../../screens/EditChoferScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen';
 import TravelScreen from '../../screens/TravelHistoryScreen';
 import EarningsScreen from '../../screens/EarningsScreen';
-import { useRoute } from '@react-navigation/native';
+
 const Tab = createBottomTabNavigator();
 
+const tabOptions = {
+  tabBarStyle: {
+    backgroundColor: '#5985EB',
+  },
+  tabBarActiveTintColor: '#D3D3fe',
+  tabBarInactiveTintColor: 'white',
+};
+
 const TabBar = () => {
-  const route = useRoute();
-  const { latitude, longitude } = route.params;
-  console.log('Latitud:', latitude);
-  console.log('Longitud:', longitude);
+  const getTabIcon = (routeName) => {
+    let iconName;
+
+    switch (routeName) {
+      case 'Inicio':
+        iconName = 'home';
+        break;
+      case 'Billetera':
+        iconName = 'cash';
+        break;
+      case 'Viajes':
+        iconName = 'car';
+        break;
+      case 'Configuracion':
+        iconName = 'settings';
+        break;
+      default:
+        iconName = 'home'; // Icono predeterminado en caso de que no coincida ningún nombre de ruta
+        break;
+    }
+
+    return iconName;
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          let iconName;
-
-          if (route.name === 'Inicio') {
-            iconName = 'home';
-          } else if (route.name === 'Billetera') {
-            iconName = 'cash'; 
-          } else if (route.name === 'Viajes') {
-            iconName = 'car'; 
-          } else if (route.name === 'Configuracion') {
-            iconName = 'settings'; 
-          }
-
+          const iconName = getTabIcon(route.name);
           return <Icon name={iconName} color={color} size={size} />;
         },
-        tabBarStyle: {
-          backgroundColor: '#5985EB', 
-        },
-        tabBarActiveTintColor: '#D3D3fe', // Cambia el color cuando está seleccionado
-        tabBarInactiveTintColor: 'white', // Cambia el color cuando no está seleccionado
+        ...tabOptions,
       })}
     >
       <Tab.Screen
         name="Inicio"
         component={HomeChoferScreen}
         options={{ headerShown: false }}
-        initialParams={{ latitude, longitude }}
       />
       <Tab.Screen
         name="Billetera"

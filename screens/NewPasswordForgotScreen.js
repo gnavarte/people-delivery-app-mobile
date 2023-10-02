@@ -1,113 +1,84 @@
-import React, { useState } from 'react';
-import { View, Image, Text, StyleSheet, TextInput, Dimensions, Alert } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Dimensions, Image, KeyboardAvoidingView, Alert, Platform } from "react-native";
+import { useForm } from "../hooks/useForm";
+import { PrimaryButton } from "../components/Buttons/Button";
+import CustomInput from "../components/TextInputs/CustomInput";
+import { useNavigation } from "@react-navigation/native";
 
-import { PrimaryButton } from '../components/Buttons/Button';
-import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
-import CustomInput from '../components/TextInputs/CustomInput';
+const LoginScreen = () => {
+  const initialState = {
+    newPassword: "",
+    confirmPassword: "",
+  };
+  const { form, onChange } = useForm(initialState);
+  const navigation = useNavigation();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-const NewPasswordForgotScreen = () => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  useEffect(() => {
+    // Función para validar el formulario y habilitar o deshabilitar el botón.
+    const validateForm = () => {
+      setIsButtonDisabled(!(form.newPassword && form.confirmPassword));
+    };
 
-  const navigateToRecoveryPassword = () => {
-    console.log('Nueva contraseña:', password);
-    console.log('Confirmar contraseña:', confirmPassword);
-    if (password !== confirmPassword) {
-      Alert.alert("las contraseña no coinciden")
-      return;
+    validateForm();
+  }, [form]);
+
+  const validatePasswordConfirmation = (newPassword, confirmPassword) => {
+    if (newPassword !== confirmPassword) {
+      return "Las contraseñas no coinciden.";
     }
-    else if(password.length < 5 ||confirmPassword.length<5 )
-    {
-      Alert.alert("las contraseña debe tener al menos 5 caracteres")
-      return;
-    }
-    else if(password===confirmPassword)
-    {
-      Alert.alert("las contraseña coinciden")
-      return;
-    }
 
-  }
+    return true;
+  };
+
+  const redirectToHome = () => {
+    const resultadoValidacionPasswordConfirmation = validatePasswordConfirmation(form.newPassword, form.confirmPassword);
+
+    if (resultadoValidacionPasswordConfirmation === true) {
+      // Realizar inicio de sesión y luego redirigir.
+      navigation.push("HomeChofer");
+    } else {
+      Alert.alert("Por favor, valide ambos campos de contraseña correctamente.");
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.topImageContainer}>
-        <Image
-          source={require('../assets/ChangePasswordLogo.png')}
-          style={styles.topImage}
-          resizeMode='contain'
-        />
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
+    >
+      <View style={styles.topContainer}>
+        <Image style={styles.illustration} source={require("../assets/Padlock.png")} />
+        <Text style={styles.helperText}>Ingrese su nueva contraseña</Text>
       </View>
-      <Text style={styles.welcomeText}>Ingresa tu nueva contraseña</Text>
-      <CustomInput
-        placeholder="Ingresa tu nueva contraseña"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={setPassword}
-      />
-      <CustomInput
-        placeholder="Repeti tu nueva contraseña"
-        secureTextEntry={true}
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
-      <View style={styles.bottomCenterPage}>
-        <PrimaryButton
-          title="Cambiar contraseña"
-          onPress={navigateToRecoveryPassword}
-          backgroundColor="#5985EB"
-        />
-      </View>
-    </View>
+      <CustomInput placeholder="Nueva Contraseña" value={form.newPassword} onChangeText={(value) => onChange(value, "newPassword")} secureTextEntry={true} />
+      <CustomInput placeholder="Confirmar Contraseña" value={form.confirmPassword} onChangeText={(value) => onChange(value, "confirmPassword")} secureTextEntry={true} />
+      <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
+    </KeyboardAvoidingView>
   );
 };
+
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingTop: 50,
   },
-  bottomCenterPage: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 20,
+  topContainer: {
+    alignItems: "center",
   },
-  grayBackground: {
-    flex: 1,
-    backgroundColor: '#F2F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  topImageContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  topImage: {
-    height: Dimensions.get('window').height * 0.3, 
-    width: Dimensions.get('window').width, 
-  },
-  
-  title: {
-    fontSize: Dimensions.get('window').width*0.05,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginTop: 20,
-    marginLeft: 20,
-  },
-  welcomeText: {
-    fontSize: Dimensions.get('window').width*0.06,
+  illustration: {
+    width: Dimensions.get("window").width * 0.65,
+    height: Dimensions.get("window").width * 0.65,
     marginBottom: 10,
-    textAlign: 'center',
   },
-  bottomLeftTextContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
+  helperText: {
+    textAlign: "center",
+    fontSize: 16,
+    marginBottom: 10,
   },
-  input: {
-    marginBottom: 10, 
-  },
-
 });
-
-export default NewPasswordForgotScreen;

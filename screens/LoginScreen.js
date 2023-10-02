@@ -77,19 +77,17 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={styles.container}
       behavior="padding"
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
     >
-      <View style={styles.container}>
-        <View style={styles.topContainer}>
-          <Image style={styles.logo} source={require("../assets/Receptionist.png")} />
-          <Text style={styles.helperText}>Ingrese correo electrónico y contraseña</Text>
-        </View>
-        <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} />
-        <CustomInput placeholder="Contraseña" value={form.password} onChangeText={(value) => onChange(value, "password")} secureTextEntry={true} />
-        <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
+      <View style={styles.topContainer}>
+        <Image style={styles.illustration} source={require("../assets/Receptionist.png")} />
+        <Text style={styles.helperText}>Ingrese correo electrónico y contraseña</Text>
       </View>
+      <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} keyboardType="email-address" />
+      <CustomInput placeholder="Contraseña" value={form.password} onChangeText={(value) => onChange(value, "password")} secureTextEntry={true} />
+      <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
       <View style={styles.bottomLeftTextContainer}>
         <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvidé mi contraseña</Text>
       </View>
@@ -103,16 +101,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 20,
-    paddingTop: 50,
   },
   topContainer: {
     alignItems: 'center',
     marginBottom: 20,
   },
-  logo: {
-    width: 200,
-    height: 200,
+  illustration: {
+    width: Dimensions.get('window').width * 0.65,
+    height: Dimensions.get('window').width * 0.65,
     marginBottom: 10,
   },
   helperText: {

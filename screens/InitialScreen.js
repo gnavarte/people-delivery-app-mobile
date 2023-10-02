@@ -1,16 +1,11 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { PrimaryButton } from '../components/Buttons/Button';
 import { ButtonWithIcon } from '../components/Buttons/ButtonWithIcon';
-import { useNavigation } from '@react-navigation/native';
-import * as Location from 'expo-location';
 
 const InitialScreen = () => {
   const navigation = useNavigation();
-
-  useEffect(() => {
-    getLocationPermission();
-  }, []);
 
   const navigateToRegister = () => {
     navigation.push('RegisterScreen');
@@ -24,33 +19,6 @@ const InitialScreen = () => {
     navigation.push('HomeChofer');
   };
 
-  const getLocationPermission = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      Alert.alert(
-        'Permiso de ubicación',
-        'No se otorgó permiso para acceder a la ubicación.',
-        [{ text: 'OK' }]
-      );
-      return;
-    }
-  
-    try {
-      let location = await Location.getCurrentPositionAsync({});
-      console.log('Ubicación actual:', location.coords);
-      var latitude = location.coords.latitude;
-      var longitude = location.coords.longitude;
-      console.log('Latitud:', latitude);
-      console.log('Longitud:', longitude);
-      navigation.navigate('HomeChofer', {
-        latitude: latitude,
-        longitude: longitude,
-      });
-    } catch (error) {
-      console.error('Error al obtener la ubicación:', error);
-    }
-  };
- 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>PD</Text>
@@ -97,11 +65,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
-  },
-  text: {
-    fontSize: Dimensions.get('window').width * 0.05,
-    textAlign: 'center',
-    marginBottom: 20,
   },
   title: {
     fontSize: Dimensions.get('window').width * 0.05,
