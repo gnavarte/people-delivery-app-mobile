@@ -27,8 +27,12 @@ const InitialScreen = () => {
     console.log('Ubicación actual:', location.coords);
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
-
-    navigation.push('HomeChofer');
+    console.log('Latitud:', latitude);
+    console.log('Longitud:', longitude);
+    navigation.navigate('HomeChofer', {
+      latitude: latitude,
+      longitude: longitude,
+    });
   }
 
   return (
