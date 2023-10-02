@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, Alert, TextInput, Dimensions } from 'react-native';
-
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { PrimaryButton } from '../components/Buttons/Button';
-import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 import { useNavigation } from '@react-navigation/native';
 import CustomInput from '../components/TextInputs/CustomInput';
 const ForgotPasswordScreen = () => {
