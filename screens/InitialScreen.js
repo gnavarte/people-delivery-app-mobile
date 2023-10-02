@@ -8,7 +8,7 @@ const InitialScreen = () => {
   const navigation = useNavigation();
 
   const navigateToRegister = () => {
-    navigation.push('DriverRegistrationScreen');
+    navigation.push('RegisterScreen');
   };
 
   const navigateToDriverRegistrationScreen = () => {
