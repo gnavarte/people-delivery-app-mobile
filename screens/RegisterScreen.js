@@ -74,6 +74,7 @@ const RegisterScreen = () => {
   };
 
   const registerChofer = () => {
+
     const booleanNombre = validarNombre(form.nombre);
     const booleanApellido = validarApellido(form.apellido);
     const booleanDNI = validarDNI(form.DNI);
