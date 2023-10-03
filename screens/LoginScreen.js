@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, Dimensions, Image, KeyboardAvoidingView, Alert } from "react-native";
+import { baseStyles } from "../themes/theme";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
-import { loginUser } from "../controller/auth/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
   const initialState = {
@@ -17,6 +16,7 @@ const LoginScreen = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
+    // Función para validar el formulario y habilitar o deshabilitar el botón.
     const validateForm = () => {
       setIsButtonDisabled(!(form.email && form.password));
     };
@@ -60,19 +60,13 @@ const LoginScreen = () => {
     return true;
   };
 
-  const redirectToHome = async () => {
+  const redirectToHome = () => {
     const resultadoValidacionEmail = validateEmail(form.email);
     const resultadoValidacionPassword = validatePassword(form.password);
 
     if (resultadoValidacionEmail === true && resultadoValidacionPassword === true) {
-      const responseLogin=await loginUser(form.email, form.password);
-
-      console.log("responseLogin", responseLogin)
-      if (responseLogin !== "") {
-        var email=form.email
-        await AsyncStorage.setItem("email", email);
-        navigation.push("HomeChofer");
-      }
+      // Realizar inicio de sesión y luego redirigir.
+      navigation.push("HomeChofer");
     } else if (resultadoValidacionEmail === true && resultadoValidacionPassword !== true) {
       Alert.alert(resultadoValidacionPassword);
     } else if (resultadoValidacionEmail !== true && resultadoValidacionPassword === true) {
@@ -107,6 +101,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: baseStyles.padding,
     justifyContent: "center",
   },
   topContainer: {

@@ -1,23 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import CodeInput from '../components/TextInputs/CodeInput';
 import { PrimaryButton } from '../components/Buttons/Button';
-import { useRoute } from '@react-navigation/native';
+import { baseStyles } from '../themes/theme';
+
 const InputCodeScreen = () => {
   const [code, setCode] = useState('');
+  const [resendButtonDisabledTime, setResendButtonDisabledTime] = useState(0);
   const navigation = useNavigation();
-  const route = useRoute();
-  const email = route.params.email;
 
   const handleCodeComplete = (value) => {
     setCode(value);
   };
 
   const validateCode = async () => {
-    navigation.push('NewPasswordForgotScreen',{ email: email });
+    // Ahora, 'code' contiene el valor completo de 5 dígitos ingresados.
+    navigation.push('NewPasswordForgotScreen');
   };
+
+  const handleResendCode = () => {
+    // Deshabilitar el botón de reenvío
+    const disableTime = 30; // 30 segundos
+    setResendButtonDisabledTime(disableTime);
+
+    const interval = setInterval(() => {
+      setResendButtonDisabledTime((prevTime) => {
+        if (prevTime === 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000); // Actualizar cada segundo
+  };
+
+  const resendButtonTitle = resendButtonDisabledTime
+    ? `Reenviar código (${resendButtonDisabledTime}s)`
+    : 'Reenviar código';
 
   return (
     <View style={styles.container}>
@@ -33,9 +54,10 @@ const InputCodeScreen = () => {
           backgroundColor="#5985EB"
         />
         <PrimaryButton
-          title="Reenviar código"
-          onPress={validateCode}
+          title={resendButtonTitle}
+          onPress={handleResendCode}
           backgroundColor="#7F44C2"
+          disabled={resendButtonDisabledTime > 0}
         />
       </View>
     </View>
@@ -48,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: baseStyles.padding,
   },
   illustration: {
     width: Dimensions.get('window').width * 0.65,

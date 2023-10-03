@@ -4,7 +4,8 @@ import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, View, Dimensions, Platform } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { baseStyles } from "../themes/theme";
+
 const initialState = {
   email: "",
 };
@@ -13,7 +14,7 @@ const ForgotPasswordScreen = () => {
   const { form, onChange } = useForm(initialState);
   const navigation = useNavigation();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const route = useRoute();
+
   useEffect(() => {
     const validateForm = () => {
       setIsButtonDisabled(!form.email);
@@ -45,8 +46,8 @@ const ForgotPasswordScreen = () => {
     const resultadoValidacionEmail = validateEmail(form.email);
 
     if (resultadoValidacionEmail === true) {
-      navigation.push("InputCodeScreen", { email: form.email });
-
+      // Realizar inicio de sesión y luego redirigir.
+      navigation.push("InputCodeScreen");
     } else {
       Alert.alert(resultadoValidacionEmail || "Valide ambos campos por favor");
     }
@@ -73,6 +74,7 @@ export default ForgotPasswordScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: baseStyles.padding,
     justifyContent: "center",
   },
   topContainer: {
