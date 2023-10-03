@@ -5,8 +5,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { FontAwesome } from '@expo/vector-icons'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const EditProfileScreen = () => {
   const navigation = useNavigation();
+  const [userEmail, setUserEmail] = useState('');
 
   const closeAccount = () => {
     Alert.alert(
@@ -31,19 +33,34 @@ const EditProfileScreen = () => {
     navigation.push("HomeScreen")
   }
   const navigateToChangePassword = () => {
-    navigation.push("NewPasswordScreen")
+    console.log("setUserEmail", userEmail)
+    navigation.push("NewPasswordScreen", { email: userEmail } )
   }
   const navigateToMyCars = () => {
     navigation.push("MisAutosScreen")
   }
   const navigateToSettings = () => {
-    navigation.push("EditChoferInfoScreen")
+    navigation.push("EditChoferInfoScreen",{ email: userEmail })
   }
   const navigateToSupprot = () => {
     navigation.push("SupportScreen")
   }
 
-  
+  useEffect(() => {
+    // Aquí deberías obtener el correo electrónico de AsyncStorage y luego actualizar el estado
+    const getUserEmailFromStorage = async () => {
+      try {
+        const email = await AsyncStorage.getItem('email');
+        if (email !== null) {
+          setUserEmail(email);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getUserEmailFromStorage();
+  }, []);
 
 
   return (
@@ -57,7 +74,7 @@ const EditProfileScreen = () => {
         />
       </View>
       <Text style={styles.descriptionText}>Juan Perez</Text>
-      <Text style={styles.descriptionText}>Facu@gmai.com</Text>
+      <Text style={styles.descriptionText}>{userEmail}</Text>
 
       <View style={styles.rectangle}>
         <View style={styles.item}>

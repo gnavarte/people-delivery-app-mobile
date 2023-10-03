@@ -46,8 +46,7 @@ const ForgotPasswordScreen = () => {
     const resultadoValidacionEmail = validateEmail(form.email);
 
     if (resultadoValidacionEmail === true) {
-      // Realizar inicio de sesión y luego redirigir.
-      navigation.push("InputCodeScreen");
+      navigation.push("InputCodeScreen", { email: form.email });
     } else {
       Alert.alert(resultadoValidacionEmail || "Valide ambos campos por favor");
     }
@@ -59,12 +58,12 @@ const ForgotPasswordScreen = () => {
       behavior="padding"
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
     >
-        <View style={styles.topContainer}>
-          <Image style={styles.illustration} source={require("../assets/Receptionist.png")} />
-          <Text style={styles.helperText}>Ingresa tu correo para recuperar la contraseña</Text>
-        </View>
-        <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} keyboardType="email-address" />
-        <PrimaryButton title="Recuperar contraseña" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
+      <View style={styles.topContainer}>
+        <Image style={styles.illustration} source={require("../assets/Receptionist.png")} />
+        <Text style={styles.helperText}>Ingresa tu correo para recuperar la contraseña</Text>
+      </View>
+      <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} keyboardType="email-address" />
+      <PrimaryButton title="Recuperar contraseña" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
     </KeyboardAvoidingView>
   );
 };

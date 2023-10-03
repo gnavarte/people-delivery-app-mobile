@@ -5,16 +5,17 @@ import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 import PrimaryButton from '../components/Buttons/Button';
 import CustomInput from '../components/TextInputs/CustomInput';
 import DeleteConfirmationModal from '../components/Modals/Modal';
-
+import  { updateChofer } from "../controller/auth/auth";
+import { useRoute } from '@react-navigation/native';
 const EditChoferScreen = () => {
     const navigation = useNavigation();
-  
-    const [email, setEmail] = useState('');
+    const route = useRoute();
+
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [domicilio, setDomicilio] = useState('');
     const [showModal, setShowModal] = useState(false);
-
+    const email =route.params.email;
     const closeModal = () => {
       setShowModal(false);
     };
@@ -33,6 +34,10 @@ const EditChoferScreen = () => {
       if (!nombre && !apellido && !domicilio) {
         Alert.alert("No se realizó ningún cambio.");
       }
+      else
+      {
+        Alert.alert("Se han realizado los cambios.");
+      }
     };
     
   
@@ -47,7 +52,7 @@ const EditChoferScreen = () => {
   
         <Text style={styles.textLabel}>Email</Text>
 
-        <TextInputCustomized value={email} onChangeText={setEmail}  placeholder="facu@gmail.com" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+        <TextInputCustomized value={email}  placeholder={email} backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
   
         <Text style={styles.textLabel}>Nombre</Text>
         <TextInputCustomized value={nombre} onChangeText={setNombre}  placeholder="Ingresa tu nuevo Nombre" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />

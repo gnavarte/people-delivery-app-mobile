@@ -1,76 +1,85 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, Dimensions } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
-import CodeInput from '../components/TextInputs/CodeInput';
-import { PrimaryButton } from '../components/Buttons/Button';
-import { baseStyles } from '../themes/theme';
+import React, { useState, useEffect } from "react";
+import { useForm } from "../hooks/useForm";
+import { PrimaryButton } from "../components/Buttons/Button";
+import CustomInput from "../components/TextInputs/CustomInput";
+import { useNavigation } from "@react-navigation/native";
+import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, View, Dimensions, Platform } from "react-native";
+import { baseStyles } from "../themes/theme";
 
-const InputCodeScreen = () => {
-  const [code, setCode] = useState('');
-  const [resendButtonDisabledTime, setResendButtonDisabledTime] = useState(0);
+const initialState = {
+  email: "",
+};
+
+const ForgotPasswordScreen = () => {
+  const { form, onChange } = useForm(initialState);
   const navigation = useNavigation();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  const handleCodeComplete = (value) => {
-    setCode(value);
+  useEffect(() => {
+    const validateForm = () => {
+      setIsButtonDisabled(!form.email);
+    };
+
+    validateForm();
+  }, [form]);
+
+  const validateEmail = (email) => {
+    if (!email) {
+      return "El correo electrónico no puede estar vacío.";
+    }
+
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailPattern.test(email)) {
+      return "El correo electrónico no tiene un formato válido.";
+    }
+
+    const [nombreUsuario, dominio] = email.split("@");
+
+    if (!nombreUsuario || !dominio) {
+      return "El correo electrónico debe tener contenido antes y después del @.";
+    }
+
+    return true;
   };
 
-  const validateCode = async () => {
-    // Ahora, 'code' contiene el valor completo de 5 dígitos ingresados.
-    navigation.push('NewPasswordForgotScreen');
+  const redirectToHome = () => {
+    const resultadoValidacionEmail = validateEmail(form.email);
+
+    if (resultadoValidacionEmail === true) {
+      navigation.push("InputCodeScreen", { email: form.email });
+
+    } else {
+      Alert.alert(resultadoValidacionEmail || "Valide ambos campos por favor");
+    }
   };
-
-  const handleResendCode = () => {
-    // Deshabilitar el botón de reenvío
-    const disableTime = 30; // 30 segundos
-    setResendButtonDisabledTime(disableTime);
-
-    const interval = setInterval(() => {
-      setResendButtonDisabledTime((prevTime) => {
-        if (prevTime === 1) {
-          clearInterval(interval);
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000); // Actualizar cada segundo
-  };
-
-  const resendButtonTitle = resendButtonDisabledTime
-    ? `Reenviar código (${resendButtonDisabledTime}s)`
-    : 'Reenviar código';
 
   return (
-    <View style={styles.container}>
-      <Image source={require('../assets/Detective.png')} style={styles.illustration} />
-      <Text style={styles.helperText}>
-        Ingresa el código de 5 dígitos enviado a tu correo electrónico.
-      </Text>
-      <CodeInput onComplete={handleCodeComplete} />
-      <View style={styles.buttonContainer}>
-        <PrimaryButton
-          title="Continuar"
-          onPress={validateCode}
-          backgroundColor="#5985EB"
-        />
-        <PrimaryButton
-          title={resendButtonTitle}
-          onPress={handleResendCode}
-          backgroundColor="#7F44C2"
-          disabled={resendButtonDisabledTime > 0}
-        />
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
+    >
+      <View style={styles.topContainer}>
+        <Image style={styles.illustration} source={require("../assets/Receptionist.png")} />
+        <Text style={styles.helperText}>Ingresa tu correo para recuperar la contraseña</Text>
       </View>
-    </View>
+      <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} keyboardType="email-address" />
+      <PrimaryButton title="Recuperar contraseña" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
+    </KeyboardAvoidingView>
   );
 };
+
+export default ForgotPasswordScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: baseStyles.padding,
+    justifyContent: "center",
+  },
+  topContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
   },
   illustration: {
     width: Dimensions.get('window').width * 0.65,
@@ -78,13 +87,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   helperText: {
-    fontSize: Dimensions.get('window').width * 0.04,
-    marginBottom: 10,
     textAlign: 'center',
+    fontSize: 16,
+    marginBottom: 10,
   },
-  buttonContainer: {
-    marginTop: 20,
+  bottomLeftTextContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+  },
+  bottomLeftText: {
+    fontSize: Dimensions.get('window').width * 0.05,
+    textDecorationLine: 'underline',
   },
 });
-
-export default InputCodeScreen;

@@ -6,13 +6,18 @@ import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 import CustomInput from '../components/TextInputs/CustomInput';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import { updatePassword } from '../controller/auth/auth';
+import { useRoute } from '@react-navigation/native';
 
 const InputCodeScreen = () => {
   const [actualPassword , setActualPassword] = useState('');
   const [newPassword , setNewPassword] = useState('');
   const [repeatNewPassword , setRepeatNewPassword] = useState('');
-
-  const navigateToRecoveryPassword = () => {
+  const route = useRoute();
+  const email = route.params.email;
+  const navigation = useNavigation();
+  
+  const navigateToRecoveryPassword = async  () => {
     if (newPassword!=repeatNewPassword){
       Alert.alert("Las nuevas contraseñas no coinciden")
     }
@@ -22,12 +27,24 @@ const InputCodeScreen = () => {
     }
     else if (actualPassword && newPassword && repeatNewPassword != "")
     {
-      Alert.alert("cambiamos contraseña")
+      const response =await  updatePassword(email,actualPassword,newPassword);
+      if (response===200)
+      {
+        Alert.alert("Tu contraseña fue actualizada correctamente")
+        navigation.push("HomeChofer");
+      }
+      else
+      {
+        Alert.alert("La contraseña ingresada no es correcta")
+      }
     }
     else if (actualPassword || newPassword || repeatNewPassword == "")
     {
       Alert.alert("por favor complete todos los campos")
     }
+
+      
+
   }
 
 

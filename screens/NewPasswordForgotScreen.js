@@ -6,7 +6,7 @@ import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { baseStyles } from "../themes/theme";
 
-const LoginScreen = () => {
+const NewPasswordForgotScreen = () => {
   const initialState = {
     newPassword: "",
     confirmPassword: "",
@@ -28,15 +28,15 @@ const LoginScreen = () => {
     if (newPassword !== confirmPassword) {
       return "Las contraseñas no coinciden.";
     }
-
     return true;
   };
 
-  const redirectToHome = () => {
+  const redirectToHome = async () => {
     const resultadoValidacionPasswordConfirmation = validatePasswordConfirmation(form.newPassword, form.confirmPassword);
 
     if (resultadoValidacionPasswordConfirmation === true) {
-      // Realizar inicio de sesión y luego redirigir.
+      // Remove the code related to forgotPassword
+      Alert.alert("Tu contraseña fue actualizada correctamente");
       navigation.push("HomeChofer");
     } else {
       Alert.alert("Por favor, valide ambos campos de contraseña correctamente.");
@@ -55,12 +55,12 @@ const LoginScreen = () => {
       </View>
       <CustomInput placeholder="Nueva Contraseña" value={form.newPassword} onChangeText={(value) => onChange(value, "newPassword")} secureTextEntry={true} />
       <CustomInput placeholder="Confirmar Contraseña" value={form.confirmPassword} onChangeText={(value) => onChange(value, "confirmPassword")} secureTextEntry={true} />
-      <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
+      <PrimaryButton title="Cambiar contraseña" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
     </KeyboardAvoidingView>
   );
 };
 
-export default LoginScreen;
+export default NewPasswordForgotScreen;
 
 const styles = StyleSheet.create({
   container: {
