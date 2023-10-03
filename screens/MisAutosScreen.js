@@ -1,24 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet,Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import AutoCard from '../components/Card/AutoCard';
-
+import { getAutos } from '../controller/auth/autos';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const MisAutosScreen = () => {
-  const autos = [
-    {
-      nombre: 'Auto 1',
-      año: 2020,
-      model: 'Modelo A',
-      viajes: 12,
-      imagen: require('../assets/auto2.jpg')
-    },
-    {
-      nombre: 'Auto 2',
-      año: 2022,
-      model: 'Modelo B',
-      viajes: 8,
-      imagen: require('../assets/auto2.jpg')
-    }
-  ];
+  const [autos, setAutos] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const email = await AsyncStorage.getItem('email');
+        const data = await getAutos(email);
+        setAutos(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <View style={styles.container}>

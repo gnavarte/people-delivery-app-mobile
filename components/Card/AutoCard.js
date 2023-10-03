@@ -24,10 +24,10 @@ return (
   <View style={styles.card}>
       <Image source={auto.imagen} style={styles.imagen} />
       <View style={styles.info}>
-        <Text style={styles.textos}>{auto.nombre}</Text>
+        <Text style={styles.textos}>{auto.marca}</Text>
         <Text style={styles.textos}>Año: {auto.año}</Text>
-        <Text style={styles.textos}>Modelo: {auto.model}</Text>
-        <Text style={styles.textos}>Viajes: {auto.viajes}</Text>
+        <Text style={styles.textos}>Modelo: {auto.modelo}</Text>
+        <Text style={styles.textos}>Viajes: {auto.color}</Text>
         <TouchableOpacity onPress={handleDeleteIconPress}>
           <AntDesign name="closecircle" size={24} color="#7F44C2" />
         </TouchableOpacity>

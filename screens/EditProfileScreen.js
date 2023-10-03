@@ -36,7 +36,7 @@ const EditProfileScreen = () => {
     navigation.push("NewPasswordScreen", { email: userEmail } )
   }
   const navigateToMyCars = () => {
-    navigation.push("MisAutosScreen")
+    navigation.push("MisAutosScreen" , { email: userEmail } )
   }
   const navigateToSettings = () => {
     navigation.push("EditChoferInfoScreen", { email: userEmail })

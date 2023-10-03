@@ -1,21 +1,37 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Puedes utilizar cualquier conjunto de iconos que desees
+import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 import travelHistoryData from '../data/travel_history.json';
-
+import { getViajes } from '../controller/auth/viajes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 const TravelScreen = () => {
   const [sortBy, setSortBy] = useState(null);
-  const [sortedData, setSortedData] = useState(travelHistoryData);
+  const [sortedData, setSortedData] = useState([]);
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      try {
+        const email = await AsyncStorage.getItem('email');
+        const data = await getViajes(email);
+        console.log(data)
+        setSortedData(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const sortData = (key) => {
     let sortedDataCopy = [...sortedData];
 
     if (sortBy === key) {
-      // Si ya estamos ordenando por la misma columna, invierte el orden
       sortedDataCopy.reverse();
     } else {
-      // Ordena los datos en función de la columna seleccionada
       sortedDataCopy.sort((a, b) => {
         if (a[key] < b[key]) return -1;
         if (a[key] > b[key]) return 1;
@@ -51,7 +67,7 @@ const TravelScreen = () => {
         <TouchableOpacity onPress={() => sortData('Ganancia')}>
           <View style={styles.filterButton}>
             <Icon name="dollar" size={20} color={sortBy === 'Ganancia' ? 'blue' : 'black'} />
-            <Text style={styles.filterButtonText}>Ganancia</Text>
+            <Text style={styles.filterButtonText}>Precio Total</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -60,10 +76,10 @@ const TravelScreen = () => {
         keyExtractor={(item) => item.Fecha}
         renderItem={({ item }) => (
           <View style={styles.row}>
-            <Text style={styles.column}>{item.Fecha}</Text>
-            <Text style={styles.column}>{item.Duracion} horas</Text>
-            <Text style={styles.column}>{item.Valoracion}</Text>
-            <Text style={styles.column}>${item.Ganancia}</Text>
+            <Text style={styles.column}>{item.updatedAt}</Text>
+            <Text style={styles.column}>{item.createdAt} horas</Text>
+            <Text style={styles.column}>{item.valoracion}</Text>
+            <Text style={styles.column}>${item.totalPrice}</Text>
           </View>
         )}
       />
