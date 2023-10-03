@@ -4,9 +4,9 @@ import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
-import { forgotPassword} from "../controller/auth/auth";
-import { useRoute } from "@react-navigation/native";
-const LoginScreen = () => {
+import { baseStyles } from "../themes/theme";
+
+const NewPasswordForgotScreen = () => {
   const initialState = {
     newPassword: "",
     confirmPassword: "",
@@ -14,8 +14,6 @@ const LoginScreen = () => {
   const { form, onChange } = useForm(initialState);
   const navigation = useNavigation();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const route = useRoute();
-  const email = route.params.email;
 
   useEffect(() => {
     // Función para validar el formulario y habilitar o deshabilitar el botón.
@@ -37,13 +35,9 @@ const LoginScreen = () => {
     const resultadoValidacionPasswordConfirmation = validatePasswordConfirmation(form.newPassword, form.confirmPassword);
 
     if (resultadoValidacionPasswordConfirmation === true) {
-      const response = await forgotPassword(email, form.newPassword);
-      console.log(response)
-      if (response==200)
-      {
-        Alert.alert("Tu contraseña fue actualizada correctamente")
-        navigation.push("HomeChofer");
-      }
+      // Remove the code related to forgotPassword
+      Alert.alert("Tu contraseña fue actualizada correctamente");
+      navigation.push("HomeChofer");
     } else {
       Alert.alert("Por favor, valide ambos campos de contraseña correctamente.");
     }
@@ -66,14 +60,13 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default NewPasswordForgotScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 20,
-    paddingTop: 50,
+    padding: baseStyles.padding,
   },
   topContainer: {
     alignItems: "center",

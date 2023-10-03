@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, Dimensions, Image, KeyboardAvoidingView, Alert } from "react-native";
+import { baseStyles } from "../themes/theme";
 import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
@@ -107,6 +108,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: baseStyles.padding,
     justifyContent: "center",
   },
   topContainer: {

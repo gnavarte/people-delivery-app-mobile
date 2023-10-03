@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from "react-native";
+import { baseStyles } from "../themes/theme";
 import { useForm } from "../hooks/useForm";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CustomInput from "../components/TextInputs/CustomInput";
@@ -157,32 +158,23 @@ const RegisterScreen = () => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: "#ffffff",
-    height: 48,
-    borderRadius: 5,
-    overflow: "hidden",
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 16,
+  container: {
+    flex: 1,
+    padding: baseStyles.padding,
+    justifyContent: "center",
   },
   errorText: {
     color: 'red',
     marginLeft: 30,
     marginRight: 30,
     marginTop: 5,
-  },
+    },
   dateInput: {
     backgroundColor: "#ffffff",
     height: 48,
     borderRadius: 5,
     overflow: "hidden",
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
+    marginVertical: 10,
     paddingLeft: 16,
     justifyContent: "center",
     borderWidth: 1,
@@ -196,8 +188,4 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.get('window').width * 0.05,
     marginBottom: 20,
   }, 
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
 });

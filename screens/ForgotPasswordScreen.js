@@ -4,7 +4,8 @@ import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, View, Dimensions, Platform } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { baseStyles } from "../themes/theme";
+
 const initialState = {
   email: "",
 };
@@ -13,7 +14,7 @@ const ForgotPasswordScreen = () => {
   const { form, onChange } = useForm(initialState);
   const navigation = useNavigation();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const route = useRoute();
+
   useEffect(() => {
     const validateForm = () => {
       setIsButtonDisabled(!form.email);
@@ -46,7 +47,6 @@ const ForgotPasswordScreen = () => {
 
     if (resultadoValidacionEmail === true) {
       navigation.push("InputCodeScreen", { email: form.email });
-
     } else {
       Alert.alert(resultadoValidacionEmail || "Valide ambos campos por favor");
     }
@@ -58,12 +58,12 @@ const ForgotPasswordScreen = () => {
       behavior="padding"
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
     >
-        <View style={styles.topContainer}>
-          <Image style={styles.illustration} source={require("../assets/Receptionist.png")} />
-          <Text style={styles.helperText}>Ingresa tu correo para recuperar la contraseña</Text>
-        </View>
-        <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} keyboardType="email-address" />
-        <PrimaryButton title="Recuperar contraseña" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
+      <View style={styles.topContainer}>
+        <Image style={styles.illustration} source={require("../assets/Receptionist.png")} />
+        <Text style={styles.helperText}>Ingresa tu correo para recuperar la contraseña</Text>
+      </View>
+      <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} keyboardType="email-address" />
+      <PrimaryButton title="Recuperar contraseña" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
     </KeyboardAvoidingView>
   );
 };
@@ -73,6 +73,7 @@ export default ForgotPasswordScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: baseStyles.padding,
     justifyContent: "center",
   },
   topContainer: {
