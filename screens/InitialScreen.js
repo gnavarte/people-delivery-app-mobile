@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { PrimaryButton } from '../components/Buttons/Button';
 import { ButtonWithIcon } from '../components/Buttons/ButtonWithIcon';
+import { useRoute } from '@react-navigation/native';
+import * as Location from 'expo-location';
+import { Alert } from 'react-native';
 
 const InitialScreen = () => {
   const navigation = useNavigation();
@@ -19,9 +22,22 @@ const InitialScreen = () => {
     navigation.push('LoginScreen');
   };
 
-  const navigateToHomeChofer = () => {
-    navigation.push('HomeChofer');
-  };
+  const navigateToHomeChofer = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permiso de ubicación', 'No se otorgó permiso para acceder a la ubicación.', [{ text: 'OK' }]);
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    console.log('Ubicación actual:', location.coords);
+    var latitude = location.coords.latitude;
+    var longitude = location.coords.longitude;
+
+    navigation.navigate('HomeChofer', {
+      latitude: latitude,
+      longitude: longitude,
+    });
+  }
 
   return (
     <View style={styles.container}>

@@ -6,7 +6,7 @@ import HomeChoferScreen from '../../screens/HomeChoferScreen';
 import EditProfileScreen from '../../screens/EditProfileScreen';
 import TravelScreen from '../../screens/TravelHistoryScreen';
 import EarningsScreen from '../../screens/EarningsScreen';
-
+import { useRoute } from '@react-navigation/native';
 const Tab = createBottomTabNavigator();
 
 const tabOptions = {
@@ -18,6 +18,10 @@ const tabOptions = {
 };
 
 const TabBar = () => {
+  const route = useRoute();
+  const { latitude, longitude } = route.params;
+  console.log('Latitud:', latitude);
+  console.log('Longitud:', longitude);
   const getTabIcon = (routeName) => {
     let iconName;
 
@@ -56,6 +60,7 @@ const TabBar = () => {
         name="Inicio"
         component={HomeChoferScreen}
         options={{ headerShown: false }}
+        initialParams={{ latitude, longitude }}
       />
       <Tab.Screen
         name="Billetera"

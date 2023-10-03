@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const EditProfileScreen = () => {
   const navigation = useNavigation();
   const [userEmail, setUserEmail] = useState('');
+
   const closeAccount = () => {
     Alert.alert(
       "Cerrar sesión",
@@ -38,7 +39,7 @@ const EditProfileScreen = () => {
     navigation.push("MisAutosScreen")
   }
   const navigateToSettings = () => {
-    navigation.push("EditChoferInfoScreen")
+    navigation.push("EditChoferInfoScreen", { email: userEmail })
   }
   const navigateToSupprot = () => {
     navigation.push("SupportScreen")

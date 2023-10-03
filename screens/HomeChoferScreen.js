@@ -2,10 +2,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import BotonCircular from '../components/Buttons/ButtonCircle';
-
+import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 const HomeChoferScreen = () => {
-  const latitude = -34.6118; 
-  const longitude = -58.4173; 
+  const navigation = useNavigation();
+  const route = useRoute();
+  const latitude = route.params.latitude;
+  const longitude = route.params.longitude;
+  
 
   const handleIniciar = () => {
     console.log("iniciamos");

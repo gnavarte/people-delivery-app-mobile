@@ -7,6 +7,8 @@ import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { loginUser } from "../controller/auth/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Location from 'expo-location';
+
 const LoginScreen = () => {
   const initialState = {
     email: "",
@@ -69,11 +71,22 @@ const LoginScreen = () => {
  
       const responseLogin=await loginUser(form.email, form.password);
 
-      console.log("responseLogin", responseLogin)
       if (responseLogin !== "") {
         var email=form.email
         await AsyncStorage.setItem("email", email);
-        navigation.push("HomeChofer");
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert('Permiso de ubicación', 'No se otorgó permiso para acceder a la ubicación.', [{ text: 'OK' }]);
+          return;
+        }
+        let location = await Location.getCurrentPositionAsync({});
+        console.log('Ubicación actual:', location.coords);
+        var latitude = location.coords.latitude;
+        var longitude = location.coords.longitude;
+        navigation.navigate('HomeChofer', {
+          latitude: latitude,
+          longitude: longitude,
+        });
       }
     } else if (resultadoValidacionEmail === true && resultadoValidacionPassword !== true) {
       Alert.alert(resultadoValidacionPassword);
