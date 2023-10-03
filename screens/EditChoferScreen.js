@@ -5,8 +5,8 @@ import TextInputCustomized from '../components/TextInputs/TextInputCustomized';
 import PrimaryButton from '../components/Buttons/Button';
 import CustomInput from '../components/TextInputs/CustomInput';
 import DeleteConfirmationModal from '../components/Modals/Modal';
-import  { updateChofer } from "../controller/auth/auth";
 import { useRoute } from '@react-navigation/native';
+import { getUserEmail  ,updateChofer} from '../controller/auth/auth';
 const EditChoferScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
@@ -30,15 +30,29 @@ const EditChoferScreen = () => {
     const navigateToRegister = () => {
       console.log("asd")
     };
-    const cambiarDatos = () => {    
+    const cambiarDatos = async () => {    
       if (!nombre && !apellido && !domicilio) {
         Alert.alert("No se realizó ningún cambio.");
-      }
-      else
-      {
-        Alert.alert("Se han realizado los cambios.");
+      } else {
+        const userID = await getUserEmail(email);
+        const updateFields = {};
+    
+        if (nombre) {
+          updateFields.nombre = nombre;
+        }
+    
+        if (apellido) {
+          updateFields.apellido = apellido;
+        }
+    
+        if (domicilio) {
+          updateFields.domicilio = domicilio;
+        }
+    
+        const userUpdate = await updateChofer(userID, updateFields);
       }
     };
+    
     
   
     return (

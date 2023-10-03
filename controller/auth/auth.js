@@ -114,3 +114,53 @@ export const forgotPassword = async (email,newPassword) => {
         throw new Error('An error occurred during register');
     }
 }
+export const getUserEmail = async (email) => {
+    try {
+        const data = {
+            email: email,
+        };
+        const response = await fetch(`${API_BASE_URL}/api/users/getByEmail`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+            'Content-Type': 'application/json',
+            'Origin': '*', 
+            },
+            body: JSON.stringify(data),
+        });
+        if (response.status===201)
+        {
+            const datas = await response.json();
+            console.log(datas.userID)
+            return datas.userID;
+        }
+    }
+    catch (error) {
+        console.error('Error during register:', error);
+        Alert.alert('' + error);   
+        throw new Error('An error occurred during register');
+    }
+}
+export const updateChofer = async (userID, updatedFields) => {
+    try {
+        const data = {
+            ...updatedFields // Utilizamos el spread operator (...) para incluir los campos actualizados
+        };
+        const response = await fetch(`${API_BASE_URL}/api/users/${userID}`, {
+            method: 'PATCH',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Origin': '*', 
+            },
+            body: JSON.stringify(data),
+        });
+        console.log(response)
+    }
+    catch (error) {
+        console.error('Error durante la actualización:', error);
+        Alert.alert('' + error);   
+        throw new Error('Ocurrió un error durante la actualización');
+    }
+}
+
