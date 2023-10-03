@@ -4,7 +4,8 @@ import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
-
+import { forgotPassword} from "../controller/auth/auth";
+import { useRoute } from "@react-navigation/native";
 const LoginScreen = () => {
   const initialState = {
     newPassword: "",
@@ -13,6 +14,8 @@ const LoginScreen = () => {
   const { form, onChange } = useForm(initialState);
   const navigation = useNavigation();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const route = useRoute();
+  const email = route.params.email;
 
   useEffect(() => {
     // Función para validar el formulario y habilitar o deshabilitar el botón.
@@ -27,16 +30,20 @@ const LoginScreen = () => {
     if (newPassword !== confirmPassword) {
       return "Las contraseñas no coinciden.";
     }
-
     return true;
   };
 
-  const redirectToHome = () => {
+  const redirectToHome = async () => {
     const resultadoValidacionPasswordConfirmation = validatePasswordConfirmation(form.newPassword, form.confirmPassword);
 
     if (resultadoValidacionPasswordConfirmation === true) {
-      // Realizar inicio de sesión y luego redirigir.
-      navigation.push("HomeChofer");
+      const response = await forgotPassword(email, form.newPassword);
+      console.log(response)
+      if (response==200)
+      {
+        Alert.alert("Tu contraseña fue actualizada correctamente")
+        navigation.push("HomeChofer");
+      }
     } else {
       Alert.alert("Por favor, valide ambos campos de contraseña correctamente.");
     }
@@ -54,7 +61,7 @@ const LoginScreen = () => {
       </View>
       <CustomInput placeholder="Nueva Contraseña" value={form.newPassword} onChangeText={(value) => onChange(value, "newPassword")} secureTextEntry={true} />
       <CustomInput placeholder="Confirmar Contraseña" value={form.confirmPassword} onChangeText={(value) => onChange(value, "confirmPassword")} secureTextEntry={true} />
-      <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
+      <PrimaryButton title="Cambiar contraseña" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
     </KeyboardAvoidingView>
   );
 };

@@ -4,7 +4,7 @@ import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, View, Dimensions, Platform } from "react-native";
-
+import { useRoute } from "@react-navigation/native";
 const initialState = {
   email: "",
 };
@@ -13,7 +13,7 @@ const ForgotPasswordScreen = () => {
   const { form, onChange } = useForm(initialState);
   const navigation = useNavigation();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
+  const route = useRoute();
   useEffect(() => {
     const validateForm = () => {
       setIsButtonDisabled(!form.email);
@@ -45,8 +45,8 @@ const ForgotPasswordScreen = () => {
     const resultadoValidacionEmail = validateEmail(form.email);
 
     if (resultadoValidacionEmail === true) {
-      // Realizar inicio de sesión y luego redirigir.
-      navigation.push("InputCodeScreen");
+      navigation.push("InputCodeScreen", { email: form.email });
+
     } else {
       Alert.alert(resultadoValidacionEmail || "Valide ambos campos por favor");
     }

@@ -4,18 +4,19 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import CodeInput from '../components/TextInputs/CodeInput';
 import { PrimaryButton } from '../components/Buttons/Button';
-
+import { useRoute } from '@react-navigation/native';
 const InputCodeScreen = () => {
   const [code, setCode] = useState('');
   const navigation = useNavigation();
+  const route = useRoute();
+  const email = route.params.email;
 
   const handleCodeComplete = (value) => {
     setCode(value);
   };
 
   const validateCode = async () => {
-    // Ahora, 'code' contiene el valor completo de 5 dígitos ingresados.
-    navigation.push('NewPasswordForgotScreen');
+    navigation.push('NewPasswordForgotScreen',{ email: email });
   };
 
   return (
