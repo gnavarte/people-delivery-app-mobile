@@ -4,6 +4,7 @@ import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, View, Dimensions, Platform } from "react-native";
+import { baseStyles } from "../themes/theme";
 
 const initialState = {
   email: "",
@@ -73,6 +74,7 @@ export default ForgotPasswordScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: baseStyles.padding,
     justifyContent: "center",
   },
   topContainer: {

@@ -73,6 +73,7 @@ export default function DriverRegistrationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 40,
   },
   sectionTitle: {
     fontSize: 18,

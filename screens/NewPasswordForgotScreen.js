@@ -4,6 +4,7 @@ import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
+import { baseStyles } from "../themes/theme";
 
 const LoginScreen = () => {
   const initialState = {
@@ -65,8 +66,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 20,
-    paddingTop: 50,
+    padding: baseStyles.padding,
   },
   topContainer: {
     alignItems: "center",

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from "react-native";
+import { baseStyles } from "../themes/theme";
 import { useForm } from "../hooks/useForm";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CustomInput from "../components/TextInputs/CustomInput";
@@ -152,6 +153,7 @@ export default RegisterScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: baseStyles.padding,
     justifyContent: "center",
   },
   errorText: {
