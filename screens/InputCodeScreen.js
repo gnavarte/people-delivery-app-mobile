@@ -5,24 +5,26 @@ import { useNavigation } from '@react-navigation/native';
 import CodeInput from '../components/TextInputs/CodeInput';
 import { PrimaryButton } from '../components/Buttons/Button';
 import { baseStyles } from '../themes/theme';
+import { useRoute } from '@react-navigation/native';
 
 const InputCodeScreen = () => {
   const [code, setCode] = useState('');
   const [resendButtonDisabledTime, setResendButtonDisabledTime] = useState(0);
   const navigation = useNavigation();
-
+  const route = useRoute();
+  const email = route.params.email;
   const handleCodeComplete = (value) => {
     setCode(value);
   };
 
   const validateCode = async () => {
-    // Ahora, 'code' contiene el valor completo de 5 dígitos ingresados.
-    navigation.push('NewPasswordForgotScreen');
+
+    navigation.push('NewPasswordForgotScreen',{ email: email });
   };
 
   const handleResendCode = () => {
-    // Deshabilitar el botón de reenvío
-    const disableTime = 30; // 30 segundos
+
+    const disableTime = 30; 
     setResendButtonDisabledTime(disableTime);
 
     const interval = setInterval(() => {
@@ -33,7 +35,7 @@ const InputCodeScreen = () => {
         }
         return prevTime - 1;
       });
-    }, 1000); // Actualizar cada segundo
+    }, 1000); 
   };
 
   const resendButtonTitle = resendButtonDisabledTime

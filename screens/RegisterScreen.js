@@ -5,7 +5,9 @@ import { useForm } from "../hooks/useForm";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CustomInput from "../components/TextInputs/CustomInput";
 import { PrimaryButton } from "../components/Buttons/Button";
-
+import { useNavigation } from "@react-navigation/native";
+import { registerUser } from "../controller/auth/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const RegisterScreen = () => {
   const initialState = {
     nombre: "",
@@ -21,7 +23,7 @@ const RegisterScreen = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
-
+  const navigation = useNavigation();
   const validarNombre = (nombre) => {
     return nombre ? true : "El nombre no puede estar vacío";
   };
@@ -74,7 +76,7 @@ const RegisterScreen = () => {
     return true;
   };
 
-  const registerChofer = () => {
+  const registerChofer = async () => {
 
     const booleanNombre = validarNombre(form.nombre);
     const booleanApellido = validarApellido(form.apellido);
@@ -91,7 +93,11 @@ const RegisterScreen = () => {
       booleanEmail === true &&
       booleanPassword === true
     ) {
-      navigation.push("DriverRegistrationScreen");
+      const responseChofer=await registerUser(form.nombre, form.apellido, form.domicilio, form.fechaNacimiento, form.DNI, form.telefono, form.email, form.password);
+      if (responseChofer!== ""){
+        await AsyncStorage.setItem("email", form.email);
+        navigation.push("DriverRegistrationScreen");
+      }
     }
   };
 

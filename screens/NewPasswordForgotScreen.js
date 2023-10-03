@@ -5,7 +5,8 @@ import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { baseStyles } from "../themes/theme";
-
+import { useRoute } from "@react-navigation/native";
+import { forgotPassword } from "../controller/auth/auth";
 const LoginScreen = () => {
   const initialState = {
     newPassword: "",
@@ -14,6 +15,8 @@ const LoginScreen = () => {
   const { form, onChange } = useForm(initialState);
   const navigation = useNavigation();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const route = useRoute();
+  const email = route.params.email;
 
   useEffect(() => {
     // Función para validar el formulario y habilitar o deshabilitar el botón.
@@ -32,12 +35,17 @@ const LoginScreen = () => {
     return true;
   };
 
-  const redirectToHome = () => {
+  const redirectToHome = async () => {
     const resultadoValidacionPasswordConfirmation = validatePasswordConfirmation(form.newPassword, form.confirmPassword);
-
     if (resultadoValidacionPasswordConfirmation === true) {
-      // Realizar inicio de sesión y luego redirigir.
-      navigation.push("HomeChofer");
+
+      const response = await forgotPassword(email, form.newPassword);
+
+      if (response==200)
+      {
+        Alert.alert("Tu contraseña fue actualizada correctamente")
+        navigation.push("HomeChofer");
+      }
     } else {
       Alert.alert("Por favor, valide ambos campos de contraseña correctamente.");
     }

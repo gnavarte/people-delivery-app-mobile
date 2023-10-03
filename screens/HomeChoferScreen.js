@@ -4,8 +4,8 @@ import MapView, { Marker } from 'react-native-maps';
 import BotonCircular from '../components/Buttons/ButtonCircle';
 
 const HomeChoferScreen = () => {
-  const latitude = -34.6118; // Latitud de Buenos Aires
-  const longitude = -58.4173; // Longitud de Buenos Aires
+  const latitude = -34.6118; 
+  const longitude = -58.4173; 
 
   const handleIniciar = () => {
     console.log("iniciamos");

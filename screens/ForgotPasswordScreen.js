@@ -47,7 +47,7 @@ const ForgotPasswordScreen = () => {
 
     if (resultadoValidacionEmail === true) {
       // Realizar inicio de sesión y luego redirigir.
-      navigation.push("InputCodeScreen");
+      navigation.push("InputCodeScreen", { email: form.email });
     } else {
       Alert.alert(resultadoValidacionEmail || "Valide ambos campos por favor");
     }

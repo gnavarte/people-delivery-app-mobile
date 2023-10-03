@@ -5,9 +5,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { FontAwesome } from '@expo/vector-icons'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const EditProfileScreen = () => {
   const navigation = useNavigation();
-
+  const [userEmail, setUserEmail] = useState('');
   const closeAccount = () => {
     Alert.alert(
       "Cerrar sesión",
@@ -31,7 +32,7 @@ const EditProfileScreen = () => {
     navigation.push("HomeScreen")
   }
   const navigateToChangePassword = () => {
-    navigation.push("NewPasswordScreen")
+    navigation.push("NewPasswordScreen", { email: userEmail } )
   }
   const navigateToMyCars = () => {
     navigation.push("MisAutosScreen")
@@ -42,7 +43,20 @@ const EditProfileScreen = () => {
   const navigateToSupprot = () => {
     navigation.push("SupportScreen")
   }
+  useEffect(() => {
+    const getUserEmailFromStorage = async () => {
+      try {
+        const email = await AsyncStorage.getItem('email');
+        if (email !== null) {
+          setUserEmail(email);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    getUserEmailFromStorage();
+  }, []);
   
 
 
@@ -57,7 +71,7 @@ const EditProfileScreen = () => {
         />
       </View>
       <Text style={styles.descriptionText}>Juan Perez</Text>
-      <Text style={styles.descriptionText}>Facu@gmai.com</Text>
+      <Text style={styles.descriptionText}>{userEmail}</Text>
 
       <View style={styles.rectangle}>
         <View style={styles.item}>
