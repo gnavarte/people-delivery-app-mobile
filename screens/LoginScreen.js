@@ -4,7 +4,7 @@ import { useForm } from "../hooks/useForm";
 import { PrimaryButton } from "../components/Buttons/Button";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
-
+import { loginUser } from "../controller/auth/auth";
 const LoginScreen = () => {
   const initialState = {
     email: "",
@@ -65,6 +65,9 @@ const LoginScreen = () => {
 
     if (resultadoValidacionEmail === true && resultadoValidacionPassword === true) {
       // Realizar inicio de sesión y luego redirigir.
+      const responseLogin= loginUser(form.email, form.password);
+      console.log("responseLogin", responseLogin)
+
       navigation.push("HomeChofer");
     } else if (resultadoValidacionEmail === true && resultadoValidacionPassword !== true) {
       Alert.alert(resultadoValidacionPassword);

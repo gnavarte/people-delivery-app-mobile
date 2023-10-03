@@ -92,6 +92,9 @@ const RegisterScreen = () => {
     ) {
       navigation.push("HomeChofer");
     }
+    else {
+      alert("Por favor complete todos los campos correctamente.");
+    }
   };
 
   useEffect(() => {
