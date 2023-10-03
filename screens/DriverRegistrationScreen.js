@@ -49,7 +49,7 @@ export default function DriverRegistrationScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container}>
+      <ScrollView>
         <Text style={styles.sectionTitle}>Licencia de Conducir</Text>
         <ImagePickerModal
           buttonText="Adjuntar Licencia de Conducir"
@@ -73,7 +73,6 @@ export default function DriverRegistrationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   sectionTitle: {
     fontSize: 18,
@@ -81,9 +80,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   previewImage: {
-    width: 200,
-    height: 200,
-    marginTop: 10,
+    width: "100%",
+    aspectRatio: 16 / 9, // Establece la relación de aspecto 16:9
     borderRadius: 5,
   },
 });
