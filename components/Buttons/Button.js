@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     width: Dimensions.get('window').width * 0.7,
-    height: 60, // Establece la altura deseada
+    height: 60, 
     marginTop: 20,
     borderRadius: 30,
     alignSelf: 'center',
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.get('window').width * 0.05,
   },
   disabledButton: {
-    backgroundColor: '#ccc', // Cambia el color del botón cuando esté desactivado
+    backgroundColor: '#ccc', 
   },
 });
 

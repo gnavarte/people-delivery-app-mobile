@@ -5,6 +5,7 @@ import CustomInput from "../components/TextInputs/CustomInput";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, View, Dimensions, Platform } from "react-native";
 import { baseStyles } from "../themes/theme";
+import {  sendEmail } from "../controller/auth/email";
 
 const initialState = {
   email: "",
@@ -46,8 +47,9 @@ const ForgotPasswordScreen = () => {
     const resultadoValidacionEmail = validateEmail(form.email);
 
     if (resultadoValidacionEmail === true) {
-      // Realizar inicio de sesión y luego redirigir.
-      navigation.push("InputCodeScreen", { email: form.email });
+      const code= Math.floor(Math.random() * (99999 - 10000)) + 1000
+      sendEmail(form.email, code);
+      navigation.push("InputCodeScreen", { email: form.email  , code: code});
     } else {
       Alert.alert(resultadoValidacionEmail || "Valide ambos campos por favor");
     }

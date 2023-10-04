@@ -19,7 +19,7 @@ const LoginScreen = () => {
   const email = route.params.email;
 
   useEffect(() => {
-    // Función para validar el formulario y habilitar o deshabilitar el botón.
+
     const validateForm = () => {
       setIsButtonDisabled(!(form.newPassword && form.confirmPassword));
     };
@@ -63,7 +63,7 @@ const LoginScreen = () => {
       </View>
       <CustomInput placeholder="Nueva Contraseña" value={form.newPassword} onChangeText={(value) => onChange(value, "newPassword")} secureTextEntry={true} />
       <CustomInput placeholder="Confirmar Contraseña" value={form.confirmPassword} onChangeText={(value) => onChange(value, "confirmPassword")} secureTextEntry={true} />
-      <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
+      <PrimaryButton title="Cambiar contraseña" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
     </KeyboardAvoidingView>
   );
 };

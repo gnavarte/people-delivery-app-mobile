@@ -6,7 +6,7 @@ import CodeInput from '../components/TextInputs/CodeInput';
 import { PrimaryButton } from '../components/Buttons/Button';
 import { baseStyles } from '../themes/theme';
 import { useRoute } from '@react-navigation/native';
-
+import {  sendEmail } from "../controller/auth/email";
 const InputCodeScreen = () => {
   const [code, setCode] = useState('');
   const [resendButtonDisabledTime, setResendButtonDisabledTime] = useState(0);
@@ -18,12 +18,19 @@ const InputCodeScreen = () => {
   };
 
   const validateCode = async () => {
-
-    navigation.push('NewPasswordForgotScreen',{ email: email });
+    if (code.length === 5) {
+      if ( code === route.params.code.toString()) { 
+        navigation.push('NewPasswordForgotScreen',{ email: email });
+      }
+      else if (code !== route.params.code.toString()) {
+        Alert.alert("El codigo es incorrecto")
+      }
+      
+    }
   };
 
   const handleResendCode = () => {
-
+    sendEmail(route.params.email, route.params.code);
     const disableTime = 30; 
     setResendButtonDisabledTime(disableTime);
 

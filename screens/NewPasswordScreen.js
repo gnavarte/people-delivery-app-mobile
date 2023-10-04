@@ -26,7 +26,7 @@ const InputCodeScreen = () => {
     }
     else if (actualPassword && newPassword && repeatNewPassword != "")
     {
-      const response =await  updatePassword(email,actualPassword,newPassword);
+      const response =await updatePassword(email,actualPassword,newPassword);
       if (response===200)
       {
         Alert.alert("Tu contraseña fue actualizada correctamente")

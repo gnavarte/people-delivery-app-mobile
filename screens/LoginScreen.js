@@ -35,8 +35,6 @@ const LoginScreen = () => {
     if (!email) {
       return "El correo electrónico no puede estar vacío.";
     }
-
-    // Utiliza una expresión regular para verificar el formato del correo electrónico.
     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     if (!emailPattern.test(email)) {
       return "El correo electrónico no tiene un formato válido.";
