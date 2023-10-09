@@ -1,20 +1,38 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, ScrollView, Image, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, ScrollView, Image, View ,Alert} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import ImagePickerModal from "../components/Modals/ImagePickerModal";
 import { PrimaryButton } from '../components/Buttons/Button';
+import { useForm } from "../hooks/useForm";
+import DatePicker from "../components/TextInputs/DatePicker";
+import CustomInput from "../components/TextInputs/CustomInput";
 
-export default function DriverRegistrationScreen() {
-  const [profileImage, setProfileImage] = useState(null);
-  const [licenseImage, setLicenseImage] = useState(null);
-  const [vehicleRegistrationImage, setVehicleRegistrationImage] = useState(null);
-  const [vehicleFrontImage, setVehicleFrontImage] = useState(null);
-
+export default function InsuranceRegistrationScreen() {
   const navigation = useNavigation();
 
   const navigateToHomeChofer = () => {
-    navigation.push('HomeChofer');
+    navigation.navigate('HomeChofer');
   };
+
+  const initialState = {
+    policyImage: null,
+    supplierName: null,
+    dateOfIssue: null,
+    expirationDate: null,
+  };
+
+  const { form, onChange } = useForm(initialState);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const validateForm = () => {
+    const { licenseImage, dateOfIssue, expirationDate, classOfLicense } = form;
+    return licenseImage && dateOfIssue && expirationDate && classOfLicense;
+  };
+
+  useEffect(() => {
+    const formIsValid = validateForm();
+    setIsFormValid(formIsValid);
+  }, [form]);
 
   const renderImagePreview = (imageUri) => {
     if (imageUri) {
@@ -29,48 +47,24 @@ export default function DriverRegistrationScreen() {
 
   return (
     <View style={styles.container}>
-    <ScrollView style={styles.container}>
-      <View>
-        <Text style={styles.sectionTitle}>Foto de Perfil</Text>
+      <ScrollView>
+        <Text style={styles.sectionTitle}>Seguro del vehículo</Text>
         <ImagePickerModal
-          buttonText="Adjuntar Foto de Perfil"
-          modalTitle="Adjuntar Foto de Perfil"
-          onImageSelected={(uri) => setProfileImage(uri)}
+          buttonText="Adjuntar Poliza de seguro"
+          modalTitle="Adjuntar Poliza de seguro"
+          onImageSelected={(uri) => onChange(uri, "licenseImage")}
         />
-        {renderImagePreview(profileImage)}
-      </View>
-
-      <View>
-        <Text style={styles.sectionTitle}>Licencia de Conducir</Text>
-        <ImagePickerModal
-          buttonText="Adjuntar Licencia de Conducir"
-          modalTitle="Adjuntar Licencia de Conducir"
-          onImageSelected={(uri) => setLicenseImage(uri)}
-        />
-        {renderImagePreview(licenseImage)}
-      </View>
-
-      <View>
-        <Text style={styles.sectionTitle}>Cédula del Vehículo</Text>
-        <ImagePickerModal
-          buttonText="Adjuntar Cédula del Vehículo"
-          modalTitle="Adjuntar Cédula del Vehículo"
-          onImageSelected={(uri) => setVehicleRegistrationImage(uri)}
-        />
-        {renderImagePreview(vehicleRegistrationImage)}
-      </View>
-
-      <View>
-        <Text style={styles.sectionTitle}>Foto Frontal del Vehículo</Text>
-        <ImagePickerModal
-          buttonText="Adjuntar Foto Frontal del Vehículo"
-          modalTitle="Adjuntar Foto Frontal del Vehículo"
-          onImageSelected={(uri) => setVehicleFrontImage(uri)}
-        />
-        {renderImagePreview(vehicleFrontImage)}
-      </View>
-    </ScrollView>
-    <PrimaryButton title="Enviar" onPress={navigateToHomeChofer} backgroundColor="#6372ff" />
+        {renderImagePreview(form.licenseImage)}
+        <Text>Nombre del proveedor:</Text>
+        <CustomInput placeholder="Nombre del proveedor" value={form.supplierName} onChangeText={(value) => onChange(value, "supplierName")} />
+        <Text>Fecha de expedición:</Text>
+        <DatePicker placeholder="Fecha de expedición" selectedDate={form.dateOfIssue} onDateChange={(date) => onChange(date, "dateOfIssue")} />
+        <Text>Fecha de vencimiento:</Text>
+        <DatePicker placeholder="Fecha de vencimiento" selectedDate={form.expirationDate} onDateChange={(date) => onChange(date, "expirationDate")} />
+      </ScrollView>
+      <PrimaryButton title="Omitir por ahora" backgroundColor="grey" onPress={navigateToHomeChofer} />
+      <PrimaryButton title="Continuar" onPress={navigateToHomeChofer} backgroundColor="#5985EB" disabled={!isFormValid} />
+    
     </View>
   );
 }
@@ -78,7 +72,7 @@ export default function DriverRegistrationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 40,
   },
   sectionTitle: {
     fontSize: 18,
@@ -86,9 +80,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   previewImage: {
-    width: 200,
-    height: 200,
-    marginTop: 10,
+    width: "100%",
+    aspectRatio: 16 / 9, // Establece la relación de aspecto 16:9
     borderRadius: 5,
   },
 });

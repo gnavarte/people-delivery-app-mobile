@@ -8,6 +8,8 @@ import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import InputCodeScreen from './screens/InputCodeScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import DriverRegistrationScreen from './screens/DriverRegistrationScreen';
+import InsuranceRegistrationScreen from './screens/InsuranceRegistrationScreen';
+import VehicleRegistrationScreen from './screens/VehicleRegistrationScreen';
 import LoginScreen from './screens/LoginScreen';
 import EditChoferScreen from './screens/EditChoferScreen';
 import HomeChoferScreen from './screens/HomeChoferScreen';
@@ -39,6 +41,8 @@ export default function App() {
         <Stack.Screen name="InputCodeScreen" component={InputCodeScreen}/>
         <Stack.Screen name='RegisterScreen' component={RegisterScreen}/>
         <Stack.Screen name="DriverRegistrationScreen" component={DriverRegistrationScreen}/>
+        <Stack.Screen name="InsuranceRegistrationScreen" component={InsuranceRegistrationScreen}/>
+        <Stack.Screen name="VehicleRegistrationScreen" component={VehicleRegistrationScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
         <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="EditChoferInfoScreen" component={EditChoferScreen}/>

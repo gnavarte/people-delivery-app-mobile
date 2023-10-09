@@ -1,278 +1,122 @@
 [
   {
-    "Fecha": "2023-01-01",
-    "Duracion": 4.5,
-    "Valoracion": 4.2,
-    "Ganancia": 85.00
-  },
-  {
-    "Fecha": "2023-01-02",
-    "Duracion": 3.0,
-    "Valoracion": 4.8,
-    "Ganancia": 70.50
-  },
-  {
-    "Fecha": "2023-01-03",
-    "Duracion": 6.2,
-    "Valoracion": 3.5,
-    "Ganancia": 105.25
-  },
-  {
-    "Fecha": "2023-01-04",
-    "Duracion": 2.8,
-    "Valoracion": 4.0,
-    "Ganancia": 50.75
-  },
-  {
-    "Fecha": "2023-01-05",
-    "Duracion": 5.5,
-    "Valoracion": 4.6,
-    "Ganancia": 95.80
-  },
-  {
-    "Fecha": "2023-01-06",
-    "Duracion": 4.0,
-    "Valoracion": 3.7,
-    "Ganancia": 78.00
-  },
-  {
-    "Fecha": "2023-01-07",
-    "Duracion": 3.2,
-    "Valoracion": 4.4,
-    "Ganancia": 65.25
-  },
-  {
-    "Fecha": "2023-01-08",
-    "Duracion": 4.8,
-    "Valoracion": 4.1,
-    "Ganancia": 90.20
-  },
-  {
-    "Fecha": "2023-01-09",
-    "Duracion": 2.5,
-    "Valoracion": 3.9,
-    "Ganancia": 45.50
-  },
-  {
-    "Fecha": "2023-01-10",
-    "Duracion": 5.0,
-    "Valoracion": 4.7,
-    "Ganancia": 82.75
-  },
-  {
-    "Fecha": "2023-01-11",
-    "Duracion": 4.3,
-    "Valoracion": 4.3,
-    "Ganancia": 75.60
-  },
-  {
-    "Fecha": "2023-01-12",
-    "Duracion": 3.7,
+    "Fecha": "2023-10-01",
+    "Duracion": 65,
     "Valoracion": 4.5,
-    "Ganancia": 68.90
+    "Ganancia": 75
   },
   {
-    "Fecha": "2023-02-01",
-    "Duracion": 5.1,
-    "Valoracion": 4.0,
-    "Ganancia": 88.25
-  },
-  {
-    "Fecha": "2023-02-02",
-    "Duracion": 4.6,
-    "Valoracion": 4.6,
-    "Ganancia": 80.75
-  },
-  {
-    "Fecha": "2023-07-01",
-    "Duracion": 4.5,
-    "Valoracion": 4.2,
-    "Ganancia": 85.00
-  },
-  {
-    "Fecha": "2023-07-02",
-    "Duracion": 3.0,
-    "Valoracion": 4.8,
-    "Ganancia": 70.50
-  },
-  {
-    "Fecha": "2023-07-03",
-    "Duracion": 6.2,
-    "Valoracion": 3.5,
-    "Ganancia": 105.25
-  },
-  {
-    "Fecha": "2023-07-04",
-    "Duracion": 2.8,
-    "Valoracion": 4.0,
-    "Ganancia": 50.75
-  },
-  {
-    "Fecha": "2023-07-05",
-    "Duracion": 5.5,
-    "Valoracion": 4.6,
-    "Ganancia": 95.80
-  },
-  {
-    "Fecha": "2023-07-06",
-    "Duracion": 4.0,
-    "Valoracion": 3.7,
-    "Ganancia": 78.00
-  },
-  {
-    "Fecha": "2023-07-07",
-    "Duracion": 3.2,
-    "Valoracion": 4.4,
-    "Ganancia": 65.25
-  },
-  {
-    "Fecha": "2023-07-08",
-    "Duracion": 4.8,
+    "Fecha": "2023-10-02",
+    "Duracion": 60,
     "Valoracion": 4.1,
-    "Ganancia": 90.20
+    "Ganancia": 82
   },
   {
-    "Fecha": "2023-07-09",
-    "Duracion": 2.5,
-    "Valoracion": 3.9,
-    "Ganancia": 45.50
-  },
-  {
-    "Fecha": "2023-07-10",
-    "Duracion": 5.0,
-    "Valoracion": 4.7,
-    "Ganancia": 82.75
-  },
-  {
-    "Fecha": "2023-07-11",
-    "Duracion": 4.3,
-    "Valoracion": 4.3,
-    "Ganancia": 75.60
-  },
-  {
-    "Fecha": "2023-07-12",
-    "Duracion": 3.7,
-    "Valoracion": 4.5,
-    "Ganancia": 68.90
-  },
-  {
-    "Fecha": "2023-07-13",
-    "Duracion": 5.1,
-    "Valoracion": 4.0,
-    "Ganancia": 88.25
-  },
-  {
-    "Fecha": "2023-07-14",
-    "Duracion": 4.6,
-    "Valoracion": 4.6,
-    "Ganancia": 80.75
-  },
-  {
-    "Fecha": "2023-07-15",
-    "Duracion": 3.9,
+    "Fecha": "2023-10-03",
+    "Duracion": 45,
     "Valoracion": 3.8,
-    "Ganancia": 72.40
+    "Ganancia": 94
   },
   {
-    "Fecha": "2023-07-16",
-    "Duracion": 4.5,
+    "Fecha": "2023-10-04",
+    "Duracion": 55,
     "Valoracion": 4.2,
-    "Ganancia": 85.00
+    "Ganancia": 65
   },
   {
-    "Fecha": "2023-07-17",
-    "Duracion": 3.0,
-    "Valoracion": 4.4,
-    "Ganancia": 62.75
-  },
-  {
-    "Fecha": "2023-09-16",
-    "Duracion": 4.5,
-    "Valoracion": 4.2,
-    "Ganancia": 85.00
-  },
-  {
-    "Fecha": "2023-09-15",
-    "Duracion": 3.0,
-    "Valoracion": 4.8,
-    "Ganancia": 70.50
-  },
-  {
-    "Fecha": "2023-09-14",
-    "Duracion": 6.2,
-    "Valoracion": 3.5,
-    "Ganancia": 105.25
-  },
-  {
-    "Fecha": "2023-09-13",
-    "Duracion": 2.8,
-    "Valoracion": 4.0,
-    "Ganancia": 50.75
-  },
-  {
-    "Fecha": "2023-09-12",
-    "Duracion": 5.5,
-    "Valoracion": 4.6,
-    "Ganancia": 95.80
-  },
-  {
-    "Fecha": "2023-09-11",
-    "Duracion": 4.0,
-    "Valoracion": 3.7,
-    "Ganancia": 78.00
-  },
-  {
-    "Fecha": "2023-09-10",
-    "Duracion": 3.2,
-    "Valoracion": 4.4,
-    "Ganancia": 65.25
-  },
-  {
-    "Fecha": "2023-09-09",
-    "Duracion": 4.8,
-    "Valoracion": 4.1,
-    "Ganancia": 90.20
-  },
-  {
-    "Fecha": "2023-09-08",
-    "Duracion": 2.5,
-    "Valoracion": 3.9,
-    "Ganancia": 45.50
-  },
-  {
-    "Fecha": "2023-09-07",
-    "Duracion": 5.0,
-    "Valoracion": 4.7,
-    "Ganancia": 82.75
-  },
-  {
-    "Fecha": "2023-09-06",
-    "Duracion": 4.3,
+    "Fecha": "2023-10-05",
+    "Duracion": 40,
     "Valoracion": 4.3,
-    "Ganancia": 75.60
+    "Ganancia": 78
   },
   {
-    "Fecha": "2023-09-05",
-    "Duracion": 3.7,
-    "Valoracion": 4.5,
-    "Ganancia": 68.90
+    "Fecha": "2023-10-06",
+    "Duracion": 68,
+    "Valoracion": 4.7,
+    "Ganancia": 69
   },
   {
-    "Fecha": "2023-09-04",
-    "Duracion": 5.1,
+    "Fecha": "2023-10-07",
+    "Duracion": 45,
+    "Valoracion": 4.4,
+    "Ganancia": 88
+  },
+  {
+    "Fecha": "2023-10-08",
+    "Duracion": 62,
+    "Valoracion": 3.9,
+    "Ganancia": 45
+  },
+  {
+    "Fecha": "2023-10-09",
+    "Duracion": 50,
     "Valoracion": 4.0,
-    "Ganancia": 88.25
+    "Ganancia": 90
   },
   {
-    "Fecha": "2023-09-03",
-    "Duracion": 4.6,
+    "Fecha": "2023-10-10",
+    "Duracion": 62,
     "Valoracion": 4.6,
-    "Ganancia": 80.75
+    "Ganancia": 77
   },
   {
-    "Fecha": "2023-09-02",
-    "Duracion": 3.9,
+    "Fecha": "2023-10-11",
+    "Duracion": 58,
+    "Valoracion": 4.3,
+    "Ganancia": 72
+  },
+  {
+    "Fecha": "2023-10-12",
+    "Duracion": 48,
+    "Valoracion": 4.1,
+    "Ganancia": 65
+  },
+  {
+    "Fecha": "2023-10-13",
+    "Duracion": 63,
+    "Valoracion": 4.7,
+    "Ganancia": 80
+  },
+  {
+    "Fecha": "2023-10-14",
+    "Duracion": 53,
+    "Valoracion": 4.5,
+    "Ganancia": 75
+  },
+  {
+    "Fecha": "2023-10-15",
+    "Duracion": 46,
     "Valoracion": 3.8,
-    "Ganancia": 72.40
+    "Ganancia": 62
+  },
+  {
+    "Fecha": "2023-10-16",
+    "Duracion": 68,
+    "Valoracion": 4.6,
+    "Ganancia": 88
+  },
+  {
+    "Fecha": "2023-10-17",
+    "Duracion": 55,
+    "Valoracion": 4.2,
+    "Ganancia": 78
+  },
+  {
+    "Fecha": "2023-10-18",
+    "Duracion": 49,
+    "Valoracion": 4.0,
+    "Ganancia": 70
+  },
+  {
+    "Fecha": "2023-10-19",
+    "Duracion": 59,
+    "Valoracion": 4.4,
+    "Ganancia": 85
+  },
+  {
+    "Fecha": "2023-10-20",
+    "Duracion": 57,
+    "Valoracion": 4.3,
+    "Ganancia": 82
   }
 ]

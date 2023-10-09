@@ -1,20 +1,45 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, ScrollView, Image, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, ScrollView, Image, View ,Alert} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import ImagePickerModal from "../components/Modals/ImagePickerModal";
 import { PrimaryButton } from '../components/Buttons/Button';
+import { useForm } from "../hooks/useForm";
+import DatePicker from "../components/TextInputs/DatePicker";
+import CustomInput from "../components/TextInputs/CustomInput";
 
-export default function DriverRegistrationScreen() {
-  const [profileImage, setProfileImage] = useState(null);
-  const [licenseImage, setLicenseImage] = useState(null);
-  const [vehicleRegistrationImage, setVehicleRegistrationImage] = useState(null);
-  const [vehicleFrontImage, setVehicleFrontImage] = useState(null);
-
+export default function VehicleRegistrationScreen() {
   const navigation = useNavigation();
 
-  const navigateToHomeChofer = () => {
-    navigation.push('HomeChofer');
+  const navigateToInsuranceRegistration = () => {
+    navigation.navigate('InsuranceRegistrationScreen');
   };
+
+  const initialState = {
+    vehicleImage: null,
+    vehicleBrand: null,
+    vehicleModel: null,
+    vehicleColor: null,
+    vehicleYear: null,
+    vehiclePlate: null,
+    vehicleMileage: null,
+    engineNumber: null,
+    chassisNumber: null,
+    vtvImage: null,
+    vtvExpiration: null,
+  };
+
+  const { form, onChange } = useForm(initialState);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const validateForm = () => {
+    const { licenseImage, dateOfIssue, expirationDate, classOfLicense } = form;
+    return licenseImage && dateOfIssue && expirationDate && classOfLicense;
+  };
+
+  useEffect(() => {
+    const formIsValid = validateForm();
+    setIsFormValid(formIsValid);
+  }, [form]);
 
   const renderImagePreview = (imageUri) => {
     if (imageUri) {
@@ -29,48 +54,41 @@ export default function DriverRegistrationScreen() {
 
   return (
     <View style={styles.container}>
-    <ScrollView style={styles.container}>
-      <View>
-        <Text style={styles.sectionTitle}>Foto de Perfil</Text>
+      <ScrollView>
+        <Text style={styles.sectionTitle}>Datos del vehículo</Text>
         <ImagePickerModal
-          buttonText="Adjuntar Foto de Perfil"
-          modalTitle="Adjuntar Foto de Perfil"
-          onImageSelected={(uri) => setProfileImage(uri)}
+          buttonText="Adjuntar Imagen del vehículo"
+          modalTitle="Adjuntar Imagen del vehículo"
+          onImageSelected={(uri) => onChange(uri, "licenseImage")}
         />
-        {renderImagePreview(profileImage)}
-      </View>
-
-      <View>
-        <Text style={styles.sectionTitle}>Licencia de Conducir</Text>
+        {renderImagePreview(form.licenseImage)}
+        <Text>Marca:</Text>
+        <CustomInput placeholder="Marca del vehículo" value={form.vehicleBrand} onChangeText={(value) => onChange(value, "vehicleBrand")} />
+        <Text>Modelo:</Text>
+        <CustomInput placeholder="Modelo del vehículo" value={form.vehicleModel} onChangeText={(value) => onChange(value, "vehicleModel")} />
+        <Text>Color:</Text>
+        <CustomInput placeholder="Color del vehículo" value={form.vehicleColor} onChangeText={(value) => onChange(value, "vehicleColor")} />
+        <Text>Año:</Text>
+        <CustomInput placeholder="Año del vehículo" value={form.vehicleYear} onChangeText={(value) => onChange(value, "vehicleYear")} />
+        <Text>Patente:</Text>
+        <CustomInput placeholder="Patente del vehículo" value={form.vehiclePlate} onChangeText={(value) => onChange(value, "vehiclePlate")} />
+        <Text>Kilometraje:</Text>
+        <CustomInput placeholder="Kilometraje del vehículo" value={form.vehicleMileage} onChangeText={(value) => onChange(value, "vehicleMileage")} />
+        <Text>Número de motor:</Text>
+        <CustomInput placeholder="Número de motor" value={form.engineNumber} onChangeText={(value) => onChange(value, "engineNumber")} />
+        <Text>Número de chasis:</Text>
+        <CustomInput placeholder="Número de chasis" value={form.chassisNumber} onChangeText={(value) => onChange(value, "chassisNumber")} />
+        <Text>Fecha de vencimiento de VTV:</Text>
+        <DatePicker placeholder="Fecha de vencimiento de VTV" selectedDate={form.vtvExpiration} onDateChange={(date) => onChange(date, "vtvExpiration")} />
         <ImagePickerModal
-          buttonText="Adjuntar Licencia de Conducir"
-          modalTitle="Adjuntar Licencia de Conducir"
-          onImageSelected={(uri) => setLicenseImage(uri)}
+          buttonText="Adjuntar VTV"
+          modalTitle="Adjuntar VTV"
+          onImageSelected={(uri) => onChange(uri, "vtvImage")}
         />
-        {renderImagePreview(licenseImage)}
-      </View>
-
-      <View>
-        <Text style={styles.sectionTitle}>Cédula del Vehículo</Text>
-        <ImagePickerModal
-          buttonText="Adjuntar Cédula del Vehículo"
-          modalTitle="Adjuntar Cédula del Vehículo"
-          onImageSelected={(uri) => setVehicleRegistrationImage(uri)}
-        />
-        {renderImagePreview(vehicleRegistrationImage)}
-      </View>
-
-      <View>
-        <Text style={styles.sectionTitle}>Foto Frontal del Vehículo</Text>
-        <ImagePickerModal
-          buttonText="Adjuntar Foto Frontal del Vehículo"
-          modalTitle="Adjuntar Foto Frontal del Vehículo"
-          onImageSelected={(uri) => setVehicleFrontImage(uri)}
-        />
-        {renderImagePreview(vehicleFrontImage)}
-      </View>
-    </ScrollView>
-    <PrimaryButton title="Enviar" onPress={navigateToHomeChofer} backgroundColor="#6372ff" />
+      </ScrollView>
+      <PrimaryButton title="Omitir por ahora" backgroundColor="grey" onPress={navigateToInsuranceRegistration} />
+      <PrimaryButton title="Continuar" onPress={navigateToInsuranceRegistration} backgroundColor="#5985EB" disabled={!isFormValid} />
+    
     </View>
   );
 }
@@ -78,7 +96,7 @@ export default function DriverRegistrationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 40,
   },
   sectionTitle: {
     fontSize: 18,
@@ -86,9 +104,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   previewImage: {
-    width: 200,
-    height: 200,
-    marginTop: 10,
+    width: "100%",
+    aspectRatio: 16 / 9, // Establece la relación de aspecto 16:9
     borderRadius: 5,
   },
 });
