@@ -16,6 +16,7 @@ export const getAutos = async (email) => {
             },
             body: JSON.stringify(data),
         });
+        console.log(response)
         const datas = await response.json();
         return datas;
     }
