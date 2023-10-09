@@ -19,7 +19,6 @@ const LoginScreen = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
-    // Función para validar el formulario y habilitar o deshabilitar el botón.
     const validateForm = () => {
       setIsButtonDisabled(!(form.email && form.password));
     };
@@ -68,7 +67,7 @@ const LoginScreen = () => {
     if (resultadoValidacionEmail === true && resultadoValidacionPassword === true) {
  
       const responseLogin=await loginUser(form.email, form.password);
-
+      console.log(responseLogin)
       if (responseLogin !== "") {
         var email=form.email
         await AsyncStorage.setItem("email", email);
@@ -81,10 +80,14 @@ const LoginScreen = () => {
         console.log('Ubicación actual:', location.coords);
         var latitude = location.coords.latitude;
         var longitude = location.coords.longitude;
+
         navigation.navigate('HomeChofer', {
           latitude: latitude,
           longitude: longitude,
         });
+      }
+      else if (responseLogin === "") {
+        Alert.alert("Usuario o contraseña incorrectos");
       }
     } else if (resultadoValidacionEmail === true && resultadoValidacionPassword !== true) {
       Alert.alert(resultadoValidacionPassword);

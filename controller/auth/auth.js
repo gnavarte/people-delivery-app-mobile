@@ -18,10 +18,16 @@ export const loginUser = async (email, password) => {
         },
         body: JSON.stringify(data),
       });
-  
-      const datas = await response.json();  
-      const token=datas.token;
-      return token;
+      console.log(response)
+
+      if (response.status===200){
+        const datas = await response.json();  
+        const token=datas.token;
+        return token;
+      }
+      else{
+        return "";
+      }
     } catch (error) {
       console.error('Error during login:', error);
       Alert.alert('' + error);   

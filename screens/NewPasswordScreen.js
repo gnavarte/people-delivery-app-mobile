@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { updatePassword } from '../controller/auth/auth';
 import { useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const InputCodeScreen = () => {
   const [actualPassword , setActualPassword] = useState('');
   const [newPassword , setNewPassword] = useState('');
@@ -30,7 +31,10 @@ const InputCodeScreen = () => {
       if (response===200)
       {
         Alert.alert("Tu contraseña fue actualizada correctamente")
-        navigation.push("HomeChofer");
+        const latitude = await AsyncStorage.getItem('latitude');
+        const longitude = await AsyncStorage.getItem('longitude');
+
+        navigation.push("LoginScreen");
       }
       else
       {
