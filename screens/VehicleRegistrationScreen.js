@@ -86,7 +86,6 @@ export default function VehicleRegistrationScreen() {
           onImageSelected={(uri) => onChange(uri, "vtvImage")}
         />
       </ScrollView>
-      <PrimaryButton title="Omitir por ahora" backgroundColor="grey" onPress={navigateToInsuranceRegistration} />
       <PrimaryButton title="Continuar" onPress={navigateToInsuranceRegistration} backgroundColor="#5985EB" disabled={!isFormValid} />
     
     </View>

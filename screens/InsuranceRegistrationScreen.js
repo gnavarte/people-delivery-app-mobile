@@ -62,7 +62,6 @@ export default function InsuranceRegistrationScreen() {
         <Text>Fecha de vencimiento:</Text>
         <DatePicker placeholder="Fecha de vencimiento" selectedDate={form.expirationDate} onDateChange={(date) => onChange(date, "expirationDate")} />
       </ScrollView>
-      <PrimaryButton title="Omitir por ahora" backgroundColor="grey" onPress={navigateToHomeChofer} />
       <PrimaryButton title="Continuar" onPress={navigateToHomeChofer} backgroundColor="#5985EB" disabled={!isFormValid} />
     
     </View>

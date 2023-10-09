@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, Alert } from "react-native";
 import { baseStyles } from "../themes/theme";
 import { useForm } from "../hooks/useForm";
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -95,7 +95,9 @@ const RegisterScreen = () => {
     ) {
       const responseChofer=await registerUser(form.nombre, form.apellido, form.domicilio, form.fechaNacimiento, form.DNI, form.telefono, form.email, form.password);
       if (responseChofer!== ""){
+        Alert.alert("Su usuario fue registrado correctamente")
         await AsyncStorage.setItem("email", form.email);
+        
         navigation.push("DriverRegistrationScreen");
       }
     }

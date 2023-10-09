@@ -20,19 +20,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    width: Dimensions.get('window').width * 0.7, // Ajusta el ancho del botón según tus necesidades
-    height: 60, // Establece la altura deseada
+    width: Dimensions.get('window').width * 0.7, 
+    height: 60, 
     marginTop: 20,
     borderRadius: 30,
     alignSelf: 'center',
   },
   iconContainer: {
-    width: '15%', // Porcentaje del ancho del botón para el contenedor del icono
-    aspectRatio: 1, // Para mantener la relación de aspecto del icono
+    width: '15%', 
+    aspectRatio: 1, 
     marginRight: 10,
   },
   icon: {
-    flex: 1, // Para que el icono ocupe todo el espacio del contenedor
+    flex: 1, 
     width: undefined,
     height: undefined,
   },

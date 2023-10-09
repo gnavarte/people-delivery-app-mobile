@@ -6,13 +6,22 @@ import { PrimaryButton } from '../components/Buttons/Button';
 import { useForm } from "../hooks/useForm";
 import DatePicker from "../components/TextInputs/DatePicker";
 import CustomInput from "../components/TextInputs/CustomInput";
-
+import * as Location from 'expo-location';
 export default function DriverRegistrationScreen() {
 
   const navigation = useNavigation();
 
-  const navigateToVehicleRegistration = () => {
-    navigation.navigate('VehicleRegistrationScreen');
+  const navigateToVehicleRegistration = async  () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permiso de ubicación', 'No se otorgó permiso para acceder a la ubicación.', [{ text: 'OK' }]);
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    console.log('Ubicación actual:', location.coords);
+    var latitude = location.coords.latitude;
+    var longitude = location.coords.longitude;
+    navigation.navigate('HomeChofer',{latitude,longitude});
   };
 
   const initialState = {
