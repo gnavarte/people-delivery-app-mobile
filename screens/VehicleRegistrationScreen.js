@@ -32,8 +32,8 @@ export default function VehicleRegistrationScreen() {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const validateForm = () => {
-    const { licenseImage, dateOfIssue, expirationDate, classOfLicense } = form;
-    return licenseImage && dateOfIssue && expirationDate && classOfLicense;
+    const { vehicleImage, vehicleBrand, vehicleModel, vehicleColor, vehicleYear, vehiclePlate, vehicleMileage, engineNumber, chassisNumber, vtvImage, vtvExpiration } = form;
+    return vehicleImage && vehicleBrand && vehicleModel && vehicleColor && vehicleYear && vehiclePlate && vehicleMileage && engineNumber && chassisNumber && vtvImage && vtvExpiration;
   };
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function VehicleRegistrationScreen() {
         <ImagePickerModal
           buttonText="Adjuntar Imagen del vehículo"
           modalTitle="Adjuntar Imagen del vehículo"
-          onImageSelected={(uri) => onChange(uri, "licenseImage")}
+          onImageSelected={(uri) => onChange(uri, "vehicleImage")}
         />
         {renderImagePreview(form.licenseImage)}
         <Text>Marca:</Text>
@@ -85,6 +85,7 @@ export default function VehicleRegistrationScreen() {
           modalTitle="Adjuntar VTV"
           onImageSelected={(uri) => onChange(uri, "vtvImage")}
         />
+        {renderImagePreview(form.vtvImage)}
       </ScrollView>
       <PrimaryButton title="Continuar" onPress={navigateToInsuranceRegistration} backgroundColor="#5985EB" disabled={!isFormValid} />
     

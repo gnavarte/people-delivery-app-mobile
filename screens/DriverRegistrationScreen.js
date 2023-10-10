@@ -11,17 +11,8 @@ export default function DriverRegistrationScreen() {
 
   const navigation = useNavigation();
 
-  const navigateToVehicleRegistration = async  () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      Alert.alert('Permiso de ubicación', 'No se otorgó permiso para acceder a la ubicación.', [{ text: 'OK' }]);
-      return;
-    }
-    let location = await Location.getCurrentPositionAsync({});
-    console.log('Ubicación actual:', location.coords);
-    var latitude = location.coords.latitude;
-    var longitude = location.coords.longitude;
-    navigation.navigate('HomeChofer',{latitude,longitude});
+  const navigateToVehicleRegistration = () => {
+    navigation.navigate('VehicleRegistrationScreen');
   };
 
   const initialState = {
