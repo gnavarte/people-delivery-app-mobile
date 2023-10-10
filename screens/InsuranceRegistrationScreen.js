@@ -10,8 +10,8 @@ import CustomInput from "../components/TextInputs/CustomInput";
 export default function InsuranceRegistrationScreen() {
   const navigation = useNavigation();
 
-  const navigateToHomeChofer = () => {
-    navigation.navigate('HomeChofer');
+  const navigateToDriverPhoto = () => {
+    navigation.navigate('DriverPhotoScreen');
   };
 
   const initialState = {
@@ -25,8 +25,8 @@ export default function InsuranceRegistrationScreen() {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const validateForm = () => {
-    const { licenseImage, dateOfIssue, expirationDate, classOfLicense } = form;
-    return licenseImage && dateOfIssue && expirationDate && classOfLicense;
+    const { policyImage, supplierName, dateOfIssue, expirationDate } = form;
+    return policyImage && supplierName && dateOfIssue && expirationDate;
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function InsuranceRegistrationScreen() {
         <ImagePickerModal
           buttonText="Adjuntar Poliza de seguro"
           modalTitle="Adjuntar Poliza de seguro"
-          onImageSelected={(uri) => onChange(uri, "licenseImage")}
+          onImageSelected={(uri) => onChange(uri, "policyImage")}
         />
         {renderImagePreview(form.licenseImage)}
         <Text>Nombre del proveedor:</Text>
@@ -62,7 +62,7 @@ export default function InsuranceRegistrationScreen() {
         <Text>Fecha de vencimiento:</Text>
         <DatePicker placeholder="Fecha de vencimiento" selectedDate={form.expirationDate} onDateChange={(date) => onChange(date, "expirationDate")} />
       </ScrollView>
-      <PrimaryButton title="Continuar" onPress={navigateToHomeChofer} backgroundColor="#5985EB" disabled={!isFormValid} />
+      <PrimaryButton title="Continuar" onPress={navigateToDriverPhoto} backgroundColor="#5985EB" disabled={!isFormValid} />
     
     </View>
   );
