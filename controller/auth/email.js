@@ -11,7 +11,7 @@ export const sendEmail = async (email,code) => {
       };
       emailjs.init('l_Wam9RV1OhZxbQT5');
       emailjs
-        .send('service_livppe4', 'template_dbwl4u4', templateParams, 'l_Wam9RV1OhZxbQT5')
+        .send('service_fg28m5o', 'template_dbwl4u4', templateParams, 'l_Wam9RV1OhZxbQT5')
         .then((result) => {
           console.log('Email sent successfully:', result.text);
         })
@@ -29,7 +29,7 @@ export const sendSupportEmail = async (email,subject,content) => {
     };
     emailjs.init('l_Wam9RV1OhZxbQT5');
     emailjs
-      .send('service_livppe4', 'template_ptnd8eo', templateParams, 'l_Wam9RV1OhZxbQT5')
+      .send('service_fg28m5o', 'template_ptnd8eo', templateParams, 'l_Wam9RV1OhZxbQT5')
       .then((result) => {
         console.log('Email sent successfully:', result.text);
       })

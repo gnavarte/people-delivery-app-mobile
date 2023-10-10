@@ -150,8 +150,9 @@ export const getUserEmail = async (email) => {
 export const updateChofer = async (userID, updatedFields) => {
     try {
         const data = {
-            ...updatedFields // Utilizamos el spread operator (...) para incluir los campos actualizados
+            ...updatedFields 
         };
+        console.log(data)
         const response = await fetch(`${API_BASE_URL}/api/users/${userID}`, {
             method: 'PATCH',
             mode: 'cors',
