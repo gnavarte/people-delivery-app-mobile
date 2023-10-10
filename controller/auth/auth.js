@@ -137,8 +137,8 @@ export const getUserEmail = async (email) => {
         if (response.status===201)
         {
             const datas = await response.json();
-            console.log(datas.userID)
-            return datas.userID;
+            console.log(datas.user._id)
+            return datas.user._id;
         }
     }
     catch (error) {
@@ -167,6 +167,34 @@ export const updateChofer = async (userID, updatedFields) => {
         console.error('Error durante la actualización:', error);
         Alert.alert('' + error);   
         throw new Error('Ocurrió un error durante la actualización');
+    }
+}
+export const getStatusChofer = async (email) => {
+    try {
+        const data = {
+            email: email,
+        };
+        console.log("probando")
+        const response = await fetch(`${API_BASE_URL}/api/users/getByEmail`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+            'Content-Type': 'application/json',
+            'Origin': '*', 
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.status===201)
+        {
+            const datas = await response.json();
+            return datas.user;
+        }
+    }
+    catch (error) {
+        console.error('Error during register:', error);
+        Alert.alert('' + error);   
+        throw new Error('An error occurred during register');
     }
 }
 

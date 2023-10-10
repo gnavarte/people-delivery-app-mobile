@@ -34,7 +34,10 @@ const InputCodeScreen = () => {
         const latitude = await AsyncStorage.getItem('latitude');
         const longitude = await AsyncStorage.getItem('longitude');
 
-        navigation.push("LoginScreen");
+        navigation.navigate('HomeChofer', {
+          latitude: latitude,
+          longitude: longitude,
+        });
       }
       else
       {

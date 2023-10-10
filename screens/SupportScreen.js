@@ -6,6 +6,8 @@ import PrimaryButton from '../components/Buttons/Button';
 import CustomInput from '../components/TextInputs/CustomInput';
 import DeleteConfirmationModal from '../components/Modals/Modal';
 import TextInputCustomizedLarge from '../components/TextInputs/TextInputSupport';
+import { sendSupportEmail } from '../controller/auth/email';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const SupportScreen = () => {
     const navigation = useNavigation();
   
@@ -25,7 +27,7 @@ const SupportScreen = () => {
         return true;
     }
 
-    const enviarConsulta = (consulta,motivo) => {
+    const enviarConsulta = async  (consulta,motivo) => {
         var booleanConsulta=validateConsulta(consulta)
         var booleanMotivo=validateMotivo(motivo)
         if (booleanConsulta!= true && booleanMotivo != true){
@@ -39,8 +41,10 @@ const SupportScreen = () => {
         }
         else if (booleanConsulta && booleanMotivo === true)
         {
-          Alert.alert("Consulta enviada")
-          navigation.push("HomeChofer")
+          const email= await AsyncStorage.getItem('email');
+          response= await sendSupportEmail(email,motivo,consulta)
+          Alert.alert("Su consulta fue enviada con exito. pronto recibira novedades por correo")
+          navigation.goBack();
         }
     }
 
