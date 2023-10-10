@@ -7,6 +7,7 @@ import CustomInput from '../components/TextInputs/CustomInput';
 import DeleteConfirmationModal from '../components/Modals/Modal';
 import { useRoute } from '@react-navigation/native';
 import { getUserEmail  ,updateChofer} from '../controller/auth/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const EditChoferScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
@@ -34,22 +35,25 @@ const EditChoferScreen = () => {
       if (!nombre && !apellido && !domicilio) {
         Alert.alert("No se realizó ningún cambio.");
       } else {
+        const email = await AsyncStorage.getItem('email');
+
         const userID = await getUserEmail(email);
         const updateFields = {};
     
         if (nombre) {
-          updateFields.nombre = nombre;
+          updateFields.firstName = nombre;
         }
     
         if (apellido) {
-          updateFields.apellido = apellido;
+          updateFields.lastName = apellido;
         }
     
         if (domicilio) {
-          updateFields.domicilio = domicilio;
+          updateFields.address = domicilio;
         }
     
         const userUpdate = await updateChofer(userID, updateFields);
+        console.log(userUpdate)
       }
     };
     

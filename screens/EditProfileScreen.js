@@ -9,7 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const EditProfileScreen = () => {
   const navigation = useNavigation();
   const [userEmail, setUserEmail] = useState('');
-
+  const [choferName , setChoferName] = useState('');
+  const [choferImage , setChoferImage] = useState('');
   const closeAccount = () => {
     Alert.alert(
       "Cerrar sesión",
@@ -48,8 +49,12 @@ const EditProfileScreen = () => {
     const getUserEmailFromStorage = async () => {
       try {
         const email = await AsyncStorage.getItem('email');
+        const name = await AsyncStorage.getItem('name');
+        const image = await AsyncStorage.getItem('imageProfile');
         if (email !== null) {
           setUserEmail(email);
+          setChoferName(name);
+          setChoferImage(image);
         }
       } catch (error) {
         console.error(error);
@@ -66,12 +71,12 @@ const EditProfileScreen = () => {
       <View style={styles.titleContainer}>
         <Image
           source={{
-            uri: 'https://res.cloudinary.com/dgvlsnajj/image/upload/v1693921729/PeopleDelivery/ProfilePicture_vbryxo.webp',
+            uri: choferImage,
           }}
           style={styles.image}
         />
       </View>
-      <Text style={styles.descriptionText}>Juan Perez</Text>
+      <Text style={styles.descriptionText}>{choferName}</Text>
       <Text style={styles.descriptionText}>{userEmail}</Text>
 
       <View style={styles.rectangle}>
