@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import TravelMap from "../components/TravelMap";
 import StartButton from "../components/Buttons/StartButton";
@@ -22,7 +22,8 @@ const touristAttractions = [
 
 const MainScreen = () => {
   const [isTravelRequestModalVisible, setIsTravelRequestModalVisible] = useState(false);
-  const [isDriverVisible, setIsDriverVisible] = useState(true);
+  const [isDriverVisible, setIsDriverVisible] = useState(false);
+  const [isOpeningModal, setIsOpeningModal] = useState(false);
 
   const passenger = { username: "John Doe", location: { latitude: -34.6037, longitude: -58.3816 }, destination: { latitude: -34.6098, longitude: -58.3704 } };
   const [destination, setDestination] = useState(null);
@@ -35,11 +36,20 @@ const MainScreen = () => {
     console.log("Travel completed");
   };
 
-  const handleOnPress = () => {
+  const openTravelRequestModal = () => {
+    setIsOpeningModal(true);
     toggleDriverVisibility();
-
-    if (isDriverVisible) {
+    setTimeout(() => {
       setIsTravelRequestModalVisible(true);
+      setIsOpeningModal(false);
+    }, 5000); // 5 segundos
+  };
+
+  const handleOnPress = () => {
+    if (isDriverVisible) {
+      setIsDriverVisible(false);
+    } else {
+      openTravelRequestModal();
     }
   };
 
@@ -63,8 +73,8 @@ const MainScreen = () => {
       <TravelMap destination={destination} onTravelComplete={handleOnTravelComplete} />
       <View style={styles.buttonContainer}>
         <StartButton
-          title={isDriverVisible ? 'Iniciar' : 'Detener'}
-          backgroundColor={isDriverVisible ? '#6372ff' : '#d66060'}
+          title={isDriverVisible ? 'Detener' : 'Iniciar'}
+          backgroundColor={isDriverVisible ? '#d66060' : '#6372ff'}
           onPress={handleOnPress}
         />
       </View>
