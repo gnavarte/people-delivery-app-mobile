@@ -19,6 +19,7 @@ import MisAutosScreen from './screens/MisAutosScreen';
 import NewPasswordForgotScreen from './screens/NewPasswordForgotScreen';
 import SupportScreen from './screens/SupportScreen';
 import DriverPhotoScreen from './screens/DriverPhotoScreen';
+import MainScreen from './screens/MainScreen';
 
 import TabBar from './components/TabBar/TabBar';
 
@@ -54,6 +55,7 @@ export default function App() {
         <Stack.Screen name="NewPasswordForgotScreen" component={NewPasswordForgotScreen} />
         <Stack.Screen name="SupportScreen" component={SupportScreen} />
         <Stack.Screen name="DriverPhotoScreen" component={DriverPhotoScreen} />
+        <Stack.Screen name="MainScreen" component={MainScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 

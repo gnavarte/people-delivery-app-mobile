@@ -26,6 +26,10 @@ const InitialScreen = () => {
     navigation.push('DriverPhotoScreen');
   };
 
+  const navigateToMainScreen = () => {
+    navigation.push('MainScreen');
+  };
+
   const navigateToHomeChofer = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -59,7 +63,7 @@ const InitialScreen = () => {
         />
         <ButtonWithIcon
           title="Continuar con Facebook"
-          onPress={navigateToDriverPhotoScreen}
+          onPress={navigateToMainScreen}
           backgroundColor="#6372ff"
           icon={require('../assets/FacebookIcon.png')}
         />
