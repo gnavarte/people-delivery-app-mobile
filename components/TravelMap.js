@@ -5,9 +5,8 @@ import axios from 'axios';
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 
-const TravelMap = () => {
+const TravelMap = ({ destination }) => {
   const [origin, setOrigin] = useState();
-  const [destination, setDestination] = useState({ latitude: -34.6085, longitude: -58.3705 });
   const [route, setRoute] = useState([]);
   const [routeLoaded, setRouteLoaded] = useState(false);
   const [position, setPosition] = useState(0);
