@@ -13,41 +13,49 @@ const TravelMap = ({ destination, onTravelComplete }) => {
   const mapRef = useRef(null);
   const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
 
-  useEffect(() => {
-    const getCurrentLocation = async () => {
-      try {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        if (status === 'granted') {
-          const location = await Location.getCurrentPositionAsync({});
-          const { latitude, longitude } = location.coords;
-          setOrigin({ latitude, longitude });
-
-          if (destination) {
-            axios
-              .get(
-                `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${longitude},${latitude}&end=${destination.longitude},${destination.latitude}`
-              )
-              .then((response) => {
-                const coordinates = response.data.features[0].geometry.coordinates;
-                const newCoordinates = coordinates.map((coordinate) => ({
-                  latitude: coordinate[1],
-                  longitude: coordinate[0],
-                }));
-                setRoute(newCoordinates);
-                setRouteLoaded(true);
-              })
-              .catch((error) => {
-                console.error('Error al obtener la ruta:', error);
-              });
-          }
-        }
-      } catch (error) {
-        console.error('Error al obtener la ubicación del dispositivo:', error);
+  const getCurrentLocation = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === 'granted') {
+        const location = await Location.getCurrentPositionAsync({});
+        const { latitude, longitude } = location.coords;
+        setOrigin({ latitude, longitude });
       }
-    };
+    } catch (error) {
+      console.error('Error al obtener la ubicación del dispositivo:', error);
+    }
+  };
 
+  const calculateRoute = () => {
+    if (origin && destination) {
+      axios
+        .get(
+          `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${origin.longitude},${origin.latitude}&end=${destination.longitude},${destination.latitude}`
+        )
+        .then((response) => {
+          const coordinates = response.data.features[0].geometry.coordinates;
+          const newCoordinates = coordinates.map((coordinate) => ({
+            latitude: coordinate[1],
+            longitude: coordinate[0],
+          }));
+          setRoute(newCoordinates);
+          setRouteLoaded(true);
+        })
+        .catch((error) => {
+          console.error('Error al obtener la ruta:', error);
+        });
+    }
+  };
+
+  useEffect(() => {
     getCurrentLocation();
-  }, [destination, apiKey]);
+  }, []);
+
+  useEffect(() => {
+    if (destination) {
+      calculateRoute();
+    }
+  }, [destination, origin]);
 
   useEffect(() => {
     if (routeLoaded) {
@@ -68,7 +76,10 @@ const TravelMap = ({ destination, onTravelComplete }) => {
           clearInterval(timer);
         };
       } else {
-        onTravelComplete(); // Llama a la función onTravelComplete en lugar de mostrar un Alert
+        setOrigin(destination);
+        setRoute([]);
+        setRouteLoaded(false);
+        onTravelComplete();
       }
     }
   }, [position, route, routeLoaded]);
