@@ -10,8 +10,8 @@ const TravelMap = ({ destination }) => {
   const [route, setRoute] = useState([]);
   const [routeLoaded, setRouteLoaded] = useState(false);
   const [position, setPosition] = useState(0);
+  const mapRef = useRef(null); // Referencia al componente MapView
   const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
-  const carMarkerRef = useRef(null);
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -24,17 +24,19 @@ const TravelMap = ({ destination }) => {
 
           if (destination) {
             axios
-              .get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${longitude},${latitude}&end=${destination.longitude},${destination.latitude}`)
-              .then(response => {
+              .get(
+                `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${longitude},${latitude}&end=${destination.longitude},${destination.latitude}`
+              )
+              .then((response) => {
                 const coordinates = response.data.features[0].geometry.coordinates;
-                const newCoordinates = coordinates.map(coordinate => ({
+                const newCoordinates = coordinates.map((coordinate) => ({
                   latitude: coordinate[1],
                   longitude: coordinate[0],
                 }));
                 setRoute(newCoordinates);
                 setRouteLoaded(true);
               })
-              .catch(error => {
+              .catch((error) => {
                 console.error('Error al obtener la ruta:', error);
               });
           }
@@ -48,10 +50,19 @@ const TravelMap = ({ destination }) => {
   }, [destination, apiKey]);
 
   useEffect(() => {
-    if (routeLoaded) { // Comprueba si la ruta está cargada
+    if (routeLoaded) {
       if (position < route.length - 1) {
         const timer = setInterval(() => {
-          setPosition(prevPosition => prevPosition + 1);
+          setPosition((prevPosition) => prevPosition + 1);
+          // Actualiza la región del mapa para seguir al automóvil
+          if (mapRef.current) {
+            mapRef.current.animateToRegion({
+              latitude: route[position].latitude,
+              longitude: route[position].longitude,
+              latitudeDelta: 0.01, // Ajusta estos valores según tus necesidades
+              longitudeDelta: 0.01,
+            });
+          }
         }, 1000);
 
         return () => {
@@ -67,6 +78,7 @@ const TravelMap = ({ destination }) => {
     <View style={styles.container}>
       {origin && (
         <MapView
+          ref={mapRef} // Asigna la referencia al componente MapView
           style={styles.map}
           initialRegion={{
             latitude: origin.latitude,
@@ -77,12 +89,10 @@ const TravelMap = ({ destination }) => {
         >
           {position < route.length - 1 && (
             <Marker coordinate={route[position]}>
-              <Ionicons name="car" size={24} color="blue" ref={carMarkerRef} />
+              <Ionicons name="car-sport" size={24} color="black" />
             </Marker>
           )}
-          {destination && (
-            <Marker coordinate={destination} title="Destino" />
-          )}
+          {destination && <Marker coordinate={destination} title="Destino" />}
           {routeLoaded && (
             <Polyline coordinates={route.slice(position)} strokeWidth={4} strokeColor="blue" />
           )}
