@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import axios from 'axios';
 import * as Location from 'expo-location';
@@ -10,7 +10,9 @@ const TravelMap = () => {
   const [destination, setDestination] = useState({ latitude: -34.6085, longitude: -58.3705 });
   const [route, setRoute] = useState([]);
   const [routeLoaded, setRouteLoaded] = useState(false);
+  const [position, setPosition] = useState(0);
   const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
+  const carMarkerRef = useRef(null);
 
   useEffect(() => {
     const getCurrentLocation = async () => {
@@ -44,6 +46,22 @@ const TravelMap = () => {
     getCurrentLocation();
   }, [destination, apiKey]);
 
+  useEffect(() => {
+    if (routeLoaded) { // Comprueba si la ruta está cargada
+      if (position < route.length - 1) {
+        const timer = setInterval(() => {
+          setPosition(prevPosition => prevPosition + 1);
+        }, 1000);
+
+        return () => {
+          clearInterval(timer);
+        };
+      } else {
+        Alert.alert('Destino alcanzado', 'Has llegado a tu destino.');
+      }
+    }
+  }, [position, route, routeLoaded]);
+
   return (
     <View style={styles.container}>
       {origin && (
@@ -56,12 +74,23 @@ const TravelMap = () => {
             longitudeDelta: Math.abs(origin.longitude - destination.longitude) + 0.1,
           }}
         >
-          <Marker coordinate={origin} title="Origen">
-            <Ionicons name="car" size={24} color="blue" />
-          </Marker>
+          {position < route.length - 1 && (
+            <Marker coordinate={route[position]}>
+              <Ionicons name="car" size={24} color="blue" ref={carMarkerRef} />
+            </Marker>
+          )}
           <Marker coordinate={destination} title="Destino" />
-          {routeLoaded && <Polyline coordinates={route} strokeWidth={4} strokeColor="blue" />}
+          {routeLoaded && (
+            <Polyline coordinates={route.slice(position)} strokeWidth={4} strokeColor="blue" />
+          )}
         </MapView>
+      )}
+      {position < route.length - 1 && (
+        <View style={styles.carInfoContainer}>
+          <Text style={styles.carInfoText}>
+            Coordenadas: {route[position].latitude.toFixed(4)}, {route[position].longitude.toFixed(4)}
+          </Text>
+        </View>
       )}
     </View>
   );
@@ -76,6 +105,12 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '70%',
+  },
+  carInfoContainer: {
+    alignItems: 'center',
+  },
+  carInfoText: {
+    fontSize: 16,
   },
 });
 
