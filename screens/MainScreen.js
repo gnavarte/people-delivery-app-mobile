@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import TravelMap from "../components/TravelMap";
+import StartButton from "../components/Buttons/StartButton";
+import TravelRequestModal from "../components/Modals/TravelRequestModal";
 
 const touristAttractions = [
   { name: "Obelisco", latitude: -34.6037, longitude: -58.3816 },
@@ -13,28 +15,66 @@ const touristAttractions = [
   { name: "Palermo Soho", latitude: -34.5909, longitude: -58.4298 },
   { name: "Tigre", latitude: -34.4262, longitude: -58.5796 },
   { name: "El Caminito", latitude: -34.6345, longitude: -58.3625 },
-  // Agrega más atracciones turísticas aquí
+  { name: "Museo Nacional de Bellas Artes", latitude: -34.5895, longitude: -58.3942 },
+  { name: "Planetario Galileo Galilei", latitude: -34.5713, longitude: -58.4232 },
+  { name: "Malba - Museo de Arte Latinoamericano", latitude: -34.5779, longitude: -58.4175 },
 ];
 
 const MainScreen = () => {
+  const [isTravelRequestModalVisible, setIsTravelRequestModalVisible] = useState(false);
+  const [isDriverVisible, setIsDriverVisible] = useState(true);
+
+  const passenger = { username: "John Doe", location: { latitude: -34.6037, longitude: -58.3816 }, destination: { latitude: -34.6098, longitude: -58.3704 } };
   const [destination, setDestination] = useState(null);
 
-  const setRandomDestination = () => {
-    // Elige una atracción turística aleatoria
-    const randomIndex = Math.floor(Math.random() * touristAttractions.length);
-    const randomAttraction = touristAttractions[randomIndex];
-    setDestination(randomAttraction);
+  const toggleDriverVisibility = () => {
+    setIsDriverVisible((prevVisibility) => !prevVisibility);
   };
 
   const handleOnTravelComplete = () => {
     console.log("Travel completed");
   };
 
+  const handleOnPress = () => {
+    toggleDriverVisibility();
+
+    if (isDriverVisible) {
+      setIsTravelRequestModalVisible(true);
+    }
+  };
+
+  const handleOnAccept = () => {
+    setRandomDestination();
+    setIsTravelRequestModalVisible(false);
+  };
+
+  const handleOnDeny = () => {
+    setIsTravelRequestModalVisible(false);
+  };
+
+  const setRandomDestination = () => {
+    const randomIndex = Math.floor(Math.random() * touristAttractions.length);
+    const randomAttraction = touristAttractions[randomIndex];
+    setDestination(randomAttraction);
+  };
+
   return (
     <View style={styles.container}>
       <TravelMap destination={destination} onTravelComplete={handleOnTravelComplete} />
-      {destination && (<Text style={{ textAlign: "center" }}>{destination.name}</Text>)}
-      <Button title="Choose random destination" onPress={setRandomDestination} />
+      <View style={styles.buttonContainer}>
+        <StartButton
+          title={isDriverVisible ? 'Iniciar' : 'Detener'}
+          backgroundColor={isDriverVisible ? '#6372ff' : '#d66060'}
+          onPress={handleOnPress}
+        />
+      </View>
+      <TravelRequestModal
+        isVisible={isTravelRequestModalVisible}
+        username={passenger.username}
+        location={passenger.location}
+        onAccept={handleOnAccept}
+        onDeny={handleOnDeny}
+      />
     </View>
   );
 };
@@ -42,6 +82,12 @@ const MainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    alignSelf: 'center',
+    zIndex: 1,
   },
 });
 
