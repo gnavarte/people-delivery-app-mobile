@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import axios from 'axios';
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 
-const TravelMap = ({ destination }) => {
+const TravelMap = ({ destination, onTravelComplete }) => {
   const [origin, setOrigin] = useState();
   const [route, setRoute] = useState([]);
   const [routeLoaded, setRouteLoaded] = useState(false);
   const [position, setPosition] = useState(0);
-  const mapRef = useRef(null); // Referencia al componente MapView
+  const mapRef = useRef(null);
   const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
 
   useEffect(() => {
@@ -54,12 +54,11 @@ const TravelMap = ({ destination }) => {
       if (position < route.length - 1) {
         const timer = setInterval(() => {
           setPosition((prevPosition) => prevPosition + 1);
-          // Actualiza la región del mapa para seguir al automóvil
           if (mapRef.current) {
             mapRef.current.animateToRegion({
               latitude: route[position].latitude,
               longitude: route[position].longitude,
-              latitudeDelta: 0.01, // Ajusta estos valores según tus necesidades
+              latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             });
           }
@@ -69,19 +68,18 @@ const TravelMap = ({ destination }) => {
           clearInterval(timer);
         };
       } else {
-        Alert.alert('Destino alcanzado', 'Has llegado a tu destino.');
+        onTravelComplete(); // Llama a la función onTravelComplete en lugar de mostrar un Alert
       }
     }
   }, [position, route, routeLoaded]);
 
-  // Lógica para mostrar la ubicación del automóvil, basada en la posición en la ruta o la ubicación de origen
   const carLocation = routeLoaded ? route[position] : origin;
 
   return (
     <View style={styles.container}>
       {origin && (
         <MapView
-          ref={mapRef} // Asigna la referencia al componente MapView
+          ref={mapRef}
           style={styles.map}
           initialRegion={{
             latitude: origin.latitude,
@@ -95,7 +93,7 @@ const TravelMap = ({ destination }) => {
           </Marker>
           {destination && <Marker coordinate={destination} title="Destino" />}
           {routeLoaded && (
-            <Polyline coordinates={route.slice(position)} strokeWidth={4} strokeColor="blue" />
+            <Polyline coordinates={route.slice(position)} strokeWidth={4} strokeColor="black" />
           )}
         </MapView>
       )}

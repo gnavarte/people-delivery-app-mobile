@@ -26,9 +26,13 @@ const MainScreen = () => {
     setDestination(randomAttraction);
   };
 
+  const handleOnTravelComplete = () => {
+    console.log("Travel completed");
+  };
+
   return (
     <View style={styles.container}>
-      <TravelMap destination={destination} />
+      <TravelMap destination={destination} onTravelComplete={handleOnTravelComplete} />
       {destination && (<Text style={{ textAlign: "center" }}>{destination.name}</Text>)}
       <Button title="Choose random destination" onPress={setRandomDestination} />
     </View>
