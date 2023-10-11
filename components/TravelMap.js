@@ -74,6 +74,9 @@ const TravelMap = ({ destination }) => {
     }
   }, [position, route, routeLoaded]);
 
+  // Lógica para mostrar la ubicación del automóvil, basada en la posición en la ruta o la ubicación de origen
+  const carLocation = routeLoaded ? route[position] : origin;
+
   return (
     <View style={styles.container}>
       {origin && (
@@ -87,11 +90,9 @@ const TravelMap = ({ destination }) => {
             longitudeDelta: 0.1,
           }}
         >
-          {position < route.length - 1 && (
-            <Marker coordinate={route[position]}>
-              <Ionicons name="car-sport" size={24} color="black" />
-            </Marker>
-          )}
+          <Marker coordinate={carLocation}>
+            <Ionicons name="car-sport" size={24} color="black" />
+          </Marker>
           {destination && <Marker coordinate={destination} title="Destino" />}
           {routeLoaded && (
             <Polyline coordinates={route.slice(position)} strokeWidth={4} strokeColor="blue" />
@@ -101,7 +102,7 @@ const TravelMap = ({ destination }) => {
       {position < route.length - 1 && (
         <View style={styles.carInfoContainer}>
           <Text style={styles.carInfoText}>
-            Coordenadas: {route[position].latitude.toFixed(4)}, {route[position].longitude.toFixed(4)}
+            Coordenadas: {carLocation.latitude.toFixed(4)}, {carLocation.longitude.toFixed(4)}
           </Text>
         </View>
       )}
