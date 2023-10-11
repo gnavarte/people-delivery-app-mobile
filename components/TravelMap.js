@@ -22,20 +22,22 @@ const TravelMap = ({ destination }) => {
           const { latitude, longitude } = location.coords;
           setOrigin({ latitude, longitude });
 
-          axios
-            .get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${longitude},${latitude}&end=${destination.longitude},${destination.latitude}`)
-            .then(response => {
-              const coordinates = response.data.features[0].geometry.coordinates;
-              const newCoordinates = coordinates.map(coordinate => ({
-                latitude: coordinate[1],
-                longitude: coordinate[0],
-              }));
-              setRoute(newCoordinates);
-              setRouteLoaded(true);
-            })
-            .catch(error => {
-              console.error('Error al obtener la ruta:', error);
-            });
+          if (destination) {
+            axios
+              .get(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${longitude},${latitude}&end=${destination.longitude},${destination.latitude}`)
+              .then(response => {
+                const coordinates = response.data.features[0].geometry.coordinates;
+                const newCoordinates = coordinates.map(coordinate => ({
+                  latitude: coordinate[1],
+                  longitude: coordinate[0],
+                }));
+                setRoute(newCoordinates);
+                setRouteLoaded(true);
+              })
+              .catch(error => {
+                console.error('Error al obtener la ruta:', error);
+              });
+          }
         }
       } catch (error) {
         console.error('Error al obtener la ubicación del dispositivo:', error);
@@ -67,10 +69,10 @@ const TravelMap = ({ destination }) => {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: (origin.latitude + destination.latitude) / 2,
-            longitude: (origin.longitude + destination.longitude) / 2,
-            latitudeDelta: Math.abs(origin.latitude - destination.latitude) + 0.1,
-            longitudeDelta: Math.abs(origin.longitude - destination.longitude) + 0.1,
+            latitude: origin.latitude,
+            longitude: origin.longitude,
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1,
           }}
         >
           {position < route.length - 1 && (
@@ -78,7 +80,9 @@ const TravelMap = ({ destination }) => {
               <Ionicons name="car" size={24} color="blue" ref={carMarkerRef} />
             </Marker>
           )}
-          <Marker coordinate={destination} title="Destino" />
+          {destination && (
+            <Marker coordinate={destination} title="Destino" />
+          )}
           {routeLoaded && (
             <Polyline coordinates={route.slice(position)} strokeWidth={4} strokeColor="blue" />
           )}

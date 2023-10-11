@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Button } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import TravelMap from "../components/TravelMap";
 
 const touristAttractions = [
@@ -28,13 +28,9 @@ const MainScreen = () => {
 
   return (
     <View style={styles.container}>
-      {destination ? (
-        <TravelMap destination={destination} />
-      ) : (
-        <View style={styles.buttonContainer}>
-          <Button title="Seleccionar Destino Turístico" onPress={setRandomDestination} />
-        </View>
-      )}
+      <TravelMap destination={destination} />
+      {destination && (<Text style={{ textAlign: "center" }}>{destination.name}</Text>)}
+      <Button title="Choose random destination" onPress={setRandomDestination} />
     </View>
   );
 };
@@ -42,10 +38,6 @@ const MainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "center",
   },
 });
 
