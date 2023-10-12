@@ -19,6 +19,7 @@ const MainScreen = () => {
   };
 
   const handleOnTravelComplete = () => {
+    // Modal para cobrar
     console.log("Travel completed");
     setIsButtonDisabled(false); // Habilitar el botón
   };
