@@ -8,6 +8,7 @@ import axios from "axios";
 const MainScreen = () => {
   const [isTravelRequestModalVisible, setIsTravelRequestModalVisible] = useState(false);
   const [isDriverVisible, setIsDriverVisible] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Nuevo estado
 
   const passenger = { username: "John Doe", location: { latitude: -34.581389, longitude: -58.414167 }, destination: { latitude: -34.581389, longitude: -58.414167 } };
   const [destination, setDestination] = useState(null);
@@ -19,6 +20,7 @@ const MainScreen = () => {
 
   const handleOnTravelComplete = () => {
     console.log("Travel completed");
+    setIsButtonDisabled(false); // Habilitar el botón
   };
 
   const openTravelRequestModal = () => {
@@ -39,6 +41,7 @@ const MainScreen = () => {
   const handleOnAccept = () => {
     setDestination(passenger.destination);
     setIsTravelRequestModalVisible(false);
+    setIsButtonDisabled(true); // Deshabilitar el botón
   };
 
   const handleOnDeny = () => {
@@ -75,6 +78,7 @@ const MainScreen = () => {
           title={isDriverVisible ? 'Detener' : 'Iniciar'}
           backgroundColor={isDriverVisible ? '#d66060' : '#6372ff'}
           onPress={handleOnPress}
+          disabled={isButtonDisabled} // Pasar el estado como prop
         />
       </View>
       <TravelRequestModal
