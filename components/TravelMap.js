@@ -9,6 +9,7 @@ const TravelMap = ({ destination, onTravelComplete }) => {
   const [origin, setOrigin] = useState();
   const [route, setRoute] = useState([]);
   const [routeLoaded, setRouteLoaded] = useState(false);
+  const [isDestinationMarkerVisible, setIsDestinationMarkerVisible] = useState(true);
   const [position, setPosition] = useState(0);
   const mapRef = useRef(null);
   const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
@@ -77,6 +78,7 @@ const TravelMap = ({ destination, onTravelComplete }) => {
         };
       } else {
         setOrigin(destination);
+        setIsDestinationMarkerVisible(false);
         setRoute([]);
         setRouteLoaded(false);
         onTravelComplete();
@@ -102,18 +104,11 @@ const TravelMap = ({ destination, onTravelComplete }) => {
           <Marker coordinate={carLocation}>
             <Ionicons name="car-sport" size={24} color="black" />
           </Marker>
-          {destination && <Marker coordinate={destination} title="Destino" />}
+          {destination && isDestinationMarkerVisible && (<Marker coordinate={destination} title="Destino" />)}
           {routeLoaded && (
             <Polyline coordinates={route.slice(position)} strokeWidth={4} strokeColor="black" />
           )}
         </MapView>
-      )}
-      {position < route.length - 1 && (
-        <View style={styles.carInfoContainer}>
-          <Text style={styles.carInfoText}>
-            Coordenadas: {carLocation.latitude.toFixed(4)}, {carLocation.longitude.toFixed(4)}
-          </Text>
-        </View>
       )}
     </View>
   );
