@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 
 const TravelRequestModal = ({ isVisible, username, location, onAccept, onDeny }) => {
   return (

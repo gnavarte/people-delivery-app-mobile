@@ -3,30 +3,15 @@ import { View, Text, StyleSheet } from "react-native";
 import TravelMap from "../components/TravelMap";
 import StartButton from "../components/Buttons/StartButton";
 import TravelRequestModal from "../components/Modals/TravelRequestModal";
-
-const touristAttractions = [
-  { name: "Obelisco", latitude: -34.6037, longitude: -58.3816 },
-  { name: "Casa Rosada", latitude: -34.6098, longitude: -58.3704 },
-  { name: "Teatro Colón", latitude: -34.6017, longitude: -58.3836 },
-  { name: "Recoleta Cemetery", latitude: -34.5885, longitude: -58.3974 },
-  { name: "Puerto Madero", latitude: -34.6100, longitude: -58.3630 },
-  { name: "La Bombonera", latitude: -34.6350, longitude: -58.3633 },
-  { name: "Jardín Japonés", latitude: -34.5893, longitude: -58.3975 },
-  { name: "Palermo Soho", latitude: -34.5909, longitude: -58.4298 },
-  { name: "Tigre", latitude: -34.4262, longitude: -58.5796 },
-  { name: "El Caminito", latitude: -34.6345, longitude: -58.3625 },
-  { name: "Museo Nacional de Bellas Artes", latitude: -34.5895, longitude: -58.3942 },
-  { name: "Planetario Galileo Galilei", latitude: -34.5713, longitude: -58.4232 },
-  { name: "Malba - Museo de Arte Latinoamericano", latitude: -34.5779, longitude: -58.4175 },
-];
+import axios from "axios";
 
 const MainScreen = () => {
   const [isTravelRequestModalVisible, setIsTravelRequestModalVisible] = useState(false);
   const [isDriverVisible, setIsDriverVisible] = useState(false);
-  const [isOpeningModal, setIsOpeningModal] = useState(false);
 
-  const passenger = { username: "John Doe", location: { latitude: -34.6037, longitude: -58.3816 }, destination: { latitude: -34.6098, longitude: -58.3704 } };
+  const passenger = { username: "John Doe", location: { latitude: -34.581389, longitude: -58.414167 }, destination: { latitude: -34.581389, longitude: -58.414167 } };
   const [destination, setDestination] = useState(null);
+  const [destinationDetails, setDestinationDetails] = useState(null);
 
   const toggleDriverVisibility = () => {
     setIsDriverVisible((prevVisibility) => !prevVisibility);
@@ -37,11 +22,9 @@ const MainScreen = () => {
   };
 
   const openTravelRequestModal = () => {
-    setIsOpeningModal(true);
     toggleDriverVisibility();
     setTimeout(() => {
       setIsTravelRequestModalVisible(true);
-      setIsOpeningModal(false);
     }, 5000); // 5 segundos
   };
 
@@ -54,7 +37,7 @@ const MainScreen = () => {
   };
 
   const handleOnAccept = () => {
-    setRandomDestination();
+    setDestination(passenger.destination);
     setIsTravelRequestModalVisible(false);
   };
 
@@ -62,11 +45,27 @@ const MainScreen = () => {
     setIsTravelRequestModalVisible(false);
   };
 
-  const setRandomDestination = () => {
-    const randomIndex = Math.floor(Math.random() * touristAttractions.length);
-    const randomAttraction = touristAttractions[randomIndex];
-    setDestination(randomAttraction);
+  const getStreetAndLocality = async (latitude, longitude) => {
+    const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
+
+    try {
+      const response = await axios.get('https://api.openrouteservice.org/geocode/reverse?api_key=' + apiKey + '&point.lon=' + longitude + '&point.lat=' + latitude);
+
+      const firstFeature = response.data.features[0];
+      if (firstFeature) {
+        const details = firstFeature.properties.label;
+        setDestinationDetails(details);
+      }
+    } catch (error) {
+      console.error("Error al obtener información de geocodificación inversa:", error);
+    }
   };
+
+  useEffect(() => {
+    if (passenger.destination) {
+      getStreetAndLocality(passenger.destination.latitude, passenger.destination.longitude);
+    }
+  }, [passenger.destination]);
 
   return (
     <View style={styles.container}>
@@ -81,7 +80,7 @@ const MainScreen = () => {
       <TravelRequestModal
         isVisible={isTravelRequestModalVisible}
         username={passenger.username}
-        location={passenger.location}
+        location={destinationDetails}
         onAccept={handleOnAccept}
         onDeny={handleOnDeny}
       />
