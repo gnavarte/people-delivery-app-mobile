@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions ,TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions ,TouchableOpacity,Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import ModalDeleteCar from '../Modals/ModalDeleteCar';
 
@@ -16,7 +16,8 @@ const handleCloseModal = () => {
 }
 
 const handleConfirmDelete = () => {
-  console.log("eliminando")
+  console.log('Datos del auto:', auto);
+  Alert.alert("Se ha enviado una peticion para eliminar el auto, revisa tu correo!")
   setShowModal(false);
 }
 
@@ -26,10 +27,10 @@ return (
             uri: "https://res.cloudinary.com/dgvlsnajj/image/upload/v1697208654/car_estandar1_icvwko.png",
           }}style={styles.imagen} />
       <View style={styles.info}>
-        <Text style={styles.textos}>{auto.marca}</Text>
+        <Text style={styles.textos}>Marca: {auto.marca}</Text>
         <Text style={styles.textos}>Año: {auto.año}</Text>
-        <Text style={styles.textos}>Modelo: {auto.modelo}</Text>
-        <Text style={styles.textos}>Viajes: {auto.color}</Text>
+        <Text style={styles.textos}>Color: {auto.color}</Text>
+        <Text style={styles.textos}>Patente: {auto.dominio}</Text>
         <TouchableOpacity onPress={handleDeleteIconPress}>
           <AntDesign name="closecircle" size={24} color="#7F44C2" />
         </TouchableOpacity>
