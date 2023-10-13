@@ -22,7 +22,9 @@ const handleConfirmDelete = () => {
 
 return (
   <View style={styles.card}>
-      <Image source={auto.imagen} style={styles.imagen} />
+      <Image source={{
+            uri: "https://res.cloudinary.com/dgvlsnajj/image/upload/v1697208654/car_estandar1_icvwko.png",
+          }}style={styles.imagen} />
       <View style={styles.info}>
         <Text style={styles.textos}>{auto.marca}</Text>
         <Text style={styles.textos}>Año: {auto.año}</Text>

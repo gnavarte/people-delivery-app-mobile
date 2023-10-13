@@ -8,6 +8,8 @@ import DeleteConfirmationModal from '../components/Modals/Modal';
 import { useRoute } from '@react-navigation/native';
 import { getUserEmail  ,updateChofer} from '../controller/auth/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteUser } from '../controller/auth/auth';
+
 const EditChoferScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
@@ -21,9 +23,16 @@ const EditChoferScreen = () => {
       setShowModal(false);
     };
   
-    const confirmDelete = () => {
-      console.log('Deleting...');
-      closeModal();
+    const confirmDelete = async () => {
+      const email = await AsyncStorage.getItem('email');
+      const userID = await getUserEmail(email);
+      const userDelete = await deleteUser(userID);
+      if (userDelete==200) {
+        Alert.alert("Usuario eliminado exitosamente")
+        navigation.navigate('HomeScreen');
+        closeModal();
+      }
+      
     };
     const openModalEliminar = () => {
       setShowModal(true);
