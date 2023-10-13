@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import TravelMap from "../components/TravelMap";
 import StartButton from "../components/Buttons/StartButton";
 import TravelRequestModal from "../components/Modals/TravelRequestModal";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getStatusChofer } from "../controller/auth/auth";
 
 const MainScreen = () => {
   const [isTravelRequestModalVisible, setIsTravelRequestModalVisible] = useState(false);
   const [isDriverVisible, setIsDriverVisible] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Nuevo estado
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const [driverStatus, setDriverStatus] = useState(null);
 
   const passenger = { username: "John Doe", location: { latitude: -34.581389, longitude: -58.414167 }, destination: { latitude: -34.581389, longitude: -58.414167 } };
   const [destination, setDestination] = useState(null);
@@ -19,30 +23,57 @@ const MainScreen = () => {
   };
 
   const handleOnTravelComplete = () => {
-    // Modal para cobrar
     console.log("Travel completed");
-    setIsButtonDisabled(false); // Habilitar el botón
+    setIsButtonDisabled(false);
   };
 
   const openTravelRequestModal = () => {
     toggleDriverVisibility();
     setTimeout(() => {
       setIsTravelRequestModalVisible(true);
-    }, 5000); // 5 segundos
+    }, 5000);
   };
 
   const handleOnPress = () => {
     if (isDriverVisible) {
-      setIsDriverVisible(false);
+      Alert.alert(
+        "Confirmar Detener",
+        "¿Estás seguro de que deseas detener el viaje?",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Detener",
+            onPress: () => {
+              setIsDriverVisible(false);
+            },
+          },
+        ]
+      );
     } else {
-      openTravelRequestModal();
+      Alert.alert(
+        "Confirmar Iniciar",
+        "¿Estás seguro de que deseas iniciar el viaje?",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Iniciar",
+            onPress: openTravelRequestModal,
+          },
+        ]
+      );
     }
   };
 
   const handleOnAccept = () => {
     setDestination(passenger.destination);
     setIsTravelRequestModalVisible(false);
-    setIsButtonDisabled(true); // Deshabilitar el botón
+    setIsButtonDisabled(true);
   };
 
   const handleOnDeny = () => {
@@ -66,6 +97,27 @@ const MainScreen = () => {
   };
 
   useEffect(() => {
+    const getDriverStatus = async () => {
+      try {
+        const email = await AsyncStorage.getItem("email");
+        console.log("email", email);
+        const driverUser = await getStatusChofer(email);
+        const status = driverUser.status;
+        setDriverStatus(status);
+        console.log("status", status);
+        const fullName = driverUser.firstName + " " + driverUser.lastName;
+        await AsyncStorage.setItem("name", fullName);
+        const imageProfile = driverUser.picturePath;
+        await AsyncStorage.setItem("imageProfile", imageProfile);
+      }
+      catch (error) {
+        console.log("Error:", error);
+      }
+    };
+    getDriverStatus();
+  }, []);
+
+  useEffect(() => {
     if (passenger.destination) {
       getStreetAndLocality(passenger.destination.latitude, passenger.destination.longitude);
     }
@@ -73,15 +125,20 @@ const MainScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Bienvenido a People Delivery</Text>
       <TravelMap destination={destination} onTravelComplete={handleOnTravelComplete} />
-      <View style={styles.buttonContainer}>
+      {driverStatus === false ? (
+        <TouchableOpacity style={styles.button} onPress={navigateLoadData}>
+          <Text>Por favor, carga los datos faltantes para empezar a usar la aplicación</Text>
+        </TouchableOpacity>
+      ) : (
         <StartButton
-          title={isDriverVisible ? 'Detener' : 'Iniciar'}
-          backgroundColor={isDriverVisible ? '#d66060' : '#6372ff'}
-          onPress={handleOnPress}
-          disabled={isButtonDisabled} // Pasar el estado como prop
-        />
-      </View>
+        title={isDriverVisible ? 'Detener' : 'Iniciar'}
+        backgroundColor={isDriverVisible ? '#d66060' : '#6372ff'}
+        onPress={handleOnPress}
+        disabled={isButtonDisabled}
+      />
+      )}
       <TravelRequestModal
         isVisible={isTravelRequestModalVisible}
         username={passenger.username}
@@ -97,11 +154,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    alignSelf: 'center',
-    zIndex: 1,
+  title: {
+    textAlign: 'center',
+    fontSize: 25,
   },
 });
 
