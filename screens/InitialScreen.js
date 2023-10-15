@@ -1,14 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { PrimaryButton } from '../components/Buttons/Button';
 import { ButtonWithIcon } from '../components/Buttons/ButtonWithIcon';
-import { useRoute } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { signInWithCredential, GoogleAuthProvider, onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
+
+WebBrowser.maybeCompleteAuthSession();
 
 const InitialScreen = () => {
+
   const navigation = useNavigation();
+
+  const [isLogged, setIsLogged] = useState(false);
+  const [userData, setUserData] = useState(null);
+
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      setIsLogged(false);
+      setUserData(null);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId: '716124601907-fm1bob9s7bfrhnml15l42r98vjbtonb4.apps.googleusercontent.com',
+  });
+    
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUserData(user);
+          setIsLogged(true);
+        }
+      });
+    }
+  }, [response]);
 
   const navigateToRegister = () => {
     navigation.push('RegisterScreen');
@@ -24,6 +60,10 @@ const InitialScreen = () => {
 
   const navigateToDriverPhotoScreen = () => {
     navigation.push('DriverPhotoScreen');
+  };
+
+  const navigateToMainScreen = () => {
+    navigation.push('MainScreen');
   };
 
   const navigateToHomeChofer = async () => {
@@ -59,15 +99,15 @@ const InitialScreen = () => {
         />
         <ButtonWithIcon
           title="Continuar con Facebook"
-          onPress={navigateToDriverPhotoScreen}
+          onPress={navigateToMainScreen}
           backgroundColor="#6372ff"
           icon={require('../assets/FacebookIcon.png')}
         />
         <ButtonWithIcon
           title="Continuar con Google"
-          onPress={navigateToHomeChofer}
           backgroundColor="#6372ff"
           icon={require('../assets/GoogleIcon.png')}
+          onPress={() => promptAsync()}
         />
         <PrimaryButton
           title="Iniciar sesión"

@@ -1,12 +1,11 @@
 {
   "expo": {
     "name": "DriverPeopleDelivery",
-    "slug": "DriverPeopleDelivery",
+    "slug": "driverpeopledelivery",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -22,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.proguade.driverpeopledelivery"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6e17d99e-68ee-46a7-8c74-5e5d52bf4e9f"
+      }
     }
   }
 }
