@@ -40,7 +40,7 @@ const TabBar = () => {
         iconName = 'settings';
         break;
       default:
-        iconName = 'home'; // Icono predeterminado en caso de que no coincida ningún nombre de ruta
+        iconName = 'home'; 
         break;
     }
 

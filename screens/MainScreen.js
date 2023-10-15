@@ -38,7 +38,7 @@ const MainScreen = () => {
     if (isDriverVisible) {
       Alert.alert(
         "Confirmar Detener",
-        "¿Estás seguro de que deseas detener el viaje?",
+        "¿Estás seguro de que deseas dejar de recibir viajes?",
         [
           {
             text: "Cancelar",
@@ -55,7 +55,7 @@ const MainScreen = () => {
     } else {
       Alert.alert(
         "Confirmar Iniciar",
-        "¿Estás seguro de que deseas iniciar el viaje?",
+        "¿Estás seguro de que deseas empezar a recibir viajes?",
         [
           {
             text: "Cancelar",

@@ -14,15 +14,22 @@ const TravelMap = ({ destination, onTravelComplete }) => {
   const mapRef = useRef(null);
   const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
 
-  const getCurrentLocation = async () => {
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status === 'granted') {
-        const location = await Location.getCurrentPositionAsync({});
-        const { latitude, longitude } = location.coords;
-        setOrigin({ latitude, longitude });
-      }
-    } catch (error) {
+  const getCurrentLocation = () => {
+    try
+     {
+      // const { status } = await Location.requestForegroundPermissionsAsync();
+      // if (status === 'granted') {
+      //   // const location = await Location.getCurrentPositionAsync({});
+      //   // const { latitude, longitude } = location.coords;
+      //   var latitude= -34.506063
+      //   var longitude= -58.517957
+      //   setOrigin({ latitude, longitude });
+      // }
+      var latitude= -34.506063
+      var longitude= -58.517957
+      setOrigin({ latitude, longitude });
+    } 
+    catch (error) {
       console.error('Error al obtener la ubicación del dispositivo:', error);
     }
   };

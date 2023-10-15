@@ -98,12 +98,6 @@ const InitialScreen = () => {
           backgroundColor="#6372ff"
         />
         <ButtonWithIcon
-          title="Continuar con Facebook"
-          onPress={navigateToMainScreen}
-          backgroundColor="#6372ff"
-          icon={require('../assets/FacebookIcon.png')}
-        />
-        <ButtonWithIcon
           title="Continuar con Google"
           backgroundColor="#6372ff"
           icon={require('../assets/GoogleIcon.png')}

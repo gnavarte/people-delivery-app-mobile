@@ -8,7 +8,7 @@ const TravelRequestModal = ({ isVisible, username, location, onAccept, onDeny })
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>{`${username} ha solicitado un viaje a ${location}`}</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, { backgroundColor: '#6372ff' }]} onPress={onDeny}>
+            <TouchableOpacity style={[styles.button, { backgroundColor: 'red' }]} onPress={onDeny}>
               <Text style={styles.buttonText}>Denegar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, { backgroundColor: '#6372ff' }]} onPress={onAccept}>

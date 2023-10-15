@@ -78,9 +78,10 @@ const LoginScreen = () => {
         }
         let location = await Location.getCurrentPositionAsync({});
         console.log('Ubicación actual:', location.coords);
-        var latitude = location.coords.latitude;
-        var longitude = location.coords.longitude;
-
+        // var latitude = location.coords.latitude;
+        // var longitude = location.coords.longitude;
+        var latitude= -34.506063
+        var longitude= -58.517957
         navigation.navigate('HomeChofer', {
           latitude: latitude,
           longitude: longitude,
