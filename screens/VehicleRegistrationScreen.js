@@ -6,11 +6,16 @@ import { PrimaryButton } from '../components/Buttons/Button';
 import { useForm } from "../hooks/useForm";
 import DatePicker from "../components/TextInputs/DatePicker";
 import CustomInput from "../components/TextInputs/CustomInput";
-
+import { createAuto } from "../controller/auth/autos";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function VehicleRegistrationScreen() {
   const navigation = useNavigation();
 
-  const navigateToInsuranceRegistration = () => {
+  const navigateToInsuranceRegistration = async () => {
+    Alert.alert(form.vehicleYear)
+    const email = await AsyncStorage.getItem('email');
+    const response= await createAuto(form.vehicleYear, form.vehiclePlate, form.engineNumber, form.vehicleBrand, form.vehicleModel, form.vehicleColor, form.chassisNumber, form.vtvExpiration, form.vehicleMileage, email);
+    console.log(response)
     navigation.navigate('InsuranceRegistrationScreen');
   };
 

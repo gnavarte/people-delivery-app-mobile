@@ -198,4 +198,26 @@ export const getStatusChofer = async (email) => {
         throw new Error('An error occurred during register');
     }
 }
+export const deleteUser = async (userID) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/delete/${userID}`, {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Origin': '*', 
+            },
+        });
+
+        if (response.status===200){
+            return response.status;
+        }
+    }
+    catch (error){
+        console.error('Error during delete:', error);
+        Alert.alert('' + error);   
+        throw new Error('An error occurred during delete');
+
+    }
+}
 

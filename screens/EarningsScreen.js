@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import travelHistoryData from '../data/travel_history.json';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import { getViajes } from '../controller/auth/viajes';
 
 const EarningsScreen = () => {
 
+  const [sortedData, setSortedData] = useState([]);
   const navigation = useNavigation();
 
   const navigateToTravelHistory = () => {
@@ -15,22 +17,26 @@ const EarningsScreen = () => {
   const lastWeek = new Date();
   lastWeek.setDate(lastWeek.getDate() - 7);
 
-  const todayEarnings = calculateEarningsForDate(today);
-  const lastWeekEarnings = calculateEarningsForDateRange(lastWeek, today);
-  const averageRating = calculateAverageRating();
-  const totalTravelTime = calculateTotalTravelTime();
+  const [totalPricesSum, setTotalPricesSum] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
+  const [averageDuration, setAverageDuration] = useState(0);
 
-  function calculateEarningsForDate(date) {
-    return travelHistoryData.reduce((totalEarnings, trip) => {
+  const todayEarnings = calculateEarningsForDate(today, sortedData);
+  const lastWeekEarnings = calculateEarningsForDateRange(lastWeek, today, sortedData);
+  // const averageRating = calculateAverageRating(sortedData);
+  const totalTravelTime = calculateTotalTravelTime(sortedData);
+
+  function calculateEarningsForDate(date, data) {
+    return data.reduce((totalEarnings, trip) => {
       if (new Date(trip.Fecha).toDateString() === date.toDateString()) {
         return totalEarnings + trip.Ganancia;
       }
       return totalEarnings;
     }, 0);
   }
-
-  function calculateEarningsForDateRange(startDate, endDate) {
-    return travelHistoryData.reduce((totalEarnings, trip) => {
+  
+  function calculateEarningsForDateRange(startDate, endDate, data) {
+    return data.reduce((totalEarnings, trip) => {
       const tripDate = new Date(trip.Fecha);
       if (tripDate >= startDate && tripDate <= endDate) {
         return totalEarnings + trip.Ganancia;
@@ -38,18 +44,51 @@ const EarningsScreen = () => {
       return totalEarnings;
     }, 0);
   }
-
-  function calculateAverageRating() {
-    const totalRating = travelHistoryData.reduce((total, trip) => total + trip.Valoracion, 0);
-    return (totalRating / travelHistoryData.length).toFixed(1);
+  
+  function calculateAverageRating(data) {
+    const totalRating = data.reduce((total, trip) => total + trip.Valoracion, 0);
+    return (totalRating / data.length).toFixed(1);
   }
-
-  function calculateTotalTravelTime() {
-    const totalMinutes = travelHistoryData.reduce((total, trip) => total + trip.Duracion, 0);
+  
+  function calculateTotalTravelTime(data) {
+    const totalMinutes = data.reduce((total, trip) => total + trip.Duracion, 0);
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes}m`;
   }
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const email = await AsyncStorage.getItem('email');
+        const data = await getViajes(email);
+  
+        const totalPricesSum = data.reduce((sum, item) => sum + item.totalPrice, 0);
+  
+        data.map((item) => {
+          item.updatedAt = item.updatedAt.split('T')[0];
+          item.duration_sec = Math.floor(item.duration_sec / 60);
+        });
+  
+        setSortedData(data);
+        setTotalPricesSum(totalPricesSum);
+        const totalRating = data.reduce((total, trip) => total + trip.valoracion, 0);
+        const averageRating = totalRating / data.length;
+        setAverageRating(averageRating.toFixed(1));
+      
+          // Calculate average duration
+        const totalDurationSec = data.reduce((total, trip) => total + trip.duration_sec, 0);
+        const averageDurationHours = totalDurationSec / data.length / 60;
+        setAverageDuration(averageDurationHours.toFixed(1));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  
 
   return (
     <View style={styles.container}>
@@ -58,7 +97,7 @@ const EarningsScreen = () => {
       <View style={styles.statsContainer}>
         <Text style={styles.subtitle}>Hoy</Text>
         <View style={styles.statCard}>
-          <Text style={styles.statValue}>${todayEarnings}</Text>
+          <Text style={styles.statValue}>${totalPricesSum}</Text>
           <Text style={styles.statLabel}>Ingresos</Text>
         </View>
       </View>
@@ -77,7 +116,7 @@ const EarningsScreen = () => {
           <Text style={styles.additionalStatLabel}>Calificación Promedio</Text>
         </View>
         <View style={styles.additionalStatCard}>
-          <Text style={styles.additionalStatValue}>{totalTravelTime}</Text>
+          <Text style={styles.additionalStatValue}>{averageDuration} Horas</Text>
           <Text style={styles.additionalStatLabel}>Tiempo Total de Viaje</Text>
         </View>
       </View>

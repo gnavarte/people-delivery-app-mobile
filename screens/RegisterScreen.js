@@ -98,7 +98,7 @@ const RegisterScreen = () => {
         Alert.alert("Su usuario fue registrado correctamente")
         await AsyncStorage.setItem("email", form.email);
         
-        navigation.push("DriverRegistrationScreen");
+        navigation.push("DriverRegistrationScreen",);
       }
     }
   };

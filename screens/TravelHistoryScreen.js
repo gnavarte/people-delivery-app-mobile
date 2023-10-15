@@ -17,6 +17,10 @@ const TravelScreen = () => {
         const email = await AsyncStorage.getItem('email');
         const data = await getViajes(email);
         console.log(data)
+        data.map((item) => {
+          item.updatedAt=item.updatedAt.split('T')[0];
+          item.duration_sec=Math.floor(item.duration_sec/60);
+        })
         setSortedData(data);
       } catch (error) {
         console.error('Error:', error);
@@ -77,7 +81,7 @@ const TravelScreen = () => {
         renderItem={({ item }) => (
           <View style={styles.row}>
             <Text style={styles.column}>{item.updatedAt}</Text>
-            <Text style={styles.column}>{item.createdAt} horas</Text>
+            <Text style={styles.column}>{item.duration_sec} Minutos</Text>
             <Text style={styles.column}>{item.valoracion}</Text>
             <Text style={styles.column}>${item.totalPrice}</Text>
           </View>
