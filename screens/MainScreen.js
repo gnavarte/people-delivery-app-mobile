@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import TravelMap from "../components/TravelMap";
 import StartButton from "../components/Buttons/StartButton";
 import TravelRequestModal from "../components/Modals/TravelRequestModal";
+import TravelCompleteModal from "../components/Modals/TravelCompleteModal";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getStatusChofer } from "../controller/auth/auth";
 
 const MainScreen = () => {
   const [isTravelRequestModalVisible, setIsTravelRequestModalVisible] = useState(false);
+  const [isTravelCompleteModalVisible, setIsTravelCompleteModalVisible] = useState(false);
   const [isDriverVisible, setIsDriverVisible] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -24,8 +26,15 @@ const MainScreen = () => {
 
   const handleOnTravelComplete = () => {
     console.log("Travel completed");
-    setIsButtonDisabled(false);
+    setTimeout(() => {
+      setIsTravelCompleteModalVisible(true);
+      setIsButtonDisabled(false);
+    }, 2000);
   };
+
+  const handleOnTravelCompleteModalClose = () => {
+    setIsTravelCompleteModalVisible(false);
+  }
 
   const openTravelRequestModal = () => {
     toggleDriverVisibility();
@@ -145,6 +154,12 @@ const MainScreen = () => {
         location={destinationDetails}
         onAccept={handleOnAccept}
         onDeny={handleOnDeny}
+      />
+      <TravelCompleteModal
+        isVisible={isTravelCompleteModalVisible}
+        username={passenger.username}
+        amountToPay={100}
+        onAccept={handleOnTravelCompleteModalClose}
       />
     </View>
   );

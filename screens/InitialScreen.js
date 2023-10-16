@@ -50,22 +50,6 @@ const InitialScreen = () => {
     navigation.push('RegisterScreen');
   };
 
-  const navigateToDriverRegistrationScreen = () => {
-    navigation.push('DriverRegistrationScreen');
-  };
-
-  const navigateToLogin = () => {
-    navigation.push('LoginScreen');
-  };
-
-  const navigateToDriverPhotoScreen = () => {
-    navigation.push('DriverPhotoScreen');
-  };
-
-  const navigateToMainScreen = () => {
-    navigation.push('MainScreen');
-  };
-
   const navigateToHomeChofer = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -82,6 +66,10 @@ const InitialScreen = () => {
       longitude: longitude,
     });
   }
+
+  const navigateToLogin = () => {
+    navigation.push('LoginScreen');
+  };
 
   return (
     <View style={styles.container}>
@@ -107,6 +95,11 @@ const InitialScreen = () => {
           title="Iniciar sesión"
           backgroundColor="#6372ff"
           onPress={navigateToLogin}
+        />
+        <PrimaryButton
+          title="Home Chofer"
+          backgroundColor="#6372ff"
+          onPress={navigateToHomeChofer}
         />
       </View>
     </View>

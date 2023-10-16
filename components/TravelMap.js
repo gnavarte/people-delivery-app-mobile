@@ -6,33 +6,13 @@ import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 
 const TravelMap = ({ destination, onTravelComplete }) => {
-  const [origin, setOrigin] = useState();
+  const [origin, setOrigin] = useState({ latitude: -34.5895, longitude: -58.3975 });
   const [route, setRoute] = useState([]);
   const [routeLoaded, setRouteLoaded] = useState(false);
   const [isDestinationMarkerVisible, setIsDestinationMarkerVisible] = useState(true);
   const [position, setPosition] = useState(0);
   const mapRef = useRef(null);
   const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
-
-  const getCurrentLocation = () => {
-    try
-     {
-      // const { status } = await Location.requestForegroundPermissionsAsync();
-      // if (status === 'granted') {
-      //   // const location = await Location.getCurrentPositionAsync({});
-      //   // const { latitude, longitude } = location.coords;
-      //   var latitude= -34.506063
-      //   var longitude= -58.517957
-      //   setOrigin({ latitude, longitude });
-      // }
-      var latitude= -34.506063
-      var longitude= -58.517957
-      setOrigin({ latitude, longitude });
-    } 
-    catch (error) {
-      console.error('Error al obtener la ubicación del dispositivo:', error);
-    }
-  };
 
   const calculateRoute = () => {
     if (origin && destination) {
@@ -56,14 +36,10 @@ const TravelMap = ({ destination, onTravelComplete }) => {
   };
 
   useEffect(() => {
-    getCurrentLocation();
-  }, []);
-
-  useEffect(() => {
     if (destination) {
       calculateRoute();
     }
-  }, [destination, origin]);
+  }, [destination]);
 
   useEffect(() => {
     if (routeLoaded) {
