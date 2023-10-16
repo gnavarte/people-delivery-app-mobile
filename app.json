@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "DriverPeopleDelivery",
+    "scheme": "driverpeopledelivery",
+    "name": "driverpeopledelivery",
     "slug": "driverpeopledelivery",
     "version": "1.0.0",
     "orientation": "portrait",
