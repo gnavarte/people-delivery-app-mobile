@@ -74,12 +74,20 @@ const EarningsScreen = () => {
         setTotalPricesSum(totalPricesSum);
         const totalRating = data.reduce((total, trip) => total + trip.valoracion, 0);
         const averageRating = totalRating / data.length;
-        setAverageRating(averageRating.toFixed(1));
-      
+        if (isNaN(averageRating)) {
+          setAverageRating(0);
+        } else {
+          setAverageRating(averageRating.toFixed(1));
+        }
+
           // Calculate average duration
         const totalDurationSec = data.reduce((total, trip) => total + trip.duration_sec, 0);
         const averageDurationHours = totalDurationSec / data.length / 60;
-        setAverageDuration(averageDurationHours.toFixed(1));
+        if (isNaN(averageDurationHours)) {
+          setAverageDuration(0);
+        } else {
+          setAverageDuration(averageDurationHours.toFixed(1));
+        }
       } catch (error) {
         console.error('Error:', error);
       }
