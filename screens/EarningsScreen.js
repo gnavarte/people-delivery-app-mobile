@@ -142,8 +142,8 @@ const EarningsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
+    marginTop: 40,
+    paddingHorizontal: 16,
   },
   header: {
     fontSize: 24,
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   statCard: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
     borderRadius: 8,
     padding: 16,
     flexDirection: 'row',
@@ -182,11 +182,10 @@ const styles = StyleSheet.create({
   },
   additionalStatCard: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
     borderRadius: 8,
     padding: 16,
     alignItems: 'center',
-    marginRight: 16,
   },
   additionalStatValue: {
     fontSize: 24,

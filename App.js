@@ -49,7 +49,7 @@ export default function App() {
         <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="EditChoferInfoScreen" component={EditChoferScreen}/>
         <Stack.Screen name="HomeChoferScreen" component={HomeChoferScreen}/>
-        <Stack.Screen name ="HomeChofer" component={TabBar}/>
+        <Stack.Screen name ="HomeChofer" component={TabBar} options={{headerShown:false}}/>
         <Stack.Screen name="NewPasswordScreen" component={NewPasswordScreen}/>
         <Stack.Screen name="MisAutosScreen" component={MisAutosScreen} />
         <Stack.Screen name="NewPasswordForgotScreen" component={NewPasswordForgotScreen} />

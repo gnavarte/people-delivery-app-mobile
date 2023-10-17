@@ -94,7 +94,8 @@ const TravelScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    marginTop: 40,
+    paddingHorizontal: 16,
   },
   row: {
     flexDirection: 'row',
