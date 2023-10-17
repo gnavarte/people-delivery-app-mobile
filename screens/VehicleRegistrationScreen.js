@@ -12,7 +12,6 @@ export default function VehicleRegistrationScreen() {
   const navigation = useNavigation();
 
   const navigateToInsuranceRegistration = async () => {
-    Alert.alert(form.vehicleYear)
     const email = await AsyncStorage.getItem('email');
     const response= await createAuto(form.vehicleYear, form.vehiclePlate, form.engineNumber, form.vehicleBrand, form.vehicleModel, form.vehicleColor, form.chassisNumber, form.vtvExpiration, form.vehicleMileage, email);
     console.log(response)
