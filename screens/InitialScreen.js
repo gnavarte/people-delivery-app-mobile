@@ -74,7 +74,7 @@ const InitialScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.grayBackground}>
-        <Text style={styles.welcomeText}>¡Bienvenido a People Delivery!</Text>
+        <Text style={styles.welcomeText}>¡Bienvenido a Driver People Delivery!</Text>
         <Image
           style={styles.logo}
           source={require('../assets/Driver.png')}

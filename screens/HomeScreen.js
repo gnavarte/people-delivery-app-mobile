@@ -18,14 +18,14 @@ const HomeScreen = () => {
           source={require('../assets/PeopleDeliveryLogo.png')}
           style={styles.mapImage}
         />
-        <Text style={styles.welcomeText}>¡Bienvenido a People Delivery!</Text>
+        <Text style={styles.welcomeText}>¡Bienvenido a Driver People Delivery!</Text>
         
         {/* Botón primario */}
         <PrimaryButton title="Continuar" onPress={navigateToInitial} backgroundColor="#6372ff" />
         
         {/* Texto en la parte inferior izquierda */}
         <View style={styles.bottomLeftTextContainer}>
-          <Text style={styles.bottomLeftText}>o pide un viaje en AppPD</Text>
+          <Text style={styles.bottomLeftText}>o pedi un viaje en People Delivery</Text>
         </View>
       </View>
     </View>

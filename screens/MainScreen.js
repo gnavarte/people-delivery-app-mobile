@@ -134,7 +134,7 @@ const MainScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Bienvenido a People Delivery</Text>
+      <Text style={styles.title}>¡Bienvenido a Driver People Delivery!</Text>
       <TravelMap destination={destination} onTravelComplete={handleOnTravelComplete} />
       {driverStatus === false ? (
         <TouchableOpacity style={styles.button} onPress={navigateLoadData}>
