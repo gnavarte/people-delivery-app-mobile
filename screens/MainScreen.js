@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import TravelMap from "../components/TravelMap";
 import StartButton from "../components/Buttons/StartButton";
 import TravelRequestModal from "../components/Modals/TravelRequestModal";
@@ -7,12 +7,14 @@ import TravelCompleteModal from "../components/Modals/TravelCompleteModal";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getStatusChofer } from "../controller/auth/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const MainScreen = () => {
   const [isTravelRequestModalVisible, setIsTravelRequestModalVisible] = useState(false);
   const [isTravelCompleteModalVisible, setIsTravelCompleteModalVisible] = useState(false);
   const [isDriverVisible, setIsDriverVisible] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const navigation = useNavigation();
 
   const [driverStatus, setDriverStatus] = useState(null);
 
@@ -126,6 +128,10 @@ const MainScreen = () => {
     getDriverStatus();
   }, []);
 
+  const navigateLoadData = () => {
+    navigation.push("DriverRegistrationScreen");
+  };
+
   useEffect(() => {
     if (passenger.destination) {
       getStreetAndLocality(passenger.destination.latitude, passenger.destination.longitude);
@@ -172,7 +178,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 20,
   },
 });
 

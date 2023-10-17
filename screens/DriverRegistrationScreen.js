@@ -15,6 +15,10 @@ export default function DriverRegistrationScreen() {
     navigation.navigate('VehicleRegistrationScreen');
   };
 
+  const navigateToHomeChofer = async () => {
+    navigation.navigate('HomeChofer', { latitude: -34.5895, longitude: -58.3975 });
+  };
+
   const initialState = {
     licenseImage: null,
     dateOfIssue: null,
@@ -65,7 +69,7 @@ export default function DriverRegistrationScreen() {
         <Text>Clase de Licencia:</Text>
         <CustomInput placeholder="Clase de Licencia" onChangeText={(text) => onChange(text, "classOfLicense")} />
       </ScrollView>
-      <PrimaryButton title="Omitir por ahora" backgroundColor="grey" onPress={navigateToVehicleRegistration} />
+      <PrimaryButton title="Omitir por ahora" backgroundColor="grey" onPress={navigateToHomeChofer} />
       <PrimaryButton title="Continuar" onPress={navigateToVehicleRegistration} backgroundColor="#5985EB" disabled={!isFormValid} />
     
     </View>

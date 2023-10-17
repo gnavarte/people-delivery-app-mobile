@@ -29,8 +29,8 @@ const EditProfileScreen = () => {
     navigation.goBack();
   };
 
-  const cerrarSession = () => {
-    // aca debemos limpiar el storage , etc.
+  const cerrarSession = async () => {
+    await AsyncStorage.clear();
     navigation.push("HomeScreen")
   }
   const navigateToChangePassword = () => {
