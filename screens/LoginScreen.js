@@ -112,9 +112,7 @@ const LoginScreen = () => {
       <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} keyboardType="email-address" />
       <CustomInput placeholder="Contraseña" value={form.password} onChangeText={(value) => onChange(value, "password")} secureTextEntry={true} />
       <PrimaryButton title="Iniciar sesión" onPress={redirectToHome} backgroundColor="#6372ff" disabled={isButtonDisabled} />
-      <View style={styles.bottomLeftTextContainer}>
-        <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvidé mi contraseña</Text>
-      </View>
+      <Text onPress={navigateToForgotPassword} style={styles.bottomLeftText}>Olvidé mi contraseña</Text>
     </KeyboardAvoidingView>
   );
 };
@@ -134,19 +132,13 @@ const styles = StyleSheet.create({
   illustration: {
     width: Dimensions.get('window').width * 0.65,
     height: Dimensions.get('window').width * 0.65,
-    marginBottom: 10,
   },
   helperText: {
     textAlign: 'center',
     fontSize: 16,
-    marginBottom: 10,
-  },
-  bottomLeftTextContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
   },
   bottomLeftText: {
+    marginTop: 20,
     fontSize: Dimensions.get('window').width*0.05,
     textDecorationLine: 'underline',
   },

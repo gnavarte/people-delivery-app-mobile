@@ -49,26 +49,16 @@ const InputCodeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>PD</Text>
-      <View style={styles.topImageContainer}>
-        <Image
-          source={require('../assets/ChangePassword.png')}
-          style={styles.topImage}
-          resizeMode='contain'
-        />
-      </View>
-        <Text style={styles.welcomeText}>Ingresa tu nueva contraseña</Text>
+        <Image style={styles.illustration} source={require("../assets/Padlock.png")} />
+        <Text style={styles.helperText}>Ingrese su nueva contraseña</Text>
         <CustomInput placeholder="Ingresa tu contraseña actual" value={actualPassword} onChangeText={setActualPassword} secureTextEntry={true}  />
         <CustomInput placeholder="Ingresa tu nueva contraseña" value={newPassword} onChangeText={setNewPassword} secureTextEntry={true}  />
         <CustomInput placeholder="Repeti tu nueva contraseña" value={repeatNewPassword} onChangeText={setRepeatNewPassword} secureTextEntry={true}  />
-
-      <View style={styles.bottomCenterPage}>
         <PrimaryButton
           title="Cambiar contraseña"
           onPress={navigateToRecoveryPassword}
           backgroundColor="#5985EB"
         />
-      </View>
     </View>
   );
   
@@ -77,48 +67,22 @@ const InputCodeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 40,
+    paddingTop: 40,
+    paddingBottom: 40,
+    justifyContent: "center",
   },
-  bottomCenterPage: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 20,
-  },
-  grayBackground: {
-    flex: 1,
-    backgroundColor: '#F2F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  topImageContainer: {
-    alignItems: 'center',
-  },
-  topImage: {
-    height: Dimensions.get('window').height * 0.3, 
-    width: Dimensions.get('window').width, 
-  },
-  
-  title: {
-    fontSize: Dimensions.get('window').width*0.05,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginTop: 20,
-    marginLeft: 20,
-  },
-  welcomeText: {
-    fontSize: Dimensions.get('window').width*0.04,
+  illustration: {
+    width: Dimensions.get("window").width * 0.65,
+    height: Dimensions.get("window").width * 0.65,
     marginBottom: 10,
-    textAlign: 'center',
+    alignSelf: "center",
   },
-  bottomLeftTextContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
+  helperText: {
+    fontSize: Dimensions.get("window").width * 0.04,
+    marginBottom: 10,
+    alignSelf: "center",
   },
-  input: {
-    marginBottom: 10, 
-  },
-
 });
 
 export default InputCodeScreen;

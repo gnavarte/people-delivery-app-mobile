@@ -51,7 +51,7 @@ const SupportScreen = () => {
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Image source={{ uri: 'https://res.cloudinary.com/dgvlsnajj/image/upload/v1693694980/PeopleDelivery/Icono_setting_cwgx18.png' }} style={styles.image} />
+          <Image source={require('../assets/Support.png')} style={styles.illustration} />
           <Text style={styles.titleText}>¡Contactate con soporte!</Text>
         </View>
         <View style={styles.inputsContainer}>
@@ -76,32 +76,30 @@ const SupportScreen = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      paddingHorizontal: 40,
+      paddingBottom: 40,
       backgroundColor: '#F2F2F2',
-      padding: 20,
       justifyContent: 'center',
     },
     titleContainer: {
       alignItems: 'center',
       alignSelf: 'center',
-      marginBottom: 20,
-    },
-    image: {
-      width: '20%',
-      aspectRatio: 1,
       marginBottom: 10,
     },
+    illustration: {
+      width: Dimensions.get('window').width * 0.65,
+      height: Dimensions.get('window').width * 0.65,
+    },
     inputsContainer: {
-      alignSelf: 'center',
       marginBottom: 20,
     },
     titleText: {
       fontSize: Dimensions.get('window').width*0.04,
-      marginBottom: 10,
       color:'#000000'
     },
     textLabel: {
       fontSize: Dimensions.get('window').width*0.04,
-      marginBottom: 5,
+      marginVertical: 10,
       color: '#000000',
     },
   });
