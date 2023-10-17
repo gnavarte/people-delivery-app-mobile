@@ -1,7 +1,6 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , Dimensions } from 'react-native';
-
+import { StyleSheet, LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
 import HomeScreen from './screens/HomeScreen';
 import InitialScreen from './screens/InitialScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
