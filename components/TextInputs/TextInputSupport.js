@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderRadius: 8,
     paddingHorizontal: 12,
-    width: '80%',
     minHeight: 300, // Altura mínima para el componente de consulta
   },
   input: {
