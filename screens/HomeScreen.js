@@ -12,16 +12,13 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Encabezado */}
-      <Text style={styles.title}>PD</Text>
-      
       {/* Contenedor principal */}
       <View style={styles.grayBackground}>
         <Image
           source={require('../assets/PeopleDeliveryLogo.png')}
           style={styles.mapImage}
         />
-        <Text style={styles.welcomeText}>Bienvenido a People Delivery</Text>
+        <Text style={styles.welcomeText}>¡Bienvenido a People Delivery!</Text>
         
         {/* Botón primario */}
         <PrimaryButton title="Continuar" onPress={navigateToInitial} backgroundColor="#6372ff" />

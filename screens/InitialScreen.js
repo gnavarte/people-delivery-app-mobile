@@ -50,22 +50,6 @@ const InitialScreen = () => {
     navigation.push('RegisterScreen');
   };
 
-  const navigateToDriverRegistrationScreen = () => {
-    navigation.push('DriverRegistrationScreen');
-  };
-
-  const navigateToLogin = () => {
-    navigation.push('LoginScreen');
-  };
-
-  const navigateToDriverPhotoScreen = () => {
-    navigation.push('DriverPhotoScreen');
-  };
-
-  const navigateToMainScreen = () => {
-    navigation.push('MainScreen');
-  };
-
   const navigateToHomeChofer = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -83,26 +67,29 @@ const InitialScreen = () => {
     });
   }
 
+  const navigateToLogin = () => {
+    navigation.push('LoginScreen');
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>PD</Text>
       <View style={styles.grayBackground}>
+        <Text style={styles.welcomeText}>¡Bienvenido a People Delivery!</Text>
         <Image
           style={styles.logo}
           source={require('../assets/Driver.png')}
         />
-        <Text style={styles.welcomeText}>¡Bienvenido a People Delivery!</Text>
         <PrimaryButton
           title="Registrate"
           onPress={navigateToRegister}
           backgroundColor="#6372ff"
         />
-        <ButtonWithIcon
+        {/* <ButtonWithIcon
           title="Continuar con Google"
           backgroundColor="#6372ff"
           icon={require('../assets/GoogleIcon.png')}
           onPress={() => promptAsync()}
-        />
+        /> */}
         <PrimaryButton
           title="Iniciar sesión"
           backgroundColor="#6372ff"
