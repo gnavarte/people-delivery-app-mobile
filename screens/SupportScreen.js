@@ -51,29 +51,23 @@ const SupportScreen = () => {
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Image source={{ uri: 'https://res.cloudinary.com/dgvlsnajj/image/upload/v1693694980/PeopleDelivery/Icono_setting_cwgx18.png' }}
-          style={styles.image}
+          <Image source={{ uri: 'https://res.cloudinary.com/dgvlsnajj/image/upload/v1693694980/PeopleDelivery/Icono_setting_cwgx18.png' }} style={styles.image} />
+          <Text style={styles.titleText}>¡Contactate con soporte!</Text>
+        </View>
+        <View style={styles.inputsContainer}>
+          <Text style={styles.textLabel}>Motivo de consulta</Text>
+          <TextInputCustomized value={motivo} onChangeText={setMotivo}  placeholder="Ingrese el motivo de su consulta" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
+          <Text style={styles.textLabel}>Consulta</Text>
+          <TextInputCustomizedLarge
+              placeholder="Escribe tu consulta aquí"
+              value={consulta}
+              onChangeText={setConsulta}
+              backgroundColor="#FFFFFF"
+              placeholderTextColor="#000000"
           />
         </View>
-        <Text style={styles.subtitleText}>¡Contactate con soporte!</Text>
-  
-        <Text style={styles.textLabel}>Motivo de consulta</Text>
-
-        <TextInputCustomized value={motivo} onChangeText={setMotivo}  placeholder="Ingrese el motivo de su consulta" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
-  
-        <Text style={styles.textLabel}>Consulta</Text>
-        <TextInputCustomizedLarge
-            placeholder="Escribe tu consulta aquí"
-            value={consulta}
-            onChangeText={setConsulta}
-            backgroundColor="#FFFFFF"
-            placeholderTextColor="#000000"
-        />
-        <View style={styles.contenedor}>
-        <TouchableOpacity style={styles.buttonEditarF} onPress={() => enviarConsulta(consulta, motivo)}>
+        <View style={{ alignSelf:'center' }}>
           <PrimaryButton title="ENVIAR CONSULTA" onPress={() => enviarConsulta(consulta, motivo)} backgroundColor="#5985EB" />
-        </TouchableOpacity>
-
         </View>
       </View>
     );
@@ -84,32 +78,23 @@ const SupportScreen = () => {
       flex: 1,
       backgroundColor: '#F2F2F2',
       padding: 20,
+      justifyContent: 'center',
     },
-    backButton: {
-      position: 'absolute',
-      top: 20,
-      left: 20,
-      zIndex: 1,
+    titleContainer: {
+      alignItems: 'center',
+      alignSelf: 'center',
+      marginBottom: 20,
     },
     image: {
       width: '20%',
       aspectRatio: 1,
-      alignSelf: 'center',
-      marginTop: 20,
-      marginBottom: 20,
-      marginLeft:145
+      marginBottom: 10,
     },
-    titleContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: 60,
+    inputsContainer: {
+      alignSelf: 'center',
       marginBottom: 20,
     },
     titleText: {
-      fontSize: Dimensions.get('window').width*0.05,
-      color: 'white',
-    },
-    subtitleText: {
       fontSize: Dimensions.get('window').width*0.04,
       marginBottom: 10,
       color:'#000000'
@@ -119,65 +104,5 @@ const SupportScreen = () => {
       marginBottom: 5,
       color: '#000000',
     },
-    button: {
-      padding: 10,
-      borderRadius: 5,
-      marginTop: 20,
-      alignItems: 'center',
-    },
-    buttonEditarF: {
-      marginBottom: '5%',
-      alignItems: 'center',
-    },
-    contenedor:{
-      flex:1,
-      justifyContent:'flex-end'
-    },
-    buttonEditar: {
-      color: 'black',
-      fontSize: Dimensions.get('window').width*0.04,
-    },
-    modalContainer: {
-      flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    modalContent: {
-      backgroundColor: 'white',
-      borderRadius: 10,
-      padding: 20,
-      alignItems: 'center',
-    },
-    modalText: {
-      fontSize: Dimensions.get('window').width*0.04,
-      marginBottom: 20,
-      textAlign: 'center',
-    },
-    modalButtons: {
-      flexDirection: 'row',
-    },
-    modalButton: {
-      flex: 1,
-      paddingVertical: 10,
-      borderRadius: 5,
-      alignItems: 'center',
-    },
-    modalButtonC: {
-      flex: 1,
-      paddingVertical: 10,
-      borderRadius: 5,
-      alignItems: 'center',
-      },
-    modalButtonText: {
-      color: 'white',
-      fontSize: Dimensions.get('window').width*0.04,
-  
-    },
-    modalButtonTextC:{
-      color: 'black',
-      fontSize: Dimensions.get('window').width*0.04,
-  
-    }
   });
   export default SupportScreen;
