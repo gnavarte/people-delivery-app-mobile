@@ -1,57 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import MapView, { Marker } from 'react-native-maps'; // Importa Marker desde react-native-maps
-import * as Location from 'expo-location';
-import { Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import io from 'socket.io-client';
 
-const MainScreen = () => {
-  const [origin, setOrigin] = useState({ latitude: 0, longitude: 0 });
-  const [locationAvailable, setLocationAvailable] = useState(false);
+const Lab = () => {
+
+  const [mensaje, setMensaje] = useState('Esperando mensaje...');
 
   useEffect(() => {
-    const getCurrentLocation = async () => {
-      try {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        if (status === 'granted') {
-          const location = await Location.getCurrentPositionAsync({});
-          const { latitude, longitude } = location.coords;
-          setOrigin({ latitude, longitude });
-          setLocationAvailable(true);
-        }
-      } catch (error) {
-        console.error('Error al obtener la ubicación del dispositivo:', error);
-      }
+    // Reemplaza 'http://tu-servidor-socket.io.com' con la dirección de tu servidor Socket.IO
+    const socket = io('http://192.168.153.245:3000');
+
+    socket.on('connect', () => {
+      console.log('Conectado al servidor de Socket.IO');
+    });
+
+    // Escucha eventos o envía eventos al servidor
+    socket.on('message', (data) => {
+      console.log('Mensaje recibido:', data);
+      setMensaje(data);
+    });
+
+    // Puedes enviar eventos al servidor de la siguiente manera
+    socket.emit('miEvento', { mensaje: 'Hola, servidor de Socket.IO' });
+
+    // Cuando el componente se desmonta, desconecta el socket
+    return () => {
+      socket.disconnect();
     };
-
-    getCurrentLocation();
-
   }, []);
 
   return (
-    <React.Fragment>
-      {locationAvailable ? (
-        <MapView 
-          style={{ flex: 1 }}
-          initialRegion={{
-            latitude: origin.latitude,
-            longitude: origin.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        >
-          <Marker // Agrega el marcador en la ubicación
-            coordinate={{
-              latitude: origin.latitude,
-              longitude: origin.longitude,
-            }}
-            title="Mi ubicación" // Puedes personalizar el título
-            description="Aquí estoy" // Puedes personalizar la descripción
-          />
-        </MapView>
-      ) : (
-        <Text>Loading... Esperando la ubicación del dispositivo</Text>
-      )}
-    </React.Fragment>
+    <View style={styles.container}>
+      <Text style={styles.title}>Componente de Socket.IO</Text>
+      <Text style={styles.message}>{mensaje}</Text>
+    </View>
   );
 };
 
-export default MainScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff'
+  },
+  title: {
+    textAlign: 'center',
+    marginTop: 40,
+    fontSize: 20
+  },
+  message: {
+    textAlign: 'center',
+    marginTop: 10,
+    fontSize: 20
+  }
+});
+
+export default Lab;

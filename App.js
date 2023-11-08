@@ -19,6 +19,7 @@ import NewPasswordForgotScreen from './screens/NewPasswordForgotScreen';
 import SupportScreen from './screens/SupportScreen';
 import DriverPhotoScreen from './screens/DriverPhotoScreen';
 import MainScreen from './screens/MainScreen';
+import Lab from './screens/Lab';
 
 import TabBar from './components/TabBar/TabBar';
 
@@ -36,6 +37,7 @@ export default function App() {
         }  
         }
       >
+        <Stack.Screen name="Lab" component={Lab}/>
         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
         <Stack.Screen name="InitialScreen" component={InitialScreen}/>
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
