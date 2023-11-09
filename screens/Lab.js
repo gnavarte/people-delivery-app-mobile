@@ -8,7 +8,7 @@ const Lab = () => {
 
   useEffect(() => {
     // Reemplaza 'http://tu-servidor-socket.io.com' con la dirección de tu servidor Socket.IO
-    const socket = io('http://192.168.153.245:3000');
+    const socket = io('http://54.208.78.25:3000');
 
     socket.on('connect', () => {
       console.log('Conectado al servidor de Socket.IO');
