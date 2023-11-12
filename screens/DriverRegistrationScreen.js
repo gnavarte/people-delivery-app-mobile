@@ -1,18 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, ScrollView, Image, View ,Alert} from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, ScrollView, Image, View, Alert } from "react-native";
+import { useNavigation, useRoute } from '@react-navigation/native';
 import ImagePickerModal from "../components/Modals/ImagePickerModal";
 import { PrimaryButton } from '../components/Buttons/Button';
 import { useForm } from "../hooks/useForm";
 import DatePicker from "../components/TextInputs/DatePicker";
 import CustomInput from "../components/TextInputs/CustomInput";
 import * as Location from 'expo-location';
-export default function DriverRegistrationScreen() {
 
+export default function DriverRegistrationScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
 
   const navigateToVehicleRegistration = () => {
-    navigation.navigate('VehicleRegistrationScreen');
+
+    console.log("fecha de expedicion: ", form.dateOfIssue);
+    console.log("fecha de vencimiento: ", form.expirationDate);
+    console.log("clase de licencia: ", form.classOfLicense);
+
+    const { usuario } = route.params;
+
+
+    const usuarioActualizado = {
+      ...usuario,
+      licencia: {
+        idLicencia: 1, 
+        otorgamiento: form.dateOfIssue,
+        vencimiento: form.expirationDate,
+        clase: form.classOfLicense,
+      },
+    };
+
+    console.log("Usuario actualizado:", usuarioActualizado);
+    navigation.navigate('VehicleRegistrationScreen', { usuario: usuarioActualizado });
+    
   };
 
   const navigateToHomeChofer = async () => {

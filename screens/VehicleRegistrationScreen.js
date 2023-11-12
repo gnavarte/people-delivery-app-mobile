@@ -8,14 +8,33 @@ import DatePicker from "../components/TextInputs/DatePicker";
 import CustomInput from "../components/TextInputs/CustomInput";
 import { createAuto } from "../controller/auth/autos";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRoute } from "@react-navigation/native";
+
 export default function VehicleRegistrationScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
 
   const navigateToInsuranceRegistration = async () => {
     const email = await AsyncStorage.getItem('email');
     const response= await createAuto(form.vehicleYear, form.vehiclePlate, form.engineNumber, form.vehicleBrand, form.vehicleModel, form.vehicleColor, form.chassisNumber, form.vtvExpiration, form.vehicleMileage, email);
-    console.log(response)
-    navigation.navigate('InsuranceRegistrationScreen');
+    const { usuario } = route.params;
+
+    const usuarioActualizado = {
+      ...usuario,
+      vehiculo: {
+        idLicencia: 1, 
+        ultimaVtv: form.vtvExpiration,
+        anio: form.vehicleYear,
+        dominio: form.vehiclePlate,
+        modelo: form.vehicleModel,
+        uso: form.vehicleMileage, 
+        tipoVehiculo: "", 
+        chasis: form.chassisNumber,
+        motor: form.engineNumber,
+        color: form.vehicleColor,
+      },
+    };
+    navigation.navigate('InsuranceRegistrationScreen', { usuario: usuarioActualizado });
   };
 
   const initialState = {

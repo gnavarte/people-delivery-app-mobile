@@ -6,15 +6,31 @@ import { PrimaryButton } from '../components/Buttons/Button';
 import { useForm } from "../hooks/useForm";
 import DatePicker from "../components/TextInputs/DatePicker";
 import CustomInput from "../components/TextInputs/CustomInput";
+import { useRoute } from "@react-navigation/native";
 
 export default function InsuranceRegistrationScreen() {
   const navigation = useNavigation();
-
+  const route = useRoute();
   const navigateToDriverPhoto = () => {
-    navigation.navigate('DriverPhotoScreen');
+    const { usuario } = route.params;
+    console.log("usuario", usuario)
+    const usuarioActualizado = {
+      ...usuario,
+      seguro: {
+        idSeguro: 1,
+        numeroPoliza: form.policyNumber,
+        proveedor: form.supplierName,
+        fechaExpedicion: form.dateOfIssue,
+        fechaVencimiento: form.expirationDate,
+      },
+    };
+    console.log("Usuario actualizado:", usuarioActualizado)
+    navigation.navigate('DriverPhotoScreen', { usuario: usuarioActualizado });
+
   };
 
   const initialState = {
+    policyNumber: null,
     policyImage: null,
     supplierName: null,
     dateOfIssue: null,
@@ -57,6 +73,8 @@ export default function InsuranceRegistrationScreen() {
         {renderImagePreview(form.licenseImage)}
         <Text>Nombre del proveedor:</Text>
         <CustomInput placeholder="Nombre del proveedor" value={form.supplierName} onChangeText={(value) => onChange(value, "supplierName")} />
+        <Text> Numero Poliza de seguro:</Text>
+        <CustomInput placeholder="Numero Poliza de seguro" value={form.policyNumber} onChangeText={(value) => onChange(value, "policyNumber")} />
         <Text>Fecha de expedición:</Text>
         <DatePicker placeholder="Fecha de expedición" selectedDate={form.dateOfIssue} onDateChange={(date) => onChange(date, "dateOfIssue")} />
         <Text>Fecha de vencimiento:</Text>

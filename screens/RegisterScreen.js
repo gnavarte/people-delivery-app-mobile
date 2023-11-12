@@ -17,6 +17,9 @@ const RegisterScreen = () => {
     domicilio: "",
     email: "",
     password: "",
+    telefono: "",
+    sexo: "",
+
   };
 
   const { form, onChange } = useForm(initialState);
@@ -95,10 +98,54 @@ const RegisterScreen = () => {
     ) {
       const responseChofer=await registerUser(form.nombre, form.apellido, form.domicilio, form.fechaNacimiento, form.DNI, form.telefono, form.email, form.password);
       if (responseChofer!== ""){
+        const usuario = {
+          id: 0, // Puedes asignar un valor adecuado si lo tienes
+          telefono: form.telefono,
+          nombre: form.nombre,
+          apellido: form.apellido,
+          dni: form.DNI,
+          sexo: form.sexo,
+          email: form.email,
+          direccion: form.domicilio,
+          fechaNacimiento: form.fechaNacimiento,
+          contrasenia: form.password,
+          foto: "", 
+          verificado: "EN_PROGRESO", 
+          licencia: {
+            idLicencia: 0,
+            otorgamiento: "", 
+            vencimiento: "", 
+            clase: "", 
+          },
+          vehiculo: {
+            idVehiculo: 0, 
+            ultimaVtv: "", 
+            anio: 0, 
+            dominio: "",
+            modelo: "",
+            uso: "",
+            tipoVehiculo: "",
+            chasis: "",
+            motor: "",
+            seguro: {
+              idSeguro: 0, 
+              nroPoliza: "",
+              fechaDesde: "",
+              fechaHasta: "",
+              proveedor: "",
+            },
+            color: "",
+          },
+          notas: "", 
+          fechaValidacion: "", 
+          numeroCedula: "",
+          tipoCedula: "",
+        };
+        console.log(usuario)
         Alert.alert("Su usuario fue registrado correctamente")
         await AsyncStorage.setItem("email", form.email);
         
-        navigation.push("DriverRegistrationScreen",);
+        navigation.push("DriverRegistrationScreen", { usuario });
       }
     }
   };
@@ -149,6 +196,8 @@ const RegisterScreen = () => {
       )}
       <CustomInput placeholder="Domicilio" value={form.domicilio} onChangeText={(value) => onChange(value, "domicilio")} />
       <CustomInput placeholder="Correo electrónico" value={form.email} onChangeText={(value) => onChange(value, "email")} />
+      <CustomInput placeholder="Sexo" value={form.sexo} onChangeText={(value) => onChange(value, "sexo")} />
+      <CustomInput placeholder="Telefono" value={form.telefono} onChangeText={(value) => onChange(value, "telefono")} />
       <CustomInput placeholder="Contraseña" value={form.password} onChangeText={(value) => onChange(value, "password")} secureTextEntry={true} />
 
       <PrimaryButton title="Registrarse" backgroundColor="#6372ff" disabled={!isFormValid} onPress={registerChofer} />

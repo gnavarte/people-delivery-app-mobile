@@ -10,10 +10,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getLocation } from '../controller/auth/location';
 import * as Location from 'expo-location';
 import { getUserEmail } from "../controller/auth/auth";
+import { useRoute } from "@react-navigation/native";
+
 export default function DriverPhotoScreen() {
 
   const navigation = useNavigation();
-
+  const route=useRoute();
+  const { usuario } = route.params;
   const updateChoferPhoto = async (userID,updateFields) =>{
     const response_update=updateChofer(userID,updateFields);
 
@@ -43,6 +46,11 @@ export default function DriverPhotoScreen() {
         updateFields.picturePath = response.data.secure_url;
         updateFields.status = true;
         updateChoferPhoto(userID,updateFields)
+        const updatedUsuario = {
+          ...usuario,
+          foto: updateFields.picturePath,
+        };
+        console.log("Usuario actualizado:", updatedUsuario);
         navigation.navigate('HomeChofer',{latitude,longitude});
       })
       .catch(error => {
