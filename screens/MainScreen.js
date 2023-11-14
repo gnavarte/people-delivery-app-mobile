@@ -8,6 +8,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getStatusChofer } from "../controller/auth/auth";
 import { useNavigation } from "@react-navigation/native";
+import io from 'socket.io-client';
 
 const MainScreen = () => {
   const [isTravelRequestModalVisible, setIsTravelRequestModalVisible] = useState(false);
@@ -15,6 +16,30 @@ const MainScreen = () => {
   const [isDriverVisible, setIsDriverVisible] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigation = useNavigation();
+  const socket = io('http://54.208.78.25:3000');
+
+  const startSocketListening = () => {
+    toggleDriverVisibility();
+    socket.on('connect', () => {
+      console.log('Conectado al servidor de Socket.IO');
+    });
+  
+    // Escucha eventos o envía eventos al servidor
+    socket.on('newTrip', (data) => {
+      console.log('Mensaje recibido:', data);
+      openTravelRequestModal();
+    });
+  
+    // Cuando el componente se desmonta, desconecta el socket
+    return () => {
+      socket.disconnect();
+    };
+  };
+
+  const stopSocketListening = () => {
+    toggleDriverVisibility();
+    socket.disconnect();
+  };
 
   const [driverStatus, setDriverStatus] = useState(null);
 
@@ -39,10 +64,7 @@ const MainScreen = () => {
   }
 
   const openTravelRequestModal = () => {
-    toggleDriverVisibility();
-    setTimeout(() => {
-      setIsTravelRequestModalVisible(true);
-    }, 5000);
+    setIsTravelRequestModalVisible(true);
   };
 
   const handleOnPress = () => {
@@ -57,9 +79,7 @@ const MainScreen = () => {
           },
           {
             text: "Detener",
-            onPress: () => {
-              setIsDriverVisible(false);
-            },
+            onPress: stopSocketListening,
           },
         ]
       );
@@ -74,7 +94,7 @@ const MainScreen = () => {
           },
           {
             text: "Iniciar",
-            onPress: openTravelRequestModal,
+            onPress: startSocketListening,
           },
         ]
       );
