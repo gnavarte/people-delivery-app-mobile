@@ -37,25 +37,25 @@ export default function App() {
         }  
         }
       >
-        <Stack.Screen name="Lab" component={Lab}/>
-        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        {/* <Stack.Screen name="Lab" component={Lab}/> */}
+{/*         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
         <Stack.Screen name="InitialScreen" component={InitialScreen}/>
+        <Stack.Screen name='RegisterScreen' component={RegisterScreen}/>
+        <Stack.Screen name="LoginScreen" component={LoginScreen}/>
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen}/>
         <Stack.Screen name="InputCodeScreen" component={InputCodeScreen}/>
-        <Stack.Screen name='RegisterScreen' component={RegisterScreen}/>
+        <Stack.Screen name="NewPasswordForgotScreen" component={NewPasswordForgotScreen} />
+        <Stack.Screen name ="HomeChofer" component={TabBar} options={{headerShown:false}}/>
         <Stack.Screen name="DriverRegistrationScreen" component={DriverRegistrationScreen}/>
-        <Stack.Screen name="InsuranceRegistrationScreen" component={InsuranceRegistrationScreen}/>
         <Stack.Screen name="VehicleRegistrationScreen" component={VehicleRegistrationScreen}/>
-        <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+        <Stack.Screen name="InsuranceRegistrationScreen" component={InsuranceRegistrationScreen}/>
         <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="EditChoferInfoScreen" component={EditChoferScreen}/>
         <Stack.Screen name="HomeChoferScreen" component={HomeChoferScreen}/>
-        <Stack.Screen name ="HomeChofer" component={TabBar} options={{headerShown:false}}/>
         <Stack.Screen name="NewPasswordScreen" component={NewPasswordScreen}/>
         <Stack.Screen name="MisAutosScreen" component={MisAutosScreen} />
-        <Stack.Screen name="NewPasswordForgotScreen" component={NewPasswordForgotScreen} />
         <Stack.Screen name="SupportScreen" component={SupportScreen} />
-        <Stack.Screen name="DriverPhotoScreen" component={DriverPhotoScreen} />
+        <Stack.Screen name="DriverPhotoScreen" component={DriverPhotoScreen} /> */}
         <Stack.Screen name="MainScreen" component={MainScreen} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import axios from 'axios';
-import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 
 const TravelMap = ({ destination, onTravelComplete }) => {
@@ -12,21 +11,27 @@ const TravelMap = ({ destination, onTravelComplete }) => {
   const [isDestinationMarkerVisible, setIsDestinationMarkerVisible] = useState(true);
   const [position, setPosition] = useState(0);
   const mapRef = useRef(null);
-  const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
+  const API_KEY = 'AvmPrvRS-voqmRn9ifwJ5pnVskBSZuc0zx4ztiQCxeHRCcr8zld_DxjJbW8U40tP'; // Reemplaza con tu clave API de Bing Maps
 
   const calculateRoute = () => {
     if (origin && destination) {
+      console.log('Latitud de origen:', origin.latitude, 'Longitud de origen:', origin.longitude);
+      console.log('Latitud de destino:', destination.latitude, 'Longitud de destino:', destination.longitude);
+      const url = `http://dev.virtualearth.net/REST/V1/Routes/Truck?wp.0=${origin.latitude},${origin.longitude}&wp.1=${destination.latitude},${destination.longitude}&routeAttributes=routePath&key=${API_KEY}`;
+
       axios
-        .get(
-          `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${origin.longitude},${origin.latitude}&end=${destination.longitude},${destination.latitude}`
-        )
+        .get(url)
         .then((response) => {
-          const coordinates = response.data.features[0].geometry.coordinates;
-          const newCoordinates = coordinates.map((coordinate) => ({
-            latitude: coordinate[1],
-            longitude: coordinate[0],
-          }));
-          setRoute(newCoordinates);
+          const routeLegs = response.data.resourceSets[0].resources[0].routePath.line.coordinates;
+          const coordinates = [];
+          
+          routeLegs.forEach((coordinate) => {
+            coordinates.push({ latitude: coordinate[0], longitude: coordinate[1] });
+          });
+
+          setRoute(coordinates);
+          console.log('Ruta:', coordinates);
+          console.log('Cantidad de puntos de ruta:', coordinates.length);
           setRouteLoaded(true);
         })
         .catch((error) => {
@@ -106,12 +111,6 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '100%',
-  },
-  carInfoContainer: {
-    alignItems: 'center',
-  },
-  carInfoText: {
-    fontSize: 16,
   },
 });
 
