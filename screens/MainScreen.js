@@ -173,16 +173,17 @@ const MainScreen = () => {
     const body = {
         "exchange": "accepted_trips", 
         "message": {
-            "idViaje": "jodahsoiuah_01",
+            "idViaje": travel.idViaje,
             "idChofer": "gf123f12g",
-            "NombreChofer": "Lionel",
-            "ApellidoChofer": "Scaloni",
-            "Vehiculo": "La Scaloneta",
-            "Patente": "QA022TR",
+            "nombreChofer": "Lionel",
+            "apellidoChofer": "Scaloni",
+            "vehiculo": "La Scaloneta",
+            "patente": "QA022TR",
             "date": "1699967693.9362886",  
             "estadoViaje": "En camino"
         }
     };
+    console.log('Cuerpo de la solicitud:', body);
     // Token de autorización
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQyMjMxMTU0LCJjb2RlIjoiOG1Gc1FUVV4nSTdTZ3QtOHgpQjJzWHZKMnFxTHRUIn0.58jMwro7ZWc3hAH-uld5_kumOhzod3IUHHWewSqoA8U';
     // Configuración de la solicitud
@@ -285,15 +286,15 @@ const MainScreen = () => {
       )}
       <TravelRequestModal
         isVisible={isTravelRequestModalVisible}
-        username={travel ? travel.Nombre + ' ' + travel.Apellido : ''}
+        username={travel ? travel.nombre + ' ' + travel.apellido : ''}
         location={travel ? travel.puntoPartida : ''}
         onAccept={handleOnAccept}
         onDeny={handleOnDeny}
       />
       <TravelCompleteModal
         isVisible={isTravelCompleteModalVisible}
-        username={travel ? travel.Nombre + ' ' + travel.Apellido : ''}
-        amountToPay={100}
+        username={travel ? travel.nombre + ' ' + travel.apellido : ''}
+        amountToPay={travel ? travel.precio : ''}
         onAccept={handleOnTravelCompleteModalClose}
       />
     </View>
