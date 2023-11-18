@@ -19,21 +19,16 @@ const MainScreen = () => {
   const [isTravelCompleteModalVisible, setIsTravelCompleteModalVisible] = useState(false);
   const [isDriverVisible, setIsDriverVisible] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  
-  const [travel, setTravel] = useState(null);
-  const [destination, setDestination] = useState(null);
-  const [adress, setAdress] = useState(null);
-  
-  const [route, setRoute] = useState([]);
-  const [routeLoaded, setRouteLoaded] = useState(false);
   const [isDestinationMarkerVisible, setIsDestinationMarkerVisible] = useState(true);
-  const [position, setPosition] = useState(0);
-  const mapRef = useRef(null);
   
   const [origin, setOrigin] = useState({ latitude: -34.5895, longitude: -58.3975 });
-  const passenger = { username: "John Doe", location: { latitude: -34.581389, longitude: -58.414167 }, destination: { latitude: -34.581389, longitude: -58.414167 } };
+  const [travel, setTravel] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [route, setRoute] = useState([]);
+  const [routeLoaded, setRouteLoaded] = useState(false);
+  const [position, setPosition] = useState(0);
+  const mapRef = useRef(null);
   const carLocation = routeLoaded ? route[position] : origin;
-
 
   useEffect(() => {
     const getDriverStatus = async () => {
@@ -55,12 +50,6 @@ const MainScreen = () => {
     };
     getDriverStatus();
   }, []);
-
-/*   useEffect(() => {
-    if (passenger.destination) {
-      getStreetAndLocality(passenger.destination.latitude, passenger.destination.longitude);
-    }
-  }, [passenger.destination]); */
 
   useEffect(() => {
     if (destination) {
@@ -185,22 +174,19 @@ const MainScreen = () => {
   };
 
   const getStreetAndLocality = async (latitude, longitude) => {
-    const apiKey = process.env.EXPO_PUBLIC_OPENROUTESERVICE_API_KEY;
 
     try {
-      const response = await axios.get('https://api.openrouteservice.org/geocode/reverse?api_key=' + apiKey + '&point.lon=' + longitude + '&point.lat=' + latitude);
+      const response = await axios.get(`https://dev.virtualearth.net/REST/v1/Locations/${latitude},${longitude}?o=json&key=${API_KEY}`);
 
-      const firstFeature = response.data.features[0];
-      if (firstFeature) {
-        const details = firstFeature.properties.label;
-        setAdress(details);
+      const firstLocation = response.data.resourceSets[0].resources[0];
+      if (firstLocation) {
+        const address = firstLocation.address.formattedAddress;
+        return address;
       }
     } catch (error) {
       console.error("Error al obtener información de geocodificación inversa:", error);
     }
   };
-
-
 
   const calculateRoute = () => {
     if (origin && destination) {
@@ -219,8 +205,6 @@ const MainScreen = () => {
           });
 
           setRoute(coordinates);
-          console.log('Ruta:', coordinates);
-          console.log('Cantidad de puntos de ruta:', coordinates.length);
           setRouteLoaded(true);
         })
         .catch((error) => {
@@ -228,9 +212,6 @@ const MainScreen = () => {
         });
     }
   };
-
-
-
 
   return (
     <View style={styles.container}>
