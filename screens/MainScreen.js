@@ -20,7 +20,8 @@ const MainScreen = () => {
   const [isDriverVisible, setIsDriverVisible] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isDestinationMarkerVisible, setIsDestinationMarkerVisible] = useState(true);
-  
+  const [isFirstLeg, setIsFirstLeg] = useState(true);
+
   const [origin, setOrigin] = useState({ latitude: -34.5895, longitude: -58.3975 });
   const [travel, setTravel] = useState(null);
   const [destination, setDestination] = useState(null);
@@ -77,11 +78,22 @@ const MainScreen = () => {
           clearInterval(timer);
         };
       } else {
-        setOrigin(destination);
-        setIsDestinationMarkerVisible(false);
-        setRoute([]);
-        setRouteLoaded(false);
-        handleOnTravelComplete();
+        if (isFirstLeg) {
+          setIsFirstLeg(false);
+          setRouteLoaded(false);
+          setRoute([]);
+          setPosition(0);
+          setOrigin(destination);
+          const [latitud, longitud] = travel.puntoLlegada.split(',');
+          const secondLeg = { latitude: parseFloat(latitud), longitude: parseFloat(longitud) };
+          setDestination(secondLeg);
+          console.log('Primer tramo completado');
+          setIsDestinationMarkerVisible(false);
+        }
+        else {
+          setOrigin(destination);
+          handleOnTravelComplete();
+        }
       }
     }
   }, [position, route, routeLoaded]);
@@ -95,7 +107,7 @@ const MainScreen = () => {
     socket.on('newTrip', async (data) => {
       console.log('Mensaje recibido:', data);
       setTravel(data);
-      await getStreetAndLocality(data.puntoPartida.split(',')[0], data.puntoPartida.split(',')[1])
+      await getStreetAndLocality(data.puntoLlegada.split(',')[0], data.puntoPartida.split(',')[1])
         .then((address) => {
           setAddress(address);
         });
@@ -168,8 +180,8 @@ const MainScreen = () => {
 
   const handleOnAccept = () => {
     const [latitud, longitud] = travel.puntoPartida.split(',');
-    const destino = { latitude: parseFloat(latitud), longitude: parseFloat(longitud) };
-    setDestination(destino);
+    const firstLeg = { latitude: parseFloat(latitud), longitude: parseFloat(longitud) };
+    setDestination(firstLeg);
     setIsTravelRequestModalVisible(false);
     setIsButtonDisabled(true);
     // URL a la que se realizará la solicitud POST
