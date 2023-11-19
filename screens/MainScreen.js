@@ -88,10 +88,11 @@ const MainScreen = () => {
           const secondLeg = { latitude: parseFloat(latitud), longitude: parseFloat(longitud) };
           setDestination(secondLeg);
           console.log('Primer tramo completado');
-          setIsDestinationMarkerVisible(false);
         }
         else {
           setOrigin(destination);
+          setIsFirstLeg(true);
+          setIsDestinationMarkerVisible(false);
           handleOnTravelComplete();
         }
       }
