@@ -88,6 +88,39 @@ const MainScreen = () => {
           const secondLeg = { latitude: parseFloat(latitud), longitude: parseFloat(longitud) };
           setDestination(secondLeg);
           console.log('Primer tramo completado');
+              // URL a la que se realizará la solicitud POST
+          const url = 'https://core-integracion.azurewebsites.net/api/publish';
+          // Cuerpo de la solicitud
+          const date = new Date();
+          const body = {
+              "exchange": "ongoing_trips", 
+              "message": {
+                  "idViaje": travel.idViaje,
+                  "idChofer": "gf123f12g",
+                  "date": date.toISOString(),
+                  "estadoViaje": "Iniciado"
+              }
+          };
+          console.log('Cuerpo de la solicitud:', body);
+          // Token de autorización
+          const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQyMjMxMTU0LCJjb2RlIjoiOG1Gc1FUVV4nSTdTZ3QtOHgpQjJzWHZJMnFxTHRUIn0.58jMwro7ZWc3hAH-uld5_kumOhzod3IUHHWewSqoA8U';
+          // Configuración de la solicitud
+          const config = {
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+              }
+          };
+          // Realizar la solicitud POST con Axios
+          axios.post(url, body, config)
+          .then(response => {
+              // Manejar la respuesta exitosa
+              console.log('Respuesta exitosa:', response.data);
+          })
+          .catch(error => {
+              // Manejar el error
+              console.error('Error al realizar la solicitud:', error);
+          });
         }
         else {
           setOrigin(destination);
