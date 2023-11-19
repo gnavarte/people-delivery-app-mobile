@@ -170,6 +170,7 @@ const MainScreen = () => {
     // URL a la que se realizará la solicitud POST
     const url = 'https://core-integracion.azurewebsites.net/api/publish';
     // Cuerpo de la solicitud
+    const date = new Date();
     const body = {
         "exchange": "accepted_trips", 
         "message": {
@@ -179,7 +180,7 @@ const MainScreen = () => {
             "apellidoChofer": "Scaloni",
             "vehiculo": "La Scaloneta",
             "patente": "QA022TR",
-            "date": "1699967693.9362886",  
+            "date": date.toISOString(),
             "estadoViaje": "En camino"
         }
     };
