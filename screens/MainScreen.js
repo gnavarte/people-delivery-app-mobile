@@ -32,19 +32,23 @@ const MainScreen = () => {
   const mapRef = useRef(null);
   const carLocation = routeLoaded ? route[position] : origin;
 
+  const axiosInstance = axios.create({
+    baseURL: 'https://core-integracion.azurewebsites.net/api',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQyMjMxMTU0LCJjb2RlIjoiOG1Gc1FUVV4nSTdTZ3QtOHgpQjJzWHZJMnFxTHRUIn0.58jMwro7ZWc3hAH-uld5_kumOhzod3IUHHWewSqoA8U',
+    },
+  });
+
   useEffect(() => {
     const getDriverStatus = async () => {
       try {
         const email = await AsyncStorage.getItem("email");
-        console.log("email", email);
         const driverUser = await getStatusChofer(email);
-        const status = driverUser.status;
+        const { status, firstName, lastName, picturePath } = driverUser;
         setDriverStatus(status);
-        console.log("status", status);
-        const fullName = driverUser.firstName + " " + driverUser.lastName;
-        await AsyncStorage.setItem("name", fullName);
-        const imageProfile = driverUser.picturePath;
-        await AsyncStorage.setItem("imageProfile", imageProfile);
+        await AsyncStorage.setItem("name", `${firstName} ${lastName}`);
+        await AsyncStorage.setItem("imageProfile", picturePath);
       }
       catch (error) {
         console.log("Error:", error);
@@ -63,7 +67,7 @@ const MainScreen = () => {
     if (routeLoaded) {
       if (position < route.length - 1) {
         const timer = setInterval(() => {
-          setPosition((prevPosition) => prevPosition + 1);
+          setPosition(prevPosition => prevPosition + 1);
           if (mapRef.current) {
             mapRef.current.animateToRegion({
               latitude: route[position].latitude,
@@ -74,9 +78,7 @@ const MainScreen = () => {
           }
         }, 1000);
 
-        return () => {
-          clearInterval(timer);
-        };
+        return () => clearInterval(timer);
       } else {
         if (isFirstLeg) {
           setIsFirstLeg(false);
@@ -88,41 +90,22 @@ const MainScreen = () => {
           const secondLeg = { latitude: parseFloat(latitud), longitude: parseFloat(longitud) };
           setDestination(secondLeg);
           console.log('Primer tramo completado');
-              // URL a la que se realizará la solicitud POST
-          const url = 'https://core-integracion.azurewebsites.net/api/publish';
-          // Cuerpo de la solicitud
+          const url = '/publish';
           const date = new Date();
           const body = {
-              "exchange": "ongoing_trips", 
-              "message": {
-                  "idViaje": travel.idViaje,
-                  "idChofer": "gf123f12g",
-                  "date": date.toISOString(),
-                  "estadoViaje": "Iniciado"
-              }
+            "exchange": "ongoing_trips",
+            "message": {
+              "idViaje": travel.idViaje,
+              "idChofer": "gf123f12g",
+              "date": date.toISOString(),
+              "estadoViaje": "Iniciado"
+            }
           };
           console.log('Cuerpo de la solicitud:', body);
-          // Token de autorización
-          const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQyMjMxMTU0LCJjb2RlIjoiOG1Gc1FUVV4nSTdTZ3QtOHgpQjJzWHZJMnFxTHRUIn0.58jMwro7ZWc3hAH-uld5_kumOhzod3IUHHWewSqoA8U';
-          // Configuración de la solicitud
-          const config = {
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token}`
-              }
-          };
-          // Realizar la solicitud POST con Axios
-          axios.post(url, body, config)
-          .then(response => {
-              // Manejar la respuesta exitosa
-              console.log('Respuesta exitosa:', response.data);
-          })
-          .catch(error => {
-              // Manejar el error
-              console.error('Error al realizar la solicitud:', error);
-          });
-        }
-        else {
+          axiosInstance.post(url, body)
+            .then(response => console.log('Respuesta exitosa:', response.data))
+            .catch(error => console.error('Error al realizar la solicitud:', error));
+        } else {
           setOrigin(destination);
           setIsFirstLeg(true);
           setIsDestinationMarkerVisible(false);
@@ -134,23 +117,15 @@ const MainScreen = () => {
 
   const startSocketListening = () => {
     toggleDriverVisibility();
-    socket.on('connect', () => {
-      console.log('Conectado al servidor de Socket.IO');
-    });
-  
+    socket.on('connect', () => console.log('Conectado al servidor de Socket.IO'));
     socket.on('newTrip', async (data) => {
       console.log('Mensaje recibido:', data);
       setTravel(data);
       await getStreetAndLocality(data.puntoLlegada.split(',')[0], data.puntoPartida.split(',')[1])
-        .then((address) => {
-          setAddress(address);
-        });
+        .then((address) => setAddress(address));
       openTravelRequestModal();
     });
-  
-    return () => {
-      socket.disconnect();
-    };
+    return () => socket.disconnect();
   };
 
   const stopSocketListening = () => {
@@ -158,13 +133,9 @@ const MainScreen = () => {
     socket.disconnect();
   };
 
-  const openTravelRequestModal = () => {
-    setIsTravelRequestModalVisible(true);
-  };
+  const openTravelRequestModal = () => setIsTravelRequestModalVisible(true);
 
-  const toggleDriverVisibility = () => {
-    setIsDriverVisible((prevVisibility) => !prevVisibility);
-  };
+  const toggleDriverVisibility = () => setIsDriverVisible(prevVisibility => !prevVisibility);
 
   const handleOnTravelComplete = () => {
     console.log("Travel completed");
@@ -174,9 +145,7 @@ const MainScreen = () => {
     }, 2000);
   };
 
-  const handleOnTravelCompleteModalClose = () => {
-    setIsTravelCompleteModalVisible(false);
-  }
+  const handleOnTravelCompleteModalClose = () => setIsTravelCompleteModalVisible(false);
 
   const handleOnPress = () => {
     if (isDriverVisible) {
@@ -184,14 +153,8 @@ const MainScreen = () => {
         "Confirmar Detener",
         "¿Estás seguro de que deseas dejar de recibir viajes?",
         [
-          {
-            text: "Cancelar",
-            style: "cancel",
-          },
-          {
-            text: "Detener",
-            onPress: stopSocketListening,
-          },
+          { text: "Cancelar", style: "cancel" },
+          { text: "Detener", onPress: stopSocketListening },
         ]
       );
     } else {
@@ -199,14 +162,8 @@ const MainScreen = () => {
         "Confirmar Iniciar",
         "¿Estás seguro de que deseas empezar a recibir viajes?",
         [
-          {
-            text: "Cancelar",
-            style: "cancel",
-          },
-          {
-            text: "Iniciar",
-            onPress: startSocketListening,
-          },
+          { text: "Cancelar", style: "cancel" },
+          { text: "Iniciar", onPress: startSocketListening },
         ]
       );
     }
@@ -218,59 +175,33 @@ const MainScreen = () => {
     setDestination(firstLeg);
     setIsTravelRequestModalVisible(false);
     setIsButtonDisabled(true);
-    // URL a la que se realizará la solicitud POST
-    const url = 'https://core-integracion.azurewebsites.net/api/publish';
-    // Cuerpo de la solicitud
     const date = new Date();
     const body = {
-        "exchange": "accepted_trips", 
-        "message": {
-            "idViaje": travel.idViaje,
-            "idChofer": "gf123f12g",
-            "nombreChofer": "Lionel",
-            "apellidoChofer": "Scaloni",
-            "vehiculo": "La Scaloneta",
-            "patente": "QA022TR",
-            "date": date.toISOString(),
-            "estadoViaje": "En camino"
-        }
+      "exchange": "accepted_trips",
+      "message": {
+        "idViaje": travel.idViaje,
+        "idChofer": "gf123f12g",
+        "nombreChofer": "Lionel",
+        "apellidoChofer": "Scaloni",
+        "vehiculo": "La Scaloneta",
+        "patente": "QA022TR",
+        "date": date.toISOString(),
+        "estadoViaje": "En camino"
+      }
     };
     console.log('Cuerpo de la solicitud:', body);
-    // Token de autorización
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQyMjMxMTU0LCJjb2RlIjoiOG1Gc1FUVV4nSTdTZ3QtOHgpQjJzWHZJMnFxTHRUIn0.58jMwro7ZWc3hAH-uld5_kumOhzod3IUHHWewSqoA8U';
-    // Configuración de la solicitud
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    };
-    // Realizar la solicitud POST con Axios
-    axios.post(url, body, config)
-        .then(response => {
-            // Manejar la respuesta exitosa
-            console.log('Respuesta exitosa:', response.data);
-        })
-        .catch(error => {
-            // Manejar el error
-            console.error('Error al realizar la solicitud:', error);
-        });
+    axiosInstance.post('/publish', body)
+      .then(response => console.log('Respuesta exitosa:', response.data))
+      .catch(error => console.error('Error al realizar la solicitud:', error));
   };
 
-  const handleOnDeny = () => {
-    setIsTravelRequestModalVisible(false);
-  };
+  const handleOnDeny = () => setIsTravelRequestModalVisible(false);
 
   const getStreetAndLocality = async (latitude, longitude) => {
-
     try {
       const response = await axios.get(`https://dev.virtualearth.net/REST/v1/Locations/${latitude},${longitude}?o=json&key=${API_KEY}`);
-
       const firstLocation = response.data.resourceSets[0].resources[0];
-      if (firstLocation) {
-        const address = firstLocation.address.formattedAddress;
-        return address;
-      }
+      if (firstLocation) return firstLocation.address.formattedAddress;
     } catch (error) {
       console.error("Error al obtener información de geocodificación inversa:", error);
     }
@@ -281,23 +212,14 @@ const MainScreen = () => {
       console.log('Latitud de origen:', origin.latitude, 'Longitud de origen:', origin.longitude);
       console.log('Latitud de destino:', destination.latitude, 'Longitud de destino:', destination.longitude);
       const url = `http://dev.virtualearth.net/REST/V1/Routes/Truck?wp.0=${origin.latitude},${origin.longitude}&wp.1=${destination.latitude},${destination.longitude}&routeAttributes=routePath&key=${API_KEY}`;
-
-      axios
-        .get(url)
-        .then((response) => {
+      axios.get(url)
+        .then(response => {
           const routeLegs = response.data.resourceSets[0].resources[0].routePath.line.coordinates;
-          const coordinates = [];
-          
-          routeLegs.forEach((coordinate) => {
-            coordinates.push({ latitude: coordinate[0], longitude: coordinate[1] });
-          });
-
+          const coordinates = routeLegs.map(coordinate => ({ latitude: coordinate[0], longitude: coordinate[1] }));
           setRoute(coordinates);
           setRouteLoaded(true);
         })
-        .catch((error) => {
-          console.error('Error al obtener la ruta:', error);
-        });
+        .catch(error => console.error('Error al obtener la ruta:', error));
     }
   };
 
@@ -344,14 +266,14 @@ const MainScreen = () => {
       )}
       <TravelRequestModal
         isVisible={isTravelRequestModalVisible}
-        username={travel ? travel.nombre + ' ' + travel.apellido : ''}
+        username={travel ? `${travel.nombre} ${travel.apellido}` : ''}
         location={travel ? address : ''}
         onAccept={handleOnAccept}
         onDeny={handleOnDeny}
       />
       <TravelCompleteModal
         isVisible={isTravelCompleteModalVisible}
-        username={travel ? travel.nombre + ' ' + travel.apellido : ''}
+        username={travel ? `${travel.nombre} ${travel.apellido}` : ''}
         amountToPay={travel ? travel.precio : ''}
         onAccept={handleOnTravelCompleteModalClose}
       />
