@@ -203,7 +203,7 @@ const MainScreen = () => {
     };
     console.log('Cuerpo de la solicitud:', body);
     // Token de autorización
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQyMjMxMTU0LCJjb2RlIjoiOG1Gc1FUVV4nSTdTZ3QtOHgpQjJzWHZKMnFxTHRUIn0.58jMwro7ZWc3hAH-uld5_kumOhzod3IUHHWewSqoA8U';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQyMjMxMTU0LCJjb2RlIjoiOG1Gc1FUVV4nSTdTZ3QtOHgpQjJzWHZJMnFxTHRUIn0.58jMwro7ZWc3hAH-uld5_kumOhzod3IUHHWewSqoA8U';
     // Configuración de la solicitud
     const config = {
         headers: {
@@ -282,9 +282,15 @@ const MainScreen = () => {
           }}
         >
           <Marker coordinate={carLocation}>
-            <Ionicons name="car-sport" size={24} color="black" />
+            {isFirstLeg ? (
+              <Ionicons name="car-sport" size={24} color="black" />
+            ) : (
+              <Ionicons name="people" size={24} color="black" />
+            )}
           </Marker>
-          {destination && isDestinationMarkerVisible && (<Marker coordinate={destination} title="Destino" />)}
+          {destination && isDestinationMarkerVisible && (
+            <Marker coordinate={destination} title="Destino" />
+          )}
           {routeLoaded && (
             <Polyline coordinates={route.slice(position)} strokeWidth={4} strokeColor="black" />
           )}
