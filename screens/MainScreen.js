@@ -24,6 +24,7 @@ const MainScreen = () => {
   const [origin, setOrigin] = useState({ latitude: -34.5895, longitude: -58.3975 });
   const [travel, setTravel] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [address, setAddress] = useState(null);
   const [route, setRoute] = useState([]);
   const [routeLoaded, setRouteLoaded] = useState(false);
   const [position, setPosition] = useState(0);
@@ -91,9 +92,13 @@ const MainScreen = () => {
       console.log('Conectado al servidor de Socket.IO');
     });
   
-    socket.on('newTrip', (data) => {
+    socket.on('newTrip', async (data) => {
       console.log('Mensaje recibido:', data);
       setTravel(data);
+      await getStreetAndLocality(data.puntoPartida.split(',')[0], data.puntoPartida.split(',')[1])
+        .then((address) => {
+          setAddress(address);
+        });
       openTravelRequestModal();
     });
   
@@ -288,7 +293,7 @@ const MainScreen = () => {
       <TravelRequestModal
         isVisible={isTravelRequestModalVisible}
         username={travel ? travel.nombre + ' ' + travel.apellido : ''}
-        location={travel ? travel.puntoPartida : ''}
+        location={travel ? address : ''}
         onAccept={handleOnAccept}
         onDeny={handleOnDeny}
       />
