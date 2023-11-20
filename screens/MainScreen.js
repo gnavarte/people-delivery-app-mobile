@@ -96,7 +96,7 @@ const MainScreen = () => {
             "exchange": "ongoing_trips",
             "message": {
               "idViaje": travel.idViaje,
-              "idChofer": "gf123f12g",
+              "idChofer": "10003",
               "date": date.toISOString(),
               "estadoViaje": "Iniciado"
             }
@@ -180,9 +180,9 @@ const MainScreen = () => {
       "exchange": "accepted_trips",
       "message": {
         "idViaje": travel.idViaje,
-        "idChofer": "gf123f12g",
-        "nombreChofer": "Lionel",
-        "apellidoChofer": "Scaloni",
+        "idChofer": "10003",
+        "nombreChofer": "Diego",
+        "apellidoChofer": "Fernández",
         "vehiculo": "La Scaloneta",
         "patente": "QA022TR",
         "date": date.toISOString(),
