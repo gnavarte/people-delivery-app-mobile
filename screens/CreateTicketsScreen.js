@@ -45,7 +45,10 @@ const CreateTicketScreen = () => {
         else if (booleanDetalle!= true && booleanMotivo == true){
             Alert.alert(booleanDetalle)
         }
-        else if (booleanDetalle && booleanMotivo === true)
+        else if (booleanDetalle && booleanMotivo === true && String(detalle).length>250){
+          Alert.alert("El detalle no puede superar los 250 caracteres")
+        }
+        else if (booleanDetalle && booleanMotivo === true && String(detalle).length<=250)
         {
           datosTicket=   {
             'idSolicitante' : idSolicitante,
@@ -71,8 +74,9 @@ const CreateTicketScreen = () => {
         <View style={styles.inputsContainer}>
           <Text style={styles.textLabel}>Motivo de ticket</Text>
           <TextInputCustomized value={motivo} onChangeText={setMotivo}  placeholder="Ingrese el motivo de su ticket" backgroundColor="#FFFFFF" placeholderTextColor="#000000" />
-          <Text style={styles.textLabel}>Ticket</Text>
+          <Text style={styles.textLabel}>Detalle ({detalle.length}/250 caracteres)</Text>
           <TextInputCustomizedLarge
+              maxLength={5}
               placeholder="Escribe tu reclamo aquí"
               value={detalle}
               onChangeText={setDetalle}

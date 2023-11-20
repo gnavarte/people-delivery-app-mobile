@@ -12,12 +12,10 @@ return (
             uri: "https://cdn-icons-png.flaticon.com/512/5269/5269933.png",
           }}style={styles.imagen} />
       <View style={styles.info}>
-        <Text style={styles.textos}>idViaje: {ticket.idViaje}</Text>
-        <Text style={styles.textos}>Asunto: {ticket.asunto}</Text>
-        <Text style={styles.textos}>detalle: {ticket.detalle}</Text>
-        <Text style={styles.textos}>status: {ticket.status}</Text>
-        <Text style={styles.textos}>Fecha de solicitud: {ticket.timestampCreacion}</Text>
-        <Text style={styles.textos}>: {ticket.status}</Text> 
+        <Text style={styles.titulo}>Asunto: {ticket.asunto}</Text>
+        <Text style={styles.textos}>{ticket.detalle}</Text>
+        <Text style={styles.status}>status: {ticket.status}</Text>
+        <Text style={styles.textos}>Fecha de solicitud: {new Date(Date.parse(ticket.timestampCreacion)).toISOString().split('T')[0]}</Text>
       </View>
   </View>
   );
@@ -35,7 +33,7 @@ const styles = StyleSheet.create({
     height: '25%'
   },
   imagen: {
-    width: '45%', 
+    width: '20%', 
     height: '100%', 
     marginRight: 10,
     resizeMode: 'contain',
@@ -44,6 +42,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
+  status:{
+    ontSize: Dimensions.get('window').width*0.05,
+    fontFamily: 'Roboto',
+    color:'#7F44C2',
+    fontWeight: 'bold',
+    textAlign: 'left',
+  },
   textos: {
     fontSize: Dimensions.get('window').width*0.05,
     fontFamily: 'Roboto',
@@ -51,9 +56,10 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: Dimensions.get('window').width*0.05,
     fontFamily: 'Roboto',
+    fontWeight: 'bold',
     color: '#7F44C2',
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: 'left'
   },
 
 });

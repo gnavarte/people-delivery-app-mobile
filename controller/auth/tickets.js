@@ -17,7 +17,6 @@ export const getTickets = async (email) => {
             body: JSON.stringify(data),
         });
         console.log("######")
-        console.log(response.text())
         const datas = await response.json();
         return datas;
     }
@@ -30,7 +29,7 @@ export const getTickets = async (email) => {
 export const createTicket = async (props) => {
     try{
         const data =props
-
+        console.log('##########')
         console.log(data)
         const response = await fetch(`${API_BASE_URL}/api/ticket/newTicket}`, {
             method: 'POST',
@@ -41,14 +40,15 @@ export const createTicket = async (props) => {
             },
             body: JSON.stringify(data),
         });
+        console.log('######')
         console.log(response)
         if (response.status===200){
             return response.status;
         }
     }
     catch (error) {
-        console.error('Error during creating car:', error);
+        console.error('Error during creating ticket:', error);
         Alert.alert('' + error);   
-        throw new Error('An error occurred during creating car');
+        throw new Error('An error occurred during creating ticket');
     }
 }
