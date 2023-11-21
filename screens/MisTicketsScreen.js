@@ -7,10 +7,13 @@ const MisTicketsScreen = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
+    setTickets([])
     const fetchData = async () => {
       try {
         const email = await AsyncStorage.getItem('email');
         const data = await getTickets(email);
+        console.log("###")
+        console.log(data)
         setTickets(data);
       } catch (error) {
         console.error('Error:', error);
@@ -23,7 +26,8 @@ const MisTicketsScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.Titulo}>Mis Reclamos</Text>
-      {tickets.map((ticket, index) => (
+      {
+        tickets.map((ticket, index) => (
         <TicketCard ticket={ticket} key={index} /> 
       ))}
     </View>

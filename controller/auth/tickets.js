@@ -30,8 +30,8 @@ export const createTicket = async (props) => {
     try{
         const data =props
         console.log('##########')
-        console.log(data)
-        const response = await fetch(`${API_BASE_URL}/api/ticket/newTicket}`, {
+        console.log(data)//${API_BASE_URL}/api/ticket/newTicket} https://santitest.free.beeceptor.com
+        const response = await fetch(`http://ec2-54-208-78-25.compute-1.amazonaws.com:3000/api/ticket/newTicket`, {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -41,6 +41,7 @@ export const createTicket = async (props) => {
             body: JSON.stringify(data),
         });
         console.log('######')
+        const res= await response.json()
         console.log(response)
         if (response.status===200){
             return response.status;

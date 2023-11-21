@@ -15,7 +15,7 @@ const CreateTicketScreen = () => {
     const route=useRoute();
     const idSolicitante = route.params.idSolicitante;
     const idReclamado=route.params.idReclamado;
-    const idViaje= route.params._id
+    const idViaje= route.params.idViaje
   
     const [motivo, setMotivo] = useState('');
     const [detalle, setDetalle] = useState('');
@@ -55,12 +55,15 @@ const CreateTicketScreen = () => {
             'idReclamado':idReclamado,
             'idViaje': idViaje,
             'asunto':motivo,
+            'status':'NEW',
+            'prioridad':'BAJA',
             'detalle': detalle,
             'tipoUsuario': 'CHOFER'
 
           }
+          console.log(`Creando ticket con:\n${JSON.stringify(datosTicket)}`)
           response= await createTicket(datosTicket)
-          Alert.alert("Su ticket fue enviado con exito.")
+          Alert.alert(`Su ticket fue enviado con exito.`)
           navigation.goBack();
         }
     }

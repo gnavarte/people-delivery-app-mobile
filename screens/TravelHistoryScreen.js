@@ -49,10 +49,11 @@ const TravelScreen = () => {
     setSortBy(key);
   };
   const navigateToCreateTicketScreen = (props) => {
+    console.log(`\n\n\nyendo a ticket screen con: ${JSON.stringify(props)}\n\n###chofer: ${props.choferID}`)
     navigation.push("CreateTicketScreen",{
         'idSolicitante': props.choferID,
-        'idReclamado':'pasajero ToDo',
-        'idViaje': props._id
+        'idReclamado':props.pasajeroID,
+        'idViaje': props.viajeID
     });
   };
   return (
