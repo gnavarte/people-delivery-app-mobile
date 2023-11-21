@@ -39,6 +39,9 @@ const EditProfileScreen = () => {
   const navigateToMyCars = () => {
     navigation.push("MisAutosScreen" , { email: userEmail } )
   }
+  const navigateToMyTickets = () => {
+    navigation.push("MisTicketsScreen" , { email: userEmail } )
+  }
   const navigateToSettings = () => {
     navigation.push("EditChoferInfoScreen", { email: userEmail })
   }
@@ -89,6 +92,11 @@ const EditProfileScreen = () => {
           <Icon name="car" size={24} color="#7F44C2" />
           <Text style={styles.textLabel}>Mis Autos</Text>
           <Icon name="chevron-right" size={24} color="black" onPress={navigateToMyCars} />
+        </View>
+        <View style={styles.item}>
+          <Icon name="ticket" size={24} color="#7F44C2" />
+          <Text style={styles.textLabel}>Mis Reclamos</Text>
+          <Icon name="chevron-right" size={24} color="black" onPress={navigateToMyTickets} />
         </View>
         <View style={styles.item}>
           <MaterialIcons name="settings" size={24} color="#7F44C2" />

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
+import { useNavigation } from '@react-navigation/native';
 
 import travelHistoryData from '../data/travel_history.json';
 import { getViajes } from '../controller/auth/viajes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 const TravelScreen = () => {
+  const navigation = useNavigation();
   const [sortBy, setSortBy] = useState(null);
   const [sortedData, setSortedData] = useState([]);
 
@@ -46,10 +48,23 @@ const TravelScreen = () => {
     setSortedData(sortedDataCopy);
     setSortBy(key);
   };
-
+  const navigateToCreateTicketScreen = (props) => {
+    console.log(`\n\n\nyendo a ticket screen con: ${JSON.stringify(props)}\n\n###chofer: ${props.choferID}`)
+    navigation.push("CreateTicketScreen",{
+        'idSolicitante': props.choferID,
+        'idReclamado':props.pasajeroID,
+        'idViaje': props.viajeID
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.filterContainer}>
+      
+          <View style={styles.filterButton}>
+            <Icon name="ticket" size={20}  />
+            <Text style={styles.row}></Text>
+          </View>
+        
         <TouchableOpacity onPress={() => sortData('Fecha')}>
           <View style={styles.filterButton}>
             <Icon name="calendar" size={20} color={sortBy === 'Fecha' ? 'blue' : 'black'} />
@@ -78,12 +93,17 @@ const TravelScreen = () => {
       <FlatList
         data={sortedData}
         keyExtractor={(item) => item.Fecha}
+        
         renderItem={({ item }) => (
           <View style={styles.row}>
+             <TouchableOpacity onPress={()=>{navigateToCreateTicketScreen(item)}}>
+             <Text style={styles.column}>Reportar</Text>
+             </TouchableOpacity>
             <Text style={styles.column}>{item.updatedAt}</Text>
             <Text style={styles.column}>{item.duration_sec} Minutos</Text>
             <Text style={styles.column}>{item.valoracion}</Text>
             <Text style={styles.column}>${item.totalPrice}</Text>
+            
           </View>
         )}
       />

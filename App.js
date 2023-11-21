@@ -19,6 +19,8 @@ import NewPasswordForgotScreen from './screens/NewPasswordForgotScreen';
 import SupportScreen from './screens/SupportScreen';
 import DriverPhotoScreen from './screens/DriverPhotoScreen';
 import MainScreen from './screens/MainScreen';
+import CreateTicketScreen  from './screens/CreateTicketsScreen';
+import MisTicketsScreen from './screens/MisTicketsScreen';
 import Lab from './screens/Lab';
 
 import TabBar from './components/TabBar/TabBar';
@@ -38,7 +40,7 @@ export default function App() {
         }
       >
         {/* <Stack.Screen name="Lab" component={Lab}/> */}
-{/*         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
         <Stack.Screen name="InitialScreen" component={InitialScreen}/>
         <Stack.Screen name='RegisterScreen' component={RegisterScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
@@ -55,8 +57,11 @@ export default function App() {
         <Stack.Screen name="NewPasswordScreen" component={NewPasswordScreen}/>
         <Stack.Screen name="MisAutosScreen" component={MisAutosScreen} />
         <Stack.Screen name="SupportScreen" component={SupportScreen} />
-        <Stack.Screen name="DriverPhotoScreen" component={DriverPhotoScreen} /> */}
+        <Stack.Screen name="DriverPhotoScreen" component={DriverPhotoScreen} /> 
         <Stack.Screen name="MainScreen" component={MainScreen} />
+        <Stack.Screen name="CreateTicketScreen" component={CreateTicketScreen} />
+        <Stack.Screen name="MisTicketsScreen" component={MisTicketsScreen} />
+        
       </Stack.Navigator>
     </NavigationContainer>
 
