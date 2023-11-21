@@ -38,7 +38,7 @@ export default function App() {
         }
       >
         {/* <Stack.Screen name="Lab" component={Lab}/> */}
-{/*         <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
         <Stack.Screen name="InitialScreen" component={InitialScreen}/>
         <Stack.Screen name='RegisterScreen' component={RegisterScreen}/>
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
@@ -55,7 +55,7 @@ export default function App() {
         <Stack.Screen name="NewPasswordScreen" component={NewPasswordScreen}/>
         <Stack.Screen name="MisAutosScreen" component={MisAutosScreen} />
         <Stack.Screen name="SupportScreen" component={SupportScreen} />
-        <Stack.Screen name="DriverPhotoScreen" component={DriverPhotoScreen} /> */}
+        <Stack.Screen name="DriverPhotoScreen" component={DriverPhotoScreen} />
         <Stack.Screen name="MainScreen" component={MainScreen} />
       </Stack.Navigator>
     </NavigationContainer>
